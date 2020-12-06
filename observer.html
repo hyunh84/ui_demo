@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="resources/css/font.css">
+	<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="resources/js/fontfaceonload.js"></script>
+
+	<style type="text/css">
+		* {padding:0;margin:0;list-style:none;word-break:break-all;}
+		h1 {text-align:center;}
+		.box {width:800px;margin:50px auto 0;padding:10px;border:2px solid blueviolet;}
+
+		.tabBox {width:800px;margin:50px auto 0;}
+		.tabBox .tabItemBox {text-align:center;}
+		.tabBox .tabItemBox button {height:20px;width:100px;}
+
+		.tabBox .tabContents {display:none;height:500px;text-align:center;line-height:500px;font-size:40px;font-weight:bold;}
+
+	</style>
+	<script type="text/javascript">
+	var observeFnc = function() {
+		var config = {
+			attributes: true,
+			childList: true,
+			characterData: true
+		}; // 감시할 내용 설정
+		var Observer = window.MutationObserver || window.WebkitMutationObserver;
+		var observer = new Observer(function (mutations) {
+			console.log('mutation = ', mutations);
+			mutations.forEach(function(mutation) {
+			});
+		});
+
+		console.log('MutationObserver =', + ('MutationObserver' in window)); 
+		console.log('MutationObserver =', window.MutationObserver); 
+		console.log('WebkitMutationObserver =', + ('WebkitMutationObserver' in window));
+		console.log('WebkitMutationObserver =', window.WebkitMutationObserver);
+
+		return {
+			setTarget : function(target) {
+				var _target = $(target);
+				for(var i=0; i < _target.length; i++) {
+					observer.observe(_target[i], config);
+				}
+			}
+		}
+	}
+
+	var observeFn = new observeFnc();
+
+	$(document).ready(function() {
+		$('.tabItemBox button').click(function() {
+			var _this = $(this);
+			var _idx = _this.index();
+
+			observeFn.setTarget('.tabContents');
+
+			$('.tabContents').hide();
+			$('.tabContents' + '.0' + (_idx + 1)).show();
+		});
+	});
+
+	</script>
+</head>
+<body class="body">
+	<h1>swiper observer 옵션 테스트</h1>
+
+	<div class="tabBox" id="aaa">
+		<div class="tabItemBox">
+			<button type="button">tab01</button>
+			<button type="button">tab02</button>
+			<button type="button">tab03</button>
+			<button type="button">tab04</button>
+		</div>
+
+		<div class="tabContents 01" style="display:block; background-color:blueviolet">
+			tab contents box 01
+			<div class="innerBox">
+
+			</div>
+		</div>
+		<div class="tabContents 02" style="background-color:salmon">
+			tab contents box 02
+			<div class="innerBox">
+				
+			</div>
+		</div>
+		<div class="tabContents 03" style="background-color:green">
+			tab contents box 03
+			<div class="innerBox">
+				
+			</div>
+		</div>
+		<div class="tabContents 04" style="background-color:aquamarine">
+			tab contents box 04
+			<div class="innerBox">
+				
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
