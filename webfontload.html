@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="resources/css/font.css">
+	<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="resources/js/fontfaceonload.js"></script>
+
+	<style type="text/css">
+		* {padding:0;margin:0;list-style:none;word-break:break-all;}
+		.box {width:300px;margin:100px auto 0;padding:10px;border:2px solid blueviolet;}
+		.box ul li {margin:5px 0 0;line-height:18px;font-size:14px;letter-spacing:-.2px;font-family:'NotoSans';}
+		.box ul li:first-child {margin:0;}
+	</style>
+	<script>
+		$(document).ready(function() {
+			console.log('dom ready = ', $('.box ul').outerHeight());
+		});
+		FontFaceOnload("NotoSans", {
+			success: function() {
+				console.log('FontFaceOnload success');
+				console.log('FontFaceOnload = ', $('.box ul').outerHeight());
+				if($('.webfont-loading-check').length) $('.webfont-loading-check').remove();
+			},
+			error: function() {
+				console.log('FontFaceOnload error');
+			},
+			timeout: 5000 // in ms. Optional, default is 10 seconds
+		});
+	</script>
+</head>
+<body>
+
+<div class="box">
+	<ul>
+		<li>Almost before we knew it, we had left the ground.</li>
+		<li>챔피온은 100여년간 품질과 디자인에서 혁신을 챔피</li>
+		<li>Almost before we knew it, we had left the ground.</li>
+		<li>Almost before we knew it, we had left the ground.</li>
+	</ul>
+</div>
+
+</body>
+</html>
