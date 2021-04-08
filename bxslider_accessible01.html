@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title>Document</title>
+
+	<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.bxslider.js"></script>
+
+	<style type="text/css">
+		* {padding:0;margin:0;list-style:none;}
+		.wrap {overflow:hidden;}
+		.swiperAreaWrap {width:500px;margin:20px auto 0;border:5px solid royalblue}
+		
+		.bxslider:after {display:block;content:"";clear:both;overflow:hidden;width:0;height:0;margin:0;padding:0;line-height:0;font-size:1px;}
+		.bxslider > li {float:left;width:500px;}
+		.bxslider > li a {display:block;width:500px;height:500px;text-align:center;font-size:40px;line-height:400px;}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="swiperAreaWrap">
+			<ul class="bxslider">
+				<li><a href="#">1번쨰</a></li>
+				<li><a href="#">2번쨰</a></li>
+				<li><a href="#">3번쨰</a></li>
+				<li><a href="#">4번쨰</a></li>
+				<li><a href="#">5번쨰</a></li>
+			</ul>
+		</div>
+	</div>
+
+<!-- 
+	realindex = 현재 노출 슬라이드 인덱스 값
+	activeindex = 현재 노출 슬라이드 html 마크업 순서 인덱스 값
+ -->
+	<script type="text/javascript">
+		$('.swiperAreaWrap .bxslider').bxSlider({
+			auto: true,
+			autoControls: true,
+			stopAutoOnClick: true,
+			pager: true,
+			slideWidth: 600
+		});
+	</script>
+</body>
+</html>

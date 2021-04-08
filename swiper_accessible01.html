@@ -11,7 +11,7 @@
 	<style type="text/css">
 		* {padding:0;margin:0;list-style:none;}
 		.wrap {overflow:hidden;}
-		.swiperAreaWrap {width:500px;margin:20px auto 0;border:5px solid royalblue}
+		.swiperAreaWrap {overflow:hidden;width:500px;margin:20px auto 0;border:5px solid royalblue}
 		.swiper-wrapper {width:100000px;}
 		.swiper-wrapper:after {display:block;content:"";clear:both;overflow:hidden;width:0;height:0;margin:0;padding:0;line-height:0;font-size:1px;}
 		.swiper-wrapper .swiper-slide {float:left;}
@@ -42,18 +42,27 @@
 			// loop : true,
 			on : {
 				init : function(swiper) {
-					console.log('init');
-					var _this = this;
-					var _el = $(_this.$el);
-					var _slideItem = $('.swiper-slide', _el);
-					_slideItem.attr('aria-hidden', true);
-					console.log(this);
-					console.log(_el);
+					// console.log('init');
+					// var _this = this;
+					// var _el = $(_this.$el);
+					// var _slideItem = $('.swiper-slide > a', _el);
+					// _slideItem.attr('aria-hidden', true);
+					// console.log(this);
+					// console.log(_el);
 
 				}
 			},
+			// autoplay : {
+			// 	delay : 3000
+			// },
+			keyboard : {
+				enabled : true
+			},
 			a11y : {
-				enabled : false
+				enabled : true,
+				prevSlideMessage: 'Previous slide',
+				nextSlideMessage: 'Next slide'
+				// onlyInViewport : false
 			}
 		});
 	</script>
