@@ -31,6 +31,7 @@ var gageGraphFn = function(canvasId, options) {
 	alpha = 0;
 	if(imgGradUri) {$img.src = imgGradUri;}
 
+	console.log(userCont);
 
 	var devicePixelRatio = window.devicePixelRatio || 1,
 	backingStoreRatio = context.webkitBackingStorePixelRatio ||

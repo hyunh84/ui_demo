@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<title>gage</title>
+<!-- <link rel="stylesheet" type="text/css" href="../../css/v2/kt-style.css"> -->
+
+<style class="text/css">
+* {margin:0;padding:0;list-style:none;}
+.wrap {}
+</style>
+<script type="text/javascript" src="./resources/js/gage.js"></script>
+<!-- 개별페이지 스크립트 -->
+</head>
+<body>
+
+	<div class="wrap">
+		<canvas id="gageGraph"></canvas>
+	</div>
+
+<script type="text/javascript">
+var gage = new gageGraphFn('gageGraph', {
+	userGrade : 3
+});
+
+</script>
+</body>
+</html>
