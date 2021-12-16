@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG를 이용한 탭</title>
+
+	<script src="resources/js/jquery-3.5.1.min.js"></script>
+	<script src="resources/js/intersection-observer.js"></script> 
+	<!-- polyfill : IntersectionObserver : IE지원하지 않음 -->
+
+	<style type="text/css">
+
+		* {margin:0;padding:0;list-style:none;}
+
+		/* .wrap {overflow-x:hidden;overflow-y:auto;width:500px;height:500px;margin:100px auto 0;} */
+		.wrap .box {height:200px;background:#f0f;opacity:0;}
+		.wrap .box:nth-child(even) {background:#0ff;}
+		.wrap .box.visible {opacity:1;}
+
+	</style>
+
+</head>
+<body>
+
+<div class="wrap">
+
+	<div class="container">
+		<div class="box">box01</div>
+		<div class="box">box02</div>
+		<div class="box">box03</div>
+		<div class="box">box04</div>
+		<div class="box">box05</div>
+		<div class="box">box06</div>
+		<div class="box">box07</div>
+		<div class="box">box08</div>
+		<div class="box">box09</div>
+		<div class="box">box10</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+
+	/*
+	 * options 설정
+	 * 1. root
+	 *  root 로 정의된 Element 기준으로 Target Element 의 노출, 비노출 여부를 결정한다.
+	 *  기본 값은 Browser ViewPort 이다.
+	 *  만약 root 로 정의한 Element 의 Children 에 Target Element 가 존재하지 않는다면, 화면에 노출 되더라도, 노출로 보지 않는다.
+	 *  만약 Target Element 가 Root Element 의 Children 이 되고, 화면에 노출되면, 노출로 보고 Callback Function 을 호출한다.
+	 * 2. rootMargin
+	 *  rootMargin 은 ‘0px 0px 0px 0px’ 형태로 정의할 수 있다.
+	 *  rootMargin 이 있으면, threshold 계산할 때, rootMargin 영역 만큼 더 계산한다.
+	 * 3. threshold
+	 *  threshold 를 number 나 Array<number> 로 정의할 수 있다. 정의하지 않는다면 기본값은 0 이다.
+	 *  number 로 정의할 경우, Target Element 의 노출 비율에 따라 한번 Callback Function 을 호출할 수 있지만, Array<number> 로 정의할 경우, 각각의 비율로 노출될 때마다 Callback Function 을 호출한다.
+	 */
+	var options = {
+		//root: document.querySelector('.wrap'),
+		//rootMargin: '0px',
+		threshold: 1
+	}
+
+	/*
+	 * target : Target Element
+	 * time : 노출되거나 비노출된 시간
+	 * isIntersecting : 노출 여부
+	 * intersectionRatio : 노출된 비율
+	 * intersectionRect : 노출된 영역
+	 * boundingClientRect : TargetElement.getBoundingClientRect() 값
+	 * rootBounds : RootElement의 bound 값 만약 옵션에서 지정하지 않았다면, 화면 크기 이다.
+	 */
+	var callback = function(entries, observer) {
+
+		entries.forEach(function(entry) {
+			// console.log(`target =` , entry.target);
+			// console.log(`노출되거나 비노출된 시간 = ${entry.time}`);
+			// console.log(`노출 여부 = ${entry.isIntersecting}`);
+			// console.log(`노출된 비율 = ${entry.intersectionRatio}`);
+			// console.log(`노출된 영역 =`, entry.intersectionRect);
+			// console.log(`TargetElement.getBoundingClientRect() 값 =`, entry.boundingClientRect);
+			if (entry.isIntersecting) {
+				console.log('화면에서 노출됨');
+				$(entry.target).addClass('visible');
+			} else {
+				console.log('화면에서 제외됨');
+				$(entry.target).removeClass('visible');
+			}
+		});
+
+	}
+
+	var observer = new IntersectionObserver(callback, options);
+
+	var target = document.querySelectorAll('.box');
+	target.forEach(function(box) {
+		/*
+		 * observe() : 대상 요소의 관찰을 시작합니다.
+		 * unobserve() : 대상 요소의 관찰을 중지합니다.
+		 */
+		observer.observe(box);
+	});
+	
+</script>
+
+</body>
+</html>
