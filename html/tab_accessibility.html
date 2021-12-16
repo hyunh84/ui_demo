@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG를 이용한 탭</title>
+
+
+	<style type="text/css">
+
+		* {margin:0;padding:0;list-style:none;font-style:normal;}
+		a {text-decoration:none;}
+
+		.wrap {width:1200px;padding:20px 0;margin:0 auto;}
+
+		[class^="tabListWrap"] .tabListInner {border-bottom:1px solid #000;}
+		[class^="tabListWrap"] ul {display:flex;margin:0 0 -1px;}
+		[class^="tabListWrap"] ul li {position:relative;min-width:160px;margin:0 -1px 0 0;border-radius:10px 10px 0 0;border:1px solid #d5d5d5;border-bottom:1px solid #000;}
+		[class^="tabListWrap"] ul li a {display:block;box-sizing:border-box;padding:5px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;}
+		[class^="tabListWrap"] ul li.active {border:1px solid #000;border-bottom:1px solid #fff;z-index:1;}
+
+	</style>
+
+</head>
+<body>
+
+<div class="wrap">
+
+	<div class="tabListWrap">
+		<div class="tabListInner">
+			<ul>
+				<li class="active">
+					<a href="#"><em>TAB01</em></a>
+				</li>
+				<li>
+					<a href="#"><em>TAB02</em></a>
+				</li>
+				<li>
+					<a href="#"><em>TAB03</em></a>
+				</li>
+				<li>
+					<a href="#"><em>TAB04</em></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="tabPanelWrap">
+
+	</div>
+
+</div>
+
+</body>
+</html>
