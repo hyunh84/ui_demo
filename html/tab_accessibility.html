@@ -4,21 +4,30 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SVG를 이용한 탭</title>
+	<title>탭 접근성</title>
 
+	<script src="../resources/js/jquery-3.5.1.min.js"></script>
 
 	<style type="text/css">
 
 		* {margin:0;padding:0;list-style:none;font-style:normal;}
 		a {text-decoration:none;}
+		button {border:none;background-color:transparent;cursor:pointer;}
 
 		.wrap {width:1200px;padding:20px 0;margin:0 auto;}
 
+		[class^="tabListWrap"] {margin:30px 0 0;}
+		[class^="tabListWrap"]:first-child {margin:0;}
 		[class^="tabListWrap"] .tabListInner {border-bottom:1px solid #000;}
 		[class^="tabListWrap"] ul {display:flex;margin:0 0 -1px;}
 		[class^="tabListWrap"] ul li {position:relative;min-width:160px;margin:0 -1px 0 0;border-radius:10px 10px 0 0;border:1px solid #d5d5d5;border-bottom:1px solid #000;}
-		[class^="tabListWrap"] ul li a {display:block;box-sizing:border-box;padding:5px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;}
+		[class^="tabListWrap"] ul li a,
+		[class^="tabListWrap"] ul li button {display:block;box-sizing:border-box;width:100%;padding:10px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;}
 		[class^="tabListWrap"] ul li.active {border:1px solid #000;border-bottom:1px solid #fff;z-index:1;}
+
+		[class^="tabPanelWrap"] {margin:30px 0 0;}
+		[class^="tabPanelWrap"] .tabPanel {display:none;height:300px;font-size:50px;line-height:300px;text-align:center;}
+		[class^="tabPanelWrap"] .tabPanel[aria-hidden="false"] {display:block;}
 
 	</style>
 
@@ -27,20 +36,20 @@
 
 <div class="wrap">
 
-	<div class="tabListWrap">
+	<div class="tabListWrap" tab-name="tabEx">
 		<div class="tabListInner">
-			<ul>
+			<ul role="tablist">
 				<li class="active">
-					<a href="#"><em>TAB01</em></a>
+					<button type="button" role="tab"><em>TAB01</em></button>
 				</li>
 				<li>
-					<a href="#"><em>TAB02</em></a>
+					<button type="button" role="tab"><em>TAB02</em></button>
 				</li>
 				<li>
-					<a href="#"><em>TAB03</em></a>
+					<button type="button" role="tab"><em>TAB03</em></button>
 				</li>
 				<li>
-					<a href="#"><em>TAB04</em></a>
+					<button type="button" role="tab"><em>TAB04</em></button>
 				</li>
 			</ul>
 		</div>
@@ -48,9 +57,112 @@
 
 	<div class="tabPanelWrap">
 
+		<div role="tabpanel" class="tabPanel" style="background-color:orange;">
+			tabPanel01
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:violet;">
+			tabPanel02
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:burlywood;">
+			tabPanel03
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:darkcyan;color:#fff;">
+			tabPanel04
+		</div>
+	</div>
+
+	<div class="tabListWrap" tab-name="tabEx02">
+		<div class="tabListInner">
+			<ul role="tablist">
+				<li class="active">
+					<a href="#" role="tab"><em>TAB01</em></a>
+				</li>
+				<li>
+					<a href="#" role="tab"><em>TAB02</em></a>
+				</li>
+				<li>
+					<a href="#" role="tab"><em>TAB03</em></a>
+				</li>
+				<li>
+					<a href="#" role="tab"><em>TAB04</em></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="tabPanelWrap">
+
+		<div role="tabpanel" class="tabPanel" style="background-color:orange;">
+			link tab
+		</div>
 	</div>
 
 </div>
+
+<script type="text/javascript">
+
+var tabControlFn = function(target) {
+	// rol = tablist
+	var _tabListWrap = $(target);
+	var _tabItems = $('[ role="tablist"] [role="tab"]', _tabListWrap);
+
+	// rol = tabpanel
+	var _tabPanelWrap = _tabListWrap.next();
+	var _tabPanelItems = $('> [role="tabpanel"]', _tabPanelWrap);
+
+	// data-tab-name
+	var _tabUiName = _tabListWrap.attr('tab-name');
+
+	// id, aria 속성 셋팅
+	var _setTabAttrFn = function() {
+		_tabItems.each(function(i) {
+			var _this = $(this);
+			var _num = i + 1;
+			var _tabId = ('tab_' + _tabUiName) + '_' + (_num < 10 ? '0' + _num : i+1);
+			var _tagName = _this.prop('tagName').toUpperCase();
+
+			_this.attr('id', _tabId);
+			if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-labelledby', _tabId);
+			if(_tagName === 'A') _tabPanelItems.attr('aria-labelledby', _tabId);
+			if($(this).parent().hasClass('active')) {
+				_this.attr('aria-selected', true).attr('tabindex', 0);
+				if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-hidden', 'false');
+				if(_tagName === 'A') _tabPanelItems.attr('aria-hidden', 'false');
+			} else {
+				_this.attr('aria-selected', false).attr('tabindex', -1);
+				if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-hidden', 'true');
+			}
+		});
+
+		// _tabPanelItems.each(function(i) {
+		// 	var _this = $(this)
+		// 	var _num = i + 1;
+		// 	var _panelId = ('tabpanel_' + _tabUiName) + (_num < 10 ? '0' + _num : i+1);
+		// 	var _panelLabelId = _this.attr('aria-labelledby');
+
+		// 	_this.attr('id', _panelId);
+		// 	_tabItems.eq(i).attr('aria-controls', _panelId);
+		// });
+	}
+
+	var _setPanelAttrFn = function(idx, attr) {
+		_tabPanelItems.eq(idx).attr(attr);
+	}
+
+	// initial function
+	var _initialFn = function() {
+		_setTabAttrFn();
+
+	}
+
+	_initialFn();
+	
+}
+
+var tabExFnc = new tabControlFn('[tab-name="tabEx"]');
+
+
+</script>
 
 </body>
 </html>
