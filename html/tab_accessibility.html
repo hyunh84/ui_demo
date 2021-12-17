@@ -41,16 +41,16 @@
 	<div class="tabListWrap">
 		<div class="tabListInner">
 			<ul role="tablist" tab-name="tabEx">
-				<li class="active">
+				<li class="tabItem active">
 					<button type="button" role="tab"><em>TAB01</em></button>
 				</li>
-				<li class="disabled">
+				<li class="tabItem disabled">
 					<button type="button" role="tab"><em>TAB02</em></button>
 				</li>
-				<li>
+				<li class="tabItem">
 					<button type="button" role="tab"><em>TAB03</em></button>
 				</li>
-				<li>
+				<li class="tabItem">
 					<button type="button" role="tab"><em>TAB04</em></button>
 				</li>
 			</ul>
@@ -77,16 +77,16 @@
 	<div class="tabListWrap">
 		<div class="tabListInner">
 			<ul role="tablist" tab-name="tabEx02">
-				<li class="active">
+				<li class="tabItem active">
 					<a href="#" role="tab"><em>TAB01</em></a>
 				</li>
-				<li>
+				<li class="tabItem">
 					<a href="#" role="tab"><em>TAB02</em></a>
 				</li>
-				<li class="disabled">
+				<li class="tabItem disabled">
 					<a href="#" role="tab"><em>TAB03</em></a>
 				</li>
-				<li>
+				<li class="tabItem">
 					<a href="#" role="tab"><em>TAB04</em></a>
 				</li>
 			</ul>
@@ -113,7 +113,7 @@ var tabControlFn = function(target) {
 	var _nowIdx;
 
 	// rol = tablist
-	var _tabItems = $('> li > [role="tab"]', _targetWrap);
+	var _tabItems = $('> .tabItem > [role="tab"]', _targetWrap);
 
 	// rol = tabpanel
 	var _tabPanelItems = $('> [role="tabpanel"]', _targetWrap);
