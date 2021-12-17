@@ -38,9 +38,9 @@
 
 <div class="wrap">
 
-	<div class="tabListWrap" tab-name="tabEx">
+	<div class="tabListWrap">
 		<div class="tabListInner">
-			<ul role="tablist">
+			<ul role="tablist" tab-name="tabEx">
 				<li class="active">
 					<button type="button" role="tab"><em>TAB01</em></button>
 				</li>
@@ -74,9 +74,9 @@
 
 	</div>
 
-	<div class="tabListWrap" tab-name="tabEx02">
+	<div class="tabListWrap">
 		<div class="tabListInner">
-			<ul role="tablist">
+			<ul role="tablist" tab-name="tabEx02">
 				<li class="active">
 					<a href="#" role="tab"><em>TAB01</em></a>
 				</li>
@@ -113,7 +113,7 @@ var tabControlFn = function(target) {
 	var _nowIdx;
 
 	// rol = tablist
-	var _tabItems = $('[ role="tablist"] [role="tab"]', _targetWrap);
+	var _tabItems = $('> li > [role="tab"]', _targetWrap);
 
 	// rol = tabpanel
 	var _tabPanelItems = $('> [role="tabpanel"]', _targetWrap);
