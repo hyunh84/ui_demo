@@ -24,6 +24,8 @@
 		[class^="tabListWrap"] ul li a,
 		[class^="tabListWrap"] ul li button {display:block;box-sizing:border-box;width:100%;padding:10px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;}
 		[class^="tabListWrap"] ul li.active {border:1px solid #000;border-bottom:1px solid #fff;z-index:1;}
+		[class^="tabListWrap"] ul li.disabled a,
+		[class^="tabListWrap"] ul li.disabled button {pointer-events:none;}
 
 		[class^="tabPanelWrap"] {margin:30px 0 0;}
 		[class^="tabPanelWrap"] .tabPanel {display:none;height:300px;font-size:50px;line-height:300px;text-align:center;}
@@ -42,7 +44,7 @@
 				<li class="active">
 					<button type="button" role="tab"><em>TAB01</em></button>
 				</li>
-				<li>
+				<li class="disabled">
 					<button type="button" role="tab"><em>TAB02</em></button>
 				</li>
 				<li>
@@ -57,18 +59,19 @@
 
 	<div class="tabPanelWrap">
 
-		<div role="tabpanel" class="tabPanel" style="background-color:orange;">
-			tabPanel01
+		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
+			button tab panel01
 		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:violet;">
-			tabPanel02
+		<div role="tabpanel" class="tabPanel" style="background-color:violet;" tabindex="0">
+			button tab panel02
 		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:burlywood;">
-			tabPanel03
+		<div role="tabpanel" class="tabPanel" style="background-color:burlywood;" tabindex="0">
+			button tab panel03
 		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:darkcyan;color:#fff;">
-			tabPanel04
+		<div role="tabpanel" class="tabPanel" style="background-color:darkcyan;color:#fff;" tabindex="0">
+			button tab panel04
 		</div>
+
 	</div>
 
 	<div class="tabListWrap" tab-name="tabEx02">
@@ -80,7 +83,7 @@
 				<li>
 					<a href="#" role="tab"><em>TAB02</em></a>
 				</li>
-				<li>
+				<li class="disabled">
 					<a href="#" role="tab"><em>TAB03</em></a>
 				</li>
 				<li>
@@ -92,9 +95,10 @@
 
 	<div class="tabPanelWrap">
 
-		<div role="tabpanel" class="tabPanel" style="background-color:orange;">
-			link tab
+		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
+			link tab panel
 		</div>
+
 	</div>
 
 </div>
@@ -102,6 +106,10 @@
 <script type="text/javascript">
 
 var tabControlFn = function(target) {
+	// tab position index
+	var _oldIdx;
+	var _nowIdx;
+
 	// rol = tablist
 	var _tabListWrap = $(target);
 	var _tabItems = $('[ role="tablist"] [role="tab"]', _tabListWrap);
@@ -122,44 +130,119 @@ var tabControlFn = function(target) {
 			var _tagName = _this.prop('tagName').toUpperCase();
 
 			_this.attr('id', _tabId);
-			if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-labelledby', _tabId);
-			if(_tagName === 'A') _tabPanelItems.attr('aria-labelledby', _tabId);
+			if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-labelledby', _tabId);
 			if($(this).parent().hasClass('active')) {
 				_this.attr('aria-selected', true).attr('tabindex', 0);
-				if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-hidden', 'false');
-				if(_tagName === 'A') _tabPanelItems.attr('aria-hidden', 'false');
+				if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-hidden', 'false');
+				if(_tagName === 'A') {
+					_setPanelAttrFn(0, 'aria-labelledby', _tabId);
+					_setPanelAttrFn(0, 'aria-hidden', 'false');
+				}
+				_oldIdx = _idxCycleFn(i - 1);
+				_nowIdx = i;
 			} else {
 				_this.attr('aria-selected', false).attr('tabindex', -1);
-				if(_tagName === 'BUTTON') _tabPanelItems.eq(i).attr('aria-hidden', 'true');
+				if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-hidden', 'true');
 			}
 		});
-
-		// _tabPanelItems.each(function(i) {
-		// 	var _this = $(this)
-		// 	var _num = i + 1;
-		// 	var _panelId = ('tabpanel_' + _tabUiName) + (_num < 10 ? '0' + _num : i+1);
-		// 	var _panelLabelId = _this.attr('aria-labelledby');
-
-		// 	_this.attr('id', _panelId);
-		// 	_tabItems.eq(i).attr('aria-controls', _panelId);
-		// });
 	}
 
-	var _setPanelAttrFn = function(idx, attr) {
-		_tabPanelItems.eq(idx).attr(attr);
+	var _setPanelAttrFn = function(idx, attrName, attrVale) {
+		var _num = idx + 1;
+		var _panelId = ('tabpanel_' + _tabUiName) + (_num < 10 ? '0' + _num : _num+1);
+		_tabPanelItems.eq(idx).attr(attrName, attrVale);
+		_tabItems.eq(idx).attr('aria-controls', _panelId);
 	}
 
 	// initial function
 	var _initialFn = function() {
 		_setTabAttrFn();
-
 	}
+
+	// tab change
+	var _tabChangeFn = function(idx) {
+		_tabItems.attr('aria-selected', 'false');
+		_tabItems.attr('tabindex', '-1');
+		_tabItems.parent().removeClass('active');
+		_tabItems.eq(idx).attr('aria-selected', 'true');
+		_tabItems.eq(idx).attr('tabindex', '0');
+		_tabItems.eq(idx).parent().addClass('active');
+		_tabPanelItems.attr('aria-hidden', 'true');
+		_tabPanelItems.eq(idx).attr('aria-hidden', 'false');
+	}
+
+	// index recycle function
+	var _idxCycleFn = function(idx) {
+		return (_tabItems.length + (idx % _tabItems.length)) % _tabItems.length
+	}
+
+	// tab item disabled check function
+	var _isDisabledFn = function(idx) {
+		return _tabItems.eq(idx).parent().hasClass('disabled');
+	}
+
+	// calculate move tab idx function
+	var _calcMoveIdx = function(idx, dir) {
+		var _isDisabled;
+		_oldIdx = idx;
+		if(dir === 'minus') {
+			_nowIdx = _idxCycleFn(idx-1);
+			_isDisabled = _isDisabledFn(_nowIdx);
+		} else if(dir === 'plus') {
+			_nowIdx = _idxCycleFn(idx+1);
+			_isDisabled = _isDisabledFn(_nowIdx);
+		}
+
+		if(_isDisabled) {
+			return _calcMoveIdx(_nowIdx, dir);
+		} else {
+			return _nowIdx;
+		}
+	}
+
+	// click event
+	_tabItems.on('click', function() {
+		var _this = $(this);
+		var _thisIdx = _tabItems.index(this);
+		var _tagName = _this.prop('tagName').toUpperCase();
+
+		if(_tagName === 'A') return;
+		_tabChangeFn(_thisIdx);
+	});
+
+	// key event
+	_tabItems.on('keyup', function(e) {
+		/**
+		 * e.keyCode
+		 * 37 : 좌, 39 : 우
+		 * 38 : 상, 40: 하
+		 */
+		var _this = $(this);
+		var _thisIdx = _tabItems.index(this);
+		var _keycode = e.keyCode;
+		var _tagName = _this.prop('tagName').toUpperCase();
+		var _moveIdx;
+
+		if(_keycode < 37 || _keycode > 40 ) return;
+		
+
+		if(_keycode === 37 || _keycode === 38) {
+			_moveIdx = _calcMoveIdx(_thisIdx, 'minus');
+		} else if(_keycode === 39 || _keycode === 40) {
+			_moveIdx = _calcMoveIdx(_thisIdx, 'plus');
+		}
+
+		if(_tagName === 'BUTTON') _tabChangeFn(_moveIdx);
+		_tabItems.eq(_moveIdx).focus();
+	});
 
 	_initialFn();
 	
 }
 
 var tabExFnc = new tabControlFn('[tab-name="tabEx"]');
+
+var tabExFnc02 = new tabControlFn('[tab-name="tabEx02"]');
 
 
 </script>
