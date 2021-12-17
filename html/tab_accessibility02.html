@@ -45,36 +45,27 @@
 
 	<div class="tabListWrap">
 		<div class="tabListInner">
-			<ul role="tablist" tab-name="tabEx">
+			<ul role="tablist" tab-name="tabEx02">
 				<li class="tabItem active">
-					<button type="button" role="tab"><em>TAB01</em></button>
+					<a href="#" role="tab"><em>TAB01</em></a>
+				</li>
+				<li class="tabItem">
+					<a href="#" role="tab"><em>TAB02</em></a>
 				</li>
 				<li class="tabItem disabled">
-					<button type="button" role="tab"><em>TAB02</em></button>
+					<a href="#" role="tab"><em>TAB03</em></a>
 				</li>
 				<li class="tabItem">
-					<button type="button" role="tab"><em>TAB03</em></button>
-				</li>
-				<li class="tabItem">
-					<button type="button" role="tab"><em>TAB04</em></button>
+					<a href="#" role="tab"><em>TAB04</em></a>
 				</li>
 			</ul>
 		</div>
 	</div>
 
-	<div class="tabPanelWrap" tab-name="tabEx">
+	<div class="tabPanelWrap" tab-name="tabEx02">
 
 		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
-			button tab panel01
-		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:violet;" tabindex="0">
-			button tab panel02
-		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:burlywood;" tabindex="0">
-			button tab panel03
-		</div>
-		<div role="tabpanel" class="tabPanel" style="background-color:darkcyan;color:#fff;" tabindex="0">
-			button tab panel04
+			link tab panel
 		</div>
 
 	</div>
@@ -218,7 +209,7 @@ var tabControlFn = function(target) {
 	
 }
 
-var tabExFnc = new tabControlFn('[tab-name="tabEx"]');
+var tabExFnc02 = new tabControlFn('[tab-name="tabEx02"]');
 
 
 </script>
