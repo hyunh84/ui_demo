@@ -22,10 +22,10 @@
 		[class^="tabListWrap"] ul {display:flex;margin:0 0 -1px;}
 		[class^="tabListWrap"] ul li {position:relative;min-width:160px;margin:0 -1px 0 0;border-radius:10px 10px 0 0;border:1px solid #d5d5d5;border-bottom:1px solid #000;}
 		[class^="tabListWrap"] ul li a,
-		[class^="tabListWrap"] ul li button {display:block;box-sizing:border-box;width:100%;padding:10px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;}
+		[class^="tabListWrap"] ul li button {display:block;box-sizing:border-box;width:100%;padding:10px 0;line-height:22px;font-size:14px;font-weight:600;color:#767676;text-align:center;border-radius:10px 10px 0 0;}
 		[class^="tabListWrap"] ul li.active {border:1px solid #000;border-bottom:1px solid #fff;z-index:1;}
 		[class^="tabListWrap"] ul li.disabled a,
-		[class^="tabListWrap"] ul li.disabled button {pointer-events:none;}
+		[class^="tabListWrap"] ul li.disabled button {pointer-events:none;background-color:#d5d5d5}
 
 		[class^="tabPanelWrap"] {margin:30px 0 0;}
 		[class^="tabPanelWrap"] .tabPanel {display:none;height:300px;font-size:50px;line-height:300px;text-align:center;}
@@ -57,7 +57,7 @@
 		</div>
 	</div>
 
-	<div class="tabPanelWrap">
+	<div class="tabPanelWrap" tab-name="tabEx">
 
 		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
 			button tab panel01
@@ -93,7 +93,7 @@
 		</div>
 	</div>
 
-	<div class="tabPanelWrap">
+	<div class="tabPanelWrap" tab-name="tabEx02">
 
 		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
 			link tab panel
@@ -106,20 +106,19 @@
 <script type="text/javascript">
 
 var tabControlFn = function(target) {
+	var _targetWrap = $(target);
 	// tab position index
 	var _oldIdx;
 	var _nowIdx;
 
 	// rol = tablist
-	var _tabListWrap = $(target);
-	var _tabItems = $('[ role="tablist"] [role="tab"]', _tabListWrap);
+	var _tabItems = $('[ role="tablist"] [role="tab"]', _targetWrap);
 
 	// rol = tabpanel
-	var _tabPanelWrap = _tabListWrap.next();
-	var _tabPanelItems = $('> [role="tabpanel"]', _tabPanelWrap);
+	var _tabPanelItems = $('> [role="tabpanel"]', _targetWrap);
 
 	// data-tab-name
-	var _tabUiName = _tabListWrap.attr('tab-name');
+	var _tabUiName = _targetWrap.attr('tab-name');
 
 	// id, aria 속성 셋팅
 	var _setTabAttrFn = function() {
