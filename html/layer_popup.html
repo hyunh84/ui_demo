@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>탭 접근성</title>
+
+	<link rel="stylesheet" href="../resources/css/base.css" />
+	<link rel="stylesheet" href="../resources/css/font.css" />
+	<script src="../resources/js/jquery-3.5.1.min.js"></script>
+
+	<style type="text/css">
+
+		/* button - tiny */
+		[class^="btnTiny"] {display:inline-block;box-sizing:border-box;padding:0 24px;text-align:center;border:1px solid #e6e6e6;border-radius:12px;background-color:#fff;}
+		[class^="btnTiny"] em {display:inline-block;padding:11px 0;line-height:16px;font-size:13px;color:#404040;vertical-align:top;}
+		[class^="btnTiny"]:active,
+		[class^="btnTiny"]:hover {background-color:#f5f5f5;}
+		[class^="btnTiny"]:disabled {border:1px solid #f1f1f1;background-color:#f1f1f1;pointer-events:none;}
+		[class^="btnTiny"]:disabled em {color:#707070 !important;opacity:0.2 !important;}
+		.btnTiny02 {border:1px solid #f3f1fe;background-color:#f3f1fe;}
+		.btnTiny02 em {color:#6856f2;}
+		.btnTiny02:active,
+		.btnTiny02:hover  {background-color:#dfd9fe;}
+		.btnTiny03 {border:1px solid #6856f2;background-color:#6856f2;}
+		.btnTiny03 em {color:#fff;}
+		.btnTiny03:active,
+		.btnTiny03:hover {background-color:#5343cd;}
+		.btnTiny03:disabled {border:1px solid #e0e3e9;background-color:#e0e3e9;}
+
+		/*********************************************************************************************************
+		layer pop
+		*********************************************************************************************************/
+		/* default type */
+		.layerWrap {display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:500;}
+		.layerWrap .AccessibilityHtml1 {overflow:hidden; width:0; height:0; padding:0; margin:0; font-size:1px; line-height:0; color:transparent;}
+		.layerWrap .AccessibilityHtml2 {overflow:hidden; width:0; height:0; padding:0; margin:0; font-size:1px; line-height:0; color:transparent;}
+		.layerWrap .layerMask {position:absolute;left:0;top:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.6);}
+		.layerWrap .layerBox {overflow:hidden;position:absolute;left:20px;top:50%;right:20px;box-sizing:border-box;border-radius:16px;background-color:#fff;transform:translate(0, -50%);}
+		.layerWrap .layerBox .header {padding:24px 24px 0;}
+		.layerWrap .layerBox .header .layerTitle {display:block;padding:4px 0;line-height:24px;font-size:16px;font-weight:400;}
+		.layerWrap .layerBox .header[aria-hidden="true"] {display:none;}
+		.layerWrap .layerBox .header[aria-hidden="true"] + .layerBody {padding:24px;}
+		.layerWrap .layerBox .layerBody {overflow-x:hidden;overflow-y:auto;box-sizing:border-box;padding:15px 24px 24px;}
+		.layerWrap .layerBox .btnCloseLayer {position:absolute;right:15px;top:26px;width:24px;height:24px;background-color:rgba(0, 255, 255, .3);}
+
+		/* float bottom type */
+		.layerWrap.floatB .layerBox {display:none;left:0;right:0;bottom:0;top:auto;border-radius:16px 16px 0 0;transform:translate(0, 0);}
+		.layerWrap.floatB .layerBox .layerBody {padding:15px 24px 24px;}
+
+		/* layer button bundle */
+		.layerWrap [class^="btnBundleBox"] {margin:30px 0 0;}
+
+		/* layer alert message */
+		[class^="alertMssgWrap"] .mssgTit {display:block;line-height:30px;font-size:20px;font-weight:700;text-align:center;}
+		[class^="alertMssgWrap"] .mssgTxt {display:block;margin:8px 0 0;line-height:20px;font-size:14px;color:#404040;text-align:center;}
+		[class^="alertMssgWrap"] .mssgTxt:first-child {margin:0;}
+
+		/* layer selet option box */
+		[class^="layerOptionBox"] {margin:0 -24px;}
+		[class^="layerOptionBox"] ul li button {width:100%;min-height:52px;padding:6px 24px;text-align:left;}
+		[class^="layerOptionBox"] ul li button em {display:block;line-height:20px;font-size:14px;color:#101010;}
+
+	</style>
+
+	<script>
+		
+		/*********************************************************************************************************
+			layer pop
+		*********************************************************************************************************/
+		var layerOpenFn = function(target, clickTarget) {
+			var _clickTarget = clickTarget;
+			var _layerWrap = $(target);
+			var _layerBox = $('.layerBox', _layerWrap).attr('tabindex', 0);
+			var _btnCloseLayer = $('.btnCloseLayer', _layerBox);
+			var _accessible01;
+			var _accessible02;
+
+			_layerWrap.data('click-target', clickTarget);
+			_layerWrap.attr('aria-hidden', false);
+			_layerWrap.prepend('<div class="AccessibilityHtml1" tabindex="0" aria-hidden="true"></div>');
+			_layerWrap.prepend('<div class="layerMask" aria-hidden="true"></div>');
+			_layerWrap.append('<div class="AccessibilityHtml2" tabindex="0" aria-hidden="true"></div>');
+			_accessible01 = $('.AccessibilityHtml1', _layerWrap);
+			_accessible02 = $('.AccessibilityHtml2', _layerWrap);
+
+			$('body').addClass('isPop');
+			_layerWrap.show();
+			if(_layerWrap.hasClass('floatB')) _layerBox.slideDown();
+			_layerBox.focus();
+
+			_btnCloseLayer.off('click').on('click', function() {
+				layerCloseFn(target);
+			});
+			_accessible01.off('focusin').on('focusin', function() {
+				console.log(_btnCloseLayer.is(':hidden') || !_btnCloseLayer.length);
+				if(_btnCloseLayer.is(':hidden') || !_btnCloseLayer.length) {
+					_layerBox.focus();
+				}else{
+					_btnCloseLayer.focus();
+				}
+			});
+			_accessible02.off('focusin').on('focusin', function() {
+				_layerBox.focus();
+			});
+		}
+
+		var layerCloseFn = function(target) {
+			var _layerWrap = $(target);
+			var _layerBox = $('.layerBox', _layerWrap);
+			var _clickTarget = _layerWrap.data('click-target');
+			var _accessible01 = $('.AccessibilityHtml1', _layerWrap);
+			var _accessible02 = $('.AccessibilityHtml2', _layerWrap);
+			var _layerMask = $('.layerMask', _layerWrap);
+
+			$('body').removeClass('isPop');
+			_accessible01.remove();
+			_accessible02.remove();
+			_layerMask.remove();
+			_layerWrap.attr('aria-hidden', true);
+			_layerWrap.hide();
+			if(_layerWrap.hasClass('floatB')) _layerBox.hide();
+			_layerBox.removeAttr('tabindex');
+			$(_clickTarget).focus();
+		}
+	</script>
+
+</head>
+<body>
+
+<div class="wrap">
+
+	<button type="button" class="btnTiny03" onclick="layerOpenFn('#layerSample02', this);"><em>select</em></button>
+
+</div>
+
+
+<article class="layerWrap floatB" id="layerSample02" aria-hidden="true">
+	
+	<div class="layerBox">
+		<header class="header">
+			<h1 class="layerTitle">통신사 선택</h1>
+		</header>
+		<div class="layerBody">
+			<div class="layerContents">
+				<div class="layerOptionBox">
+					<ul>
+						<li><button type="button"><em>SKT</em></button></li>
+						<li><button type="button"><em>KT</em></button></li>
+						<li><button type="button"><em>LG U+</em></button></li>
+						<li><button type="button"><em>SKT 알뜰폰</em></button></li>
+						<li><button type="button"><em>KT 알뜰폰</em></button></li>
+						<li><button type="button"><em>LG U+ 알뜰폰</em></button></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="btnCloseLayer"><em class="blind">닫기</em></button>
+	</div>
+</article>
+
+</body>
+</html>
