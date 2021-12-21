@@ -30,11 +30,11 @@
 
 
 	<div class="foldingBox" folding-name>
-		<button type="button" class="btnFolding" folding-button>
+		<button type="button" class="btnFolding" aria-expanded="false" folding-button>
 			<span>폴딩 박스</span>
 		</button>
 
-		<div class="foldingConts" folding-contents>
+		<div class="foldingConts" aria-hidden="true" folding-contents>
 			<p class="txt"> 폴딩 컨텐츠 </p>
 		</div>
 	</div>
@@ -42,11 +42,11 @@
 	<br /><br />
 
 	<div class="foldingBox" folding-name="folding02">
-		<button type="button" class="btnFolding" folding-button>
+		<button type="button" class="btnFolding" aria-expanded="false" folding-button>
 			<span>폴딩 박스 group folding</span>
 		</button>
 
-		<div class="foldingConts" folding-contents>
+		<div class="foldingConts" aria-hidden="true" folding-contents>
 			<p class="txt"> 폴딩 컨텐츠 </p>
 		</div>
 	</div>
@@ -54,11 +54,11 @@
 	<br /><br />
 
 	<div class="foldingBox" folding-name="folding02">
-		<button type="button" class="btnFolding" folding-button>
+		<button type="button" class="btnFolding" aria-expanded="false" folding-button>
 			<span>폴딩 박스 group folding</span>
 		</button>
 
-		<div class="foldingConts" folding-contents>
+		<div class="foldingConts" aria-hidden="true" folding-contents>
 			<p class="txt"> 폴딩 컨텐츠 </p>
 		</div>
 	</div>
@@ -75,16 +75,24 @@ $(document).on('click', '[folding-name] [folding-button]', function() {
 	var _foldingConts = $('[folding-contents]', _foldingBox);
 	var _foldingName = _foldingBox.attr('folding-name') != '' ? _foldingBox.attr('folding-name') : undefined;
 	var _foldingGroup = $('[folding-name="'+ _foldingName +'"]');
+	var _foldingGroupBtn = $('[folding-button]', _foldingGroup);
 	var _foldingGroupConts = $('[folding-contents]', _foldingGroup);
 
 	if(_foldingConts.is(':hidden')) {
 		_foldingGroupConts.slideUp();
 		_foldingGroup.removeClass('active');
+		_foldingGroupBtn.attr('aria-expanded', 'false');
+		_foldingConts.attr('aria-hidden', 'true');
+
 		_foldingConts.slideDown();
 		_foldingBox.addClass('active');
+		_this.attr('aria-expanded', 'true');
+		_foldingConts.attr('aria-hidden', 'false');
 	} else {
 		_foldingConts.slideUp();
 		_foldingBox.removeClass('active');
+		_this.attr('aria-expanded', 'false');
+		_foldingConts.attr('aria-hidden', 'true');
 	}
 
 });
