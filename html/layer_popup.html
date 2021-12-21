@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>탭 접근성</title>
+	<title>layer</title>
 
 	<link rel="stylesheet" href="../resources/css/base.css" />
 	<link rel="stylesheet" href="../resources/css/font.css" />
@@ -36,14 +36,14 @@
 		.layerWrap {display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:500;}
 		.layerWrap .AccessibilityHtml1 {overflow:hidden; width:0; height:0; padding:0; margin:0; font-size:1px; line-height:0; color:transparent;}
 		.layerWrap .AccessibilityHtml2 {overflow:hidden; width:0; height:0; padding:0; margin:0; font-size:1px; line-height:0; color:transparent;}
-		.layerWrap .layerMask {position:absolute;left:0;top:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.6);}
+		.layerWrap .layerMask {position:absolute;left:0;top:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.4);}
 		.layerWrap .layerBox {overflow:hidden;position:absolute;left:20px;top:50%;right:20px;box-sizing:border-box;border-radius:16px;background-color:#fff;transform:translate(0, -50%);}
 		.layerWrap .layerBox .header {padding:24px 24px 0;}
 		.layerWrap .layerBox .header .layerTitle {display:block;padding:4px 0;line-height:24px;font-size:16px;font-weight:400;}
 		.layerWrap .layerBox .header[aria-hidden="true"] {display:none;}
 		.layerWrap .layerBox .header[aria-hidden="true"] + .layerBody {padding:24px;}
 		.layerWrap .layerBox .layerBody {overflow-x:hidden;overflow-y:auto;box-sizing:border-box;padding:15px 24px 24px;}
-		.layerWrap .layerBox .btnCloseLayer {position:absolute;right:15px;top:26px;width:24px;height:24px;background-color:rgba(0, 255, 255, .3);}
+		.layerWrap .layerBox .btnCloseLayer {position:absolute;right:15px;top:26px;width:24px;height:24px;background:url('../resources/images/btn_layer_close.png') no-repeat center;background-size:16px;}
 
 		/* float bottom type */
 		.layerWrap.floatB .layerBox {display:none;left:0;right:0;bottom:0;top:auto;border-radius:16px 16px 0 0;transform:translate(0, 0);}
