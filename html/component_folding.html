@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>layer</title>
+
+	<link rel="stylesheet" href="../resources/css/base.css" />
+	<link rel="stylesheet" href="../resources/css/font.css" />
+	<script src="../resources/js/jquery-3.5.1.min.js"></script>
+
+	<style type="text/css">
+
+		.wrap {width:1200px;margin:0 auto;padding:30px 10px 0;}
+
+		[class^="foldingBox"] {overflow:hidden;border-radius:10px;border:1px solid #ccc;}
+		[class^="foldingBox"] .btnFolding {width:100%;padding:15px 20px;line-height:20px;font-size:15px;border-radius:10px;}
+		[class^="foldingBox"] .foldingConts {display:none;padding:20px;line-height:50px;font-size:20px;font-weight:700;color:#fff;text-align:center;border-top:1px solid #000;background-color:cornflowerblue;}
+		[class^="foldingBox"].active {border:1px solid #000;}
+		[class^="foldingBox"].active .btnFolding {border-radius:10px 10px 0 0;}
+	</style>
+
+	
+
+</head>
+<body>
+
+<div class="wrap">
+
+
+	<div class="foldingBox" folding-name>
+		<button type="button" class="btnFolding" folding-button>
+			<span>폴딩 박스</span>
+		</button>
+
+		<div class="foldingConts" folding-contents>
+			<p class="txt"> 폴딩 컨텐츠 </p>
+		</div>
+	</div>
+
+	<br /><br />
+
+	<div class="foldingBox" folding-name="folding02">
+		<button type="button" class="btnFolding" folding-button>
+			<span>폴딩 박스 group folding</span>
+		</button>
+
+		<div class="foldingConts" folding-contents>
+			<p class="txt"> 폴딩 컨텐츠 </p>
+		</div>
+	</div>
+
+	<br /><br />
+
+	<div class="foldingBox" folding-name="folding02">
+		<button type="button" class="btnFolding" folding-button>
+			<span>폴딩 박스 group folding</span>
+		</button>
+
+		<div class="foldingConts" folding-contents>
+			<p class="txt"> 폴딩 컨텐츠 </p>
+		</div>
+	</div>
+
+
+</div>
+
+<script>
+
+$(document).on('click', '[folding-name] [folding-button]', function() {
+
+	var _this = $(this);
+	var _foldingBox = _this.closest('[folding-name]');
+	var _foldingConts = $('[folding-contents]', _foldingBox);
+	var _foldingName = _foldingBox.attr('folding-name') != '' ? _foldingBox.attr('folding-name') : undefined;
+	var _foldingGroup = $('[folding-name="'+ _foldingName +'"]');
+	var _foldingGroupConts = $('[folding-contents]', _foldingGroup);
+
+	if(_foldingConts.is(':hidden')) {
+		_foldingGroupConts.slideUp();
+		_foldingGroup.removeClass('active');
+		_foldingConts.slideDown();
+		_foldingBox.addClass('active');
+	} else {
+		_foldingConts.slideUp();
+		_foldingBox.removeClass('active');
+	}
+
+});
+
+</script>
+
+
+</body>
+</html>
