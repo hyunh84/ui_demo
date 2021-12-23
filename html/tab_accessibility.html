@@ -83,7 +83,10 @@
 
 <script type="text/javascript">
 
-var tabControlFn = function(target) {
+var tabControlFn = function(target, options) {
+	// 함수 옵션
+	var options = options || {};
+
 	var _targetWrap = $(target);
 
 	// tab position index
@@ -138,13 +141,17 @@ var tabControlFn = function(target) {
 	}
 
 	// tab change
-	var _tabChangeFn = function(idx) {
+	var _tabChFn = function(idx) {
 		_tabItems.attr('aria-selected', 'false');
 		_tabItems.attr('tabindex', '-1');
 		_tabItems.parent().removeClass('active');
 		_tabItems.eq(idx).attr('aria-selected', 'true');
 		_tabItems.eq(idx).attr('tabindex', '0');
 		_tabItems.eq(idx).parent().addClass('active');
+	}
+
+	// tab panel change
+	var _panelChFn = function(idx) {
 		_tabPanelItems.attr('aria-hidden', 'true');
 		_tabPanelItems.eq(idx).attr('aria-hidden', 'false');
 	}
@@ -184,7 +191,12 @@ var tabControlFn = function(target) {
 		var _thisIdx = _tabItems.index(this);
 		var _tagName = _this.prop('tagName').toUpperCase();
 
-		if(_tagName === 'BUTTON') _tabChangeFn(_thisIdx);
+		if(_tagName === 'BUTTON') {
+			_tabChFn(_thisIdx);
+
+			if(options.asyncPanelChange) options.asyncPanelChange(_thisIdx, _panelChFn);
+			if(!options.asyncPanelChange) _panelChFn(_thisIdx);
+		}
 	});
 
 	// key event
@@ -208,7 +220,12 @@ var tabControlFn = function(target) {
 			_moveIdx = _calcMoveIdx(_thisIdx, 'plus');
 		}
 
-		if(_tagName === 'BUTTON') _tabChangeFn(_moveIdx);
+		if(_tagName === 'BUTTON') {
+			_tabChFn(_moveIdx);
+
+			if(options.asyncPanelChange) options.asyncPanelChange(_moveIdx, _panelChFn);
+			if(!options.asyncPanelChange) _panelChFn(_moveIdx);
+		}
 		_tabItems.eq(_moveIdx).focus();
 	});
 

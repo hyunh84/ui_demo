@@ -45,27 +45,36 @@
 
 	<div class="tabListWrap">
 		<div class="tabListInner">
-			<ul role="tablist" tab-name="tabEx02">
+			<ul role="tablist" tab-name="tabEx">
 				<li class="tabItem active">
-					<a href="#" role="tab"><em>TAB01</em></a>
-				</li>
-				<li class="tabItem">
-					<a href="#" role="tab"><em>TAB02</em></a>
+					<button type="button" role="tab"><em>TAB01</em></button>
 				</li>
 				<li class="tabItem disabled">
-					<a href="#" role="tab"><em>TAB03</em></a>
+					<button type="button" role="tab"><em>TAB02</em></button>
 				</li>
 				<li class="tabItem">
-					<a href="#" role="tab"><em>TAB04</em></a>
+					<button type="button" role="tab"><em>TAB03</em></button>
+				</li>
+				<li class="tabItem">
+					<button type="button" role="tab"><em>TAB04</em></button>
 				</li>
 			</ul>
 		</div>
 	</div>
 
-	<div class="tabPanelWrap" tab-name="tabEx02">
+	<div class="tabPanelWrap" tab-name="tabEx">
 
 		<div role="tabpanel" class="tabPanel" style="background-color:orange;" tabindex="0">
-			link tab panel
+			button tab panel01
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:violet;" tabindex="0">
+			button tab panel02
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:burlywood;" tabindex="0">
+			button tab panel03
+		</div>
+		<div role="tabpanel" class="tabPanel" style="background-color:darkcyan;color:#fff;" tabindex="0">
+			button tab panel04
 		</div>
 
 	</div>
@@ -224,7 +233,11 @@ var tabControlFn = function(target, options) {
 	
 }
 
-var tabExFnc02 = new tabControlFn('[tab-name="tabEx02"]');
+var tabExFnc = new tabControlFn('[tab-name="tabEx"]', {
+	asyncPanelChange : function(nextIdx, panelChFn) {
+		panelChFn(nextIdx);
+	}
+});
 
 
 </script>
