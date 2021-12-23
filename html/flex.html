@@ -5,7 +5,91 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>CSS Flex를 익혀보자</title>
+
+	<link rel="stylesheet" href="../resources/css/font.css" />
+	<link rel="stylesheet" href="../resources/css/flex.css" />
+	<script src="../resources/js/jquery-3.5.1.min.js"></script>
+	<script>
+		function CSSTester(arg) {
+			const viewerElem = document.querySelector(arg.viewerElem);
+			const property = arg.property;
+			const values = arg.values;
+			const containerBaseCSS = arg.containerBaseCSS;
+			const itemBaseCSS = arg.itemBaseCSS;
+			const codeTarget = arg.codeTarget;
+			const itemText = arg.itemText;
+			const itemElems = [];
+
+			const containerElem = document.createElement('div');
+			const controlsElem = document.createElement('div');
+
+			viewerElem.classList.add('meal-css-tester');
+			containerElem.classList.add('meal-css-tester-container');
+			controlsElem.classList.add('meal-css-tester-controls');
+
+			containerElem.style.cssText = containerBaseCSS;
+			
+			let itemElem;
+			for (let i = 0; i < itemText.length; i++) {
+				itemElem = document.createElement('div');
+				itemElem.innerHTML = itemText[i];
+				itemElem.style.cssText = itemBaseCSS;
+				itemElem.classList.add('meal-css-tester-item');
+				containerElem.appendChild(itemElem);
+				itemElems.push(itemElem);
+			}
+
+			let liElem;
+			let radioElem;
+			let labelElem;
+			for (let i = 0; i < values.length; i++) {
+
+				liElem = document.createElement('li');
+
+				radioElem = document.createElement('input');
+				radioElem.setAttribute('type', 'radio');
+				radioElem.setAttribute('name', property);
+				radioElem.setAttribute('value', values[i]);
+				radioElem.setAttribute('data-value', values[i]);
+				radioElem.setAttribute('id', property + '-' + values[i]);
+				controlsElem.appendChild(radioElem);
+
+				if (i == 0) {
+					radioElem.setAttribute('checked', 'checked');
+				}
+
+				labelElem = document.createElement('label');
+				labelElem.setAttribute('for', property + '-' + values[i]);
+				labelElem.setAttribute('data-value', values[i]);
+				labelElem.innerHTML = values[i];
+				controlsElem.appendChild(labelElem);
+			}
+
+			viewerElem.appendChild(containerElem);
+			viewerElem.appendChild(controlsElem);
+
+			controlsElem.addEventListener('click', function (e) {
+				const value = e.target.dataset.value;
+				if (value) {
+					if (codeTarget == 'container') {
+						// 컨테이너
+						containerElem.style[property] = value;
+					} else {
+						// 아이템
+						if (codeTarget == 'item') {
+							for (let i = 0; i < itemText.length; i++) {
+								itemElems[i].style[property] = value;
+							}
+						} else if (codeTarget == 'item-one') {
+							itemElems[1].style[property] = value;
+						}
+					}
+				}
+			});
+		}
+	</script>
+
 </head>
 
 <body>
@@ -13,27 +97,12 @@
 <section class="post">
 	<header class="post-header">
 		<h1 class="post-title">이번에야말로 CSS Flex를 익혀보자</h1>
-		<div class="post-date">2020-02-14 / 일분이베프</div>
 	</header>
 
 	<p>이 튜토리얼은 “차세대 CSS 레이아웃” 시리즈의 첫번째 포스트입니다.</p>
 
-	<ul class="post-index">
-		<li class="current-post">이번에야말로 CSS Flex를 익혀보자</li>
-		<li><a href="/archives/533">이번에야말로 CSS Grid를 익혀보자</a></li>
-	</ul>
-
 	<p>벌써부터 스크롤의 압박이 느껴지고,<br>‘좀 편안하게 누군가 나의 공부를 이끌어주면 좋겠다.’라고 생각하고 계신다면, 아래의 배너의 강좌를 살펴보세요.</p>
 
-	<figure class="wp-block-image size-large is-resized"><a
-			href="https://www.inflearn.com/course/css-flex-grid-제대로-익히기?inst=86d8c4bb" target="_blank"
-			rel="noreferrer noopener"><img loading="lazy"
-				src="http://3.35.125.9/wp-content/uploads/2020/03/banner-flex-grid.jpg" alt="" class="wp-image-1018"
-				width="375" height="200"
-				srcset="https://studiomeal.com/wp-content/uploads/2020/03/banner-flex-grid.jpg 750w, https://studiomeal.com/wp-content/uploads/2020/03/banner-flex-grid-300x160.jpg 300w"
-				sizes="(max-width: 375px) 100vw, 375px"></a>
-		<figcaption>학습시간_절약의_길.jpg</figcaption>
-	</figure>
 
 	<p>바야흐로 2020년입니다.<br><a
 			href="https://namu.wiki/w/2020%20%EC%9A%B0%EC%A3%BC%EC%9D%98%20%EC%9B%90%EB%8D%94%ED%82%A4%EB%94%94"
@@ -43,10 +112,7 @@
 		테이블 코딩처럼 구닥다리 취급을 당할지도 몰라요. 우리는 그 전에 준비하고, 이미 익숙해져 있어야 합니다. 프로라면 그러셔야 합니다. 아 물론 아직까지 float를 이용한 방식도 여전히 많이
 		쓰이기 때문에, 사실 다 알고 계시는게 좋아요..<br>동기부여는 이 정도면 충분히 되었다고 생각하고.. 어쨋든, 이 포스트를 모두 보고 난 여러분들이 이렇게 외치기를 기대합니다.</p>
 
-	<figure class="wp-block-image size-large"><img loading="lazy" width="562" height="373"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/01-00.jpg" alt="" class="wp-image-268"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/01-00.jpg 562w, https://studiomeal.com/wp-content/uploads/2020/01/01-00-300x199.jpg 300w"
-			sizes="(max-width: 562px) 100vw, 562px"></figure>
+	<figure class="wp-block-image"><img width="300" src="../resources/images/flex/01-00.jpg" alt=""></figure>
 
 	<p>그럼 정말 시작!</p>
 
@@ -83,10 +149,7 @@
 	<p>부모 요소인 div.container를 Flex Container(플렉스 컨테이너)라고 부르고,<br>자식 요소인 div.item들을 Flex Item(플렉스 아이템)이라고
 		부릅니다.<br>“컨테이너가 Flex의 영향을 받는 전체 공간이고, 설정된 속성에 따라 각각의 아이템들이 어떤 형태로 배치되는 것”이라고 생각하시면 됩니다.</p>
 
-	<figure class="wp-block-image size-large"><img loading="lazy" width="571" height="456"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/02.jpg" alt="" class="wp-image-275"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/02.jpg 571w, https://studiomeal.com/wp-content/uploads/2020/01/02-300x240.jpg 300w"
-			sizes="(max-width: 571px) 100vw, 571px"></figure>
+	<figure class="wp-block-image size-large"><img width="571" height="456" src="../resources/images/flex/02.jpg" alt="" ></figure>
 
 	<p>Flex의 속성들은,</p>
 
@@ -97,13 +160,6 @@
 
 	<p>이렇게 두 가지로 나뉘어요.<br>먼저, <strong>컨테이너에 적용하는 속성</strong>들 부터 알아볼게요.</p>
 
-	<figure class="wp-block-image" style="width: 250px">
-		<a href="https://www.inflearn.com/course/애플-웹사이트-인터랙션-클론?inst=05cf9b02" target="_blank"
-			rel="noopener noreferrer"><img src="/wp-content/themes/studiomeal/images/ad/apple-clone.jpg"
-				alt="애플 웹사이트 클론 강의"></a>
-		<figcaption>한땀한땀 구현원리를 공부하자!</figcaption>
-	</figure>
-	
 	<div class="post-section-title">Flex 컨테이너에 적용하는 속성들</div>
 	
 	<h2>display: flex;</h2>
@@ -115,56 +171,47 @@ display: flex;
 /* display: inline-flex; */
 }</code></pre>
 
-	<figure class="wp-block-image size-large"><img loading="lazy" width="842" height="507"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/x03.jpg.pagespeed.ic.QryEWNATcK.webp" alt=""
-			class="wp-image-276"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/x03.jpg.pagespeed.ic.QryEWNATcK.webp 842w, https://studiomeal.com/wp-content/uploads/2020/01/03-300x181.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/03-768x462.jpg 768w"
-			sizes="(max-width: 842px) 100vw, 842px"></figure>
+	<figure class="wp-block-image size-large"><img width="842" height="507" src="../resources/images/flex/x03.jpg.pagespeed.ic.QryEWNATcK.webp" alt=""></figure>
 			
 	<div class="code1 meal-css-tester">
-		<div class="meal-css-tester-container" style="">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="display" value="block" data-value="block"
-				id="display-block" checked="checked"><label for="display-block"
-				data-value="block">block</label><input type="radio" name="display" value="flex" data-value="flex"
-				id="display-flex"><label for="display-flex" data-value="flex">flex</label></div>
+		
 	</div>
-	<script>new CSSTester({ viewerElem: '.code1', codeTarget: 'container', property: 'display', values: ['block', 'flex'], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: '', itemBaseCSS: '' });</script>
+	<script>new CSSTester({viewerElem:'.code1',codeTarget:'container',property:'display',values:['block','flex'],itemText:['AAA','BBBBBBBBBBB','CCCCC'],containerBaseCSS:'',itemBaseCSS:''});</script>
+	<!-- <script>
+		$('.code1.meal-css-tester .meal-css-tester-controls input[type="radio"]').click(function() {
+
+			if($(this).val() == 'block') {
+				$('.code1.meal-css-tester .meal-css-tester-container').css({'display' : 'block'});
+			} else if($(this).val() == 'flex') {
+				$('.code1.meal-css-tester .meal-css-tester-container').css({'display' : 'flex'});
+			}
+		});
+	</script> -->
 	<div class="meal-css-tester-desc">직접 테스트 해보세요</div>
 	
 	<p>Flex 아이템들은 가로 방향으로 배치되고, 자신이 가진 내용물의 width 만큼만 차지하게 되지요. 마치 inline 요소들 처럼요. height는 컨테이너의 높이만큼
 		늘어납니다.<br>height가 알아서 늘어나는 특징은 컬럼 레이아웃을 만들 때 아주 편리하겠네요~<br>(물론 나중에 정렬 속성을 통해 height를 어떻게 처리할지도 조정할 수 있습니다.)
 	</p>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="527"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/x07-1.jpg.pagespeed.ic.FjxttQ2Av8.webp" alt=""
-			class="wp-image-379"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/x07-1.jpg.pagespeed.ic.FjxttQ2Av8.webp 1000w, https://studiomeal.com/wp-content/uploads/2020/01/07-1-300x158.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/07-1-768x405.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px">
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="527" src="../resources/images/flex/x07-1.jpg.pagespeed.ic.FjxttQ2Av8.webp" alt="">
 		<figcaption>컬럼의 높이가 자동으로 쫙- 맞는다</figcaption>
 	</figure>
 	
 	<p><strong>inline-flex</strong>도 있는데, 이건 block과 inline-block의 관계를 생각하시면 돼요.<br>아이템의 배치와 관련이 있다기 보다는, 컨테이너가 주변
 		요소들과 어떻게 어우러질지 결정하는 값입니다. inline-flex는 inline-block처럼 동작해요.</p>
 		
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="281"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/x08-1.jpg.pagespeed.ic.fBHsg6bFe2.webp" alt=""
-			class="wp-image-399"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/x08-1.jpg.pagespeed.ic.fBHsg6bFe2.webp 1000w, https://studiomeal.com/wp-content/uploads/2020/01/08-1-300x84.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/08-1-768x216.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="281" src="../resources/images/flex/x08-1.jpg.pagespeed.ic.fBHsg6bFe2.webp" alt="">
+	</figure>
 			
 	<p>아이템들이 배치된 방향의 축을 <strong>메인축</strong>(Main Axis),<br>메인축과 수직인 축을 <strong>수직축 또는 교차축</strong>(Cross Axis)이라고
 		불러요.<br>좀 뜬금 없지만, 앞으로 <strong>메인축</strong>을 <strong>“오뎅꼬치”</strong>라고 생각하세요.<br>?????<br>나중에 정렬을 배울 때 헷갈리지
 		않으려고 하는 건데요,<br>오뎅(Flex 아이템)들이 꼬치(메인축)을 따라 쭉 꽂혀서 정렬된 상태를 생각하고 계시면 됩니다.<br>바로 이렇게요↓</p>
 		
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="534"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/x04-1.jpg.pagespeed.ic.DotpceNZoC.webp" alt=""
-			class="wp-image-403"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/x04-1.jpg.pagespeed.ic.DotpceNZoC.webp 1000w, https://studiomeal.com/wp-content/uploads/2020/01/04-1-300x160.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/04-1-768x410.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="534" src="../resources/images/flex/x04-1.jpg.pagespeed.ic.DotpceNZoC.webp" alt="">
+	</figure>
 			
 	<h2>배치 방향 설정<br>flex-direction</h2>
 	
@@ -177,27 +224,14 @@ flex-direction: row;
 /* flex-direction: column-reverse; */
 }</code></pre>
 
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="473"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/05-1.jpg" alt="" class="wp-image-363"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/05-1.jpg 1000w, https://studiomeal.com/wp-content/uploads/2020/01/05-1-300x142.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/05-1-768x363.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="473" src="../resources/images/flex/05-1.jpg" alt="" class="wp-image-363">
+	</figure>
 			
 	<div class="code2 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="flex-direction" value="row" data-value="row"
-				id="flex-direction-row" checked="checked"><label for="flex-direction-row"
-				data-value="row">row</label><input type="radio" name="flex-direction" value="row-reverse"
-				data-value="row-reverse" id="flex-direction-row-reverse"><label for="flex-direction-row-reverse"
-				data-value="row-reverse">row-reverse</label><input type="radio" name="flex-direction" value="column"
-				data-value="column" id="flex-direction-column"><label for="flex-direction-column"
-				data-value="column">column</label><input type="radio" name="flex-direction" value="column-reverse"
-				data-value="column-reverse" id="flex-direction-column-reverse"><label
-				for="flex-direction-column-reverse" data-value="column-reverse">column-reverse</label></div>
+		
 	</div>
+
 	<script>new CSSTester({ viewerElem: '.code2', codeTarget: 'container', property: 'flex-direction', values: ['row', 'row-reverse', 'column', 'column-reverse'], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: '' });</script>
 	
 	<h3>row (기본값)</h3>
@@ -228,24 +262,11 @@ flex-wrap: nowrap;
 /* flex-wrap: wrap-reverse; */
 }</code></pre>
 
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="750"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/06-1.jpg" alt="" class="wp-image-375"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/06-1.jpg 1000w, https://studiomeal.com/wp-content/uploads/2020/01/06-1-300x225.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/06-1-768x576.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
-			
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="750" src="../resources/images/flex/06-1.jpg" alt="" class="wp-image-375">
+	</figure>
+
 	<div class="code3 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; width: 13rem;">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="flex-wrap" value="nowrap"
-				data-value="nowrap" id="flex-wrap-nowrap" checked="checked"><label for="flex-wrap-nowrap"
-				data-value="nowrap">nowrap</label><input type="radio" name="flex-wrap" value="wrap"
-				data-value="wrap" id="flex-wrap-wrap"><label for="flex-wrap-wrap"
-				data-value="wrap">wrap</label><input type="radio" name="flex-wrap" value="wrap-reverse"
-				data-value="wrap-reverse" id="flex-wrap-wrap-reverse"><label for="flex-wrap-wrap-reverse"
-				data-value="wrap-reverse">wrap-reverse</label></div>
 	</div>
 	<script>new CSSTester({ viewerElem: '.code3', codeTarget: 'container', property: 'flex-wrap', values: ['nowrap', 'wrap', 'wrap-reverse'], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex; width: 13rem;', itemBaseCSS: '' });</script>
 	
@@ -276,10 +297,9 @@ flex-flow: row wrap;
 	
 	<p><strong>“justify”는 메인축(오뎅꼬치) 방향으로 정렬<br>“align”은 수직축(오뎅을 뜯어내는) 방향으로 정렬</strong></p>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="783"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/09-1.jpg" alt="" class="wp-image-408"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/09-1.jpg 1000w, https://studiomeal.com/wp-content/uploads/2020/01/09-1-300x235.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/09-1-768x601.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="783" src="../resources/images/flex/09-1.jpg" alt="" class="wp-image-408">
+	</figure>
 			
 	<p>한 번만 나올게 아니니까 이건↑ 지금 꼭 머리에 넣어 두세요!</p>
 	
@@ -297,26 +317,6 @@ justify-content: flex-start;
 }</code></pre>
 
 	<div class="code4 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="justify-content" value="flex-start"
-				data-value="flex-start" id="justify-content-flex-start" checked="checked"><label
-				for="justify-content-flex-start" data-value="flex-start">flex-start</label><input type="radio"
-				name="justify-content" value="flex-end" data-value="flex-end" id="justify-content-flex-end"><label
-				for="justify-content-flex-end" data-value="flex-end">flex-end</label><input type="radio"
-				name="justify-content" value="center" data-value="center" id="justify-content-center"><label
-				for="justify-content-center" data-value="center">center</label><input type="radio"
-				name="justify-content" value="space-between" data-value="space-between"
-				id="justify-content-space-between"><label for="justify-content-space-between"
-				data-value="space-between">space-between</label><input type="radio" name="justify-content"
-				value="space-around" data-value="space-around" id="justify-content-space-around"><label
-				for="justify-content-space-around" data-value="space-around">space-around</label><input type="radio"
-				name="justify-content" value="space-evenly" data-value="space-evenly"
-				id="justify-content-space-evenly"><label for="justify-content-space-evenly"
-				data-value="space-evenly">space-evenly</label></div>
 	</div>
 	<script>new CSSTester({ viewerElem: '.code4', codeTarget: 'container', property: 'justify-content', values: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: '' });</script>
 	
@@ -342,16 +342,18 @@ justify-content: flex-start;
 	
 	<h3>space-evenly</h3>
 	
-	<p>아이템들의 사이와 양 끝에 균일한 간격을 만들어 줍니다.<br>주의! IE와 엣지(Edge)에서는 지원되지 않습니다<img draggable="false" role="img"
-			class="emoji" alt="👎" src="https://s.w.org/images/core/emoji/13.0.1/svg/1f44e.svg"><br>이 웹사이트의 메뉴 부분은
-		브라우저 폭이 1024px 이상일 때 space-evenly가 적용되도록 했는데요, IE와 엣지에서만 space-around로 적용이 되도록 처리해 두었어요.</p>
+	<p>
+		아이템들의 사이와 양 끝에 균일한 간격을 만들어 줍니다.<br>
+		주의! IE와 엣지(Edge)에서는 지원되지 않습니다
+		<img draggable="false" role="img" class="emoji" alt="👎" src="../resources/images/flex/1f44e.svg"><br>
+		이 웹사이트의 메뉴 부분은 브라우저 폭이 1024px 이상일 때 space-evenly가 적용되도록 했는데요, IE와 엣지에서만 space-around로 적용이 되도록 처리해 두었어요.
+	</p>
 		
 	<p>space-between, space-around, space-evenly는 비슷한듯 하면서 살짝 다른데요, 아래 그림을 봐보세요~</p>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="779"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/10-1.jpg" alt="" class="wp-image-413"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/10-1.jpg 1000w, https://studiomeal.com/wp-content/uploads/2020/01/10-1-300x234.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/10-1-768x598.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="779" src="../resources/images/flex/10-1.jpg" alt="" class="wp-image-413">
+	</figure>
 			
 	<h2>수직축 방향 정렬<br>align-items</h2>
 	
@@ -366,22 +368,6 @@ align-items: stretch;
 }</code></pre>
 
 	<div class="code5 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; height: 15rem;">
-			<div class="meal-css-tester-item" style="font-size: 30px;">AAAgg</div>
-			<div class="meal-css-tester-item" style="font-size: 14px;">BBBBB</div>
-			<div class="meal-css-tester-item" style="font-size: 50px;">CC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="align-items" value="stretch"
-				data-value="stretch" id="align-items-stretch" checked="checked"><label for="align-items-stretch"
-				data-value="stretch">stretch</label><input type="radio" name="align-items" value="flex-start"
-				data-value="flex-start" id="align-items-flex-start"><label for="align-items-flex-start"
-				data-value="flex-start">flex-start</label><input type="radio" name="align-items" value="flex-end"
-				data-value="flex-end" id="align-items-flex-end"><label for="align-items-flex-end"
-				data-value="flex-end">flex-end</label><input type="radio" name="align-items" value="center"
-				data-value="center" id="align-items-center"><label for="align-items-center"
-				data-value="center">center</label><input type="radio" name="align-items" value="baseline"
-				data-value="baseline" id="align-items-baseline"><label for="align-items-baseline"
-				data-value="baseline">baseline</label></div>
 	</div>
 	<script>new CSSTester({ viewerElem: '.code5', codeTarget: 'container', property: 'align-items', values: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'], itemText: ['AAAgg', 'BBBBB', 'CC'], containerBaseCSS: 'display: flex; height: 15rem;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code5 .meal-css-tester-item'); items[0].style.fontSize = '30px'; items[1].style.fontSize = '14px'; items[2].style.fontSize = '50px'; }) });</script>
 	
@@ -405,17 +391,15 @@ align-items: stretch;
 	
 	<p>아이템들을 텍스트 베이스라인 기준으로 정렬합니다.</p>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="1000" height="203"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/11.jpg" alt="" class="wp-image-433"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/11.jpg 1000w, https://studiomeal.com/wp-content/uploads/2020/01/11-300x61.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/11-768x156.jpg 768w"
-			sizes="(max-width: 1000px) 100vw, 1000px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="1000" height="203" src="../resources/images/flex/11.jpg" alt="" class="wp-image-433">
+	</figure>
 			
 	<p>justify-content: center;<br>align-item: center;<br>를 해주면, 아이템을 이렇게↓ 한 가운데에 놓는 것도 매우 쉽습니다.</p>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="830" height="436"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/12.jpg" alt="" class="wp-image-442"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/12.jpg 830w, https://studiomeal.com/wp-content/uploads/2020/01/12-300x158.jpg 300w, https://studiomeal.com/wp-content/uploads/2020/01/12-768x403.jpg 768w"
-			sizes="(max-width: 830px) 100vw, 830px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="830" height="436" src="../resources/images/flex/12.jpg" alt="" class="wp-image-442">
+	</figure>
 			
 	<h2>여러 행 정렬<br>align-content</h2>
 	
@@ -432,36 +416,14 @@ align-content: stretch;
 /* align-content: space-evenly; */
 }</code></pre>
 
-	<div class="code6 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; flex-wrap: wrap; width: 15rem; height: 15rem;">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="align-content" value="stretch"
-				data-value="stretch" id="align-content-stretch" checked="checked"><label for="align-content-stretch"
-				data-value="stretch">stretch</label><input type="radio" name="align-content" value="flex-start"
-				data-value="flex-start" id="align-content-flex-start"><label for="align-content-flex-start"
-				data-value="flex-start">flex-start</label><input type="radio" name="align-content" value="flex-end"
-				data-value="flex-end" id="align-content-flex-end"><label for="align-content-flex-end"
-				data-value="flex-end">flex-end</label><input type="radio" name="align-content" value="center"
-				data-value="center" id="align-content-center"><label for="align-content-center"
-				data-value="center">center</label><input type="radio" name="align-content" value="space-between"
-				data-value="space-between" id="align-content-space-between"><label for="align-content-space-between"
-				data-value="space-between">space-between</label><input type="radio" name="align-content"
-				value="space-around" data-value="space-around" id="align-content-space-around"><label
-				for="align-content-space-around" data-value="space-around">space-around</label><input type="radio"
-				name="align-content" value="space-evenly" data-value="space-evenly"
-				id="align-content-space-evenly"><label for="align-content-space-evenly"
-				data-value="space-evenly">space-evenly</label></div>
-	</div>
+	<div class="code6 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code6', codeTarget: 'container', property: 'align-content', values: ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex; flex-wrap: wrap; width: 15rem; height: 15rem;', itemBaseCSS: '' });</script>
 	
 	<p>위의 정렬들, justify-content랑 align-items를 보셨다면 어떤 느낌인지 이거↑ 테스트 해보시면 아실 거예요..(무책임)<br>정리하려다가 말이 너무 중복되는 느낌이라서요
-		ㅋㅋㅋ<br>눌러보시니까 딱 와 닿죠?<br>역시나 space-evenly는 MS 계열 브라우저(IE, 엣지)에서는 지원되지 않습니다<img draggable="false" role="img"
-			class="emoji" alt="👎" src="https://s.w.org/images/core/emoji/13.0.1/svg/1f44e.svg"><img
-			draggable="false" role="img" class="emoji" alt="👎"
-			src="https://s.w.org/images/core/emoji/13.0.1/svg/1f44e.svg"></p>
+		ㅋㅋㅋ<br>눌러보시니까 딱 와 닿죠?<br>역시나 space-evenly는 MS 계열 브라우저(IE, 엣지)에서는 지원되지 않습니다
+		<img draggable="false" role="img" class="emoji" alt="👎" src="../resources/images/flex/1f44e.svg">
+		<img draggable="false" role="img" class="emoji" alt="👎" src="../resources/images/flex/1f44e.svg">
+	</p>
 			
 	<p>자, 이제 컨테이너에 적용하는 속성은 마무리가 되었고<br>이제 <strong>아이템에 적용하는 속성들</strong>에 대해 살펴 볼게요.</p>
 	
@@ -490,14 +452,7 @@ flex-basis: 100px;
 
 	<p>원래의 width가 100px이 안되는 AAA와 CCC는 100px로 늘어났고, 원래 100px이 넘는 BBB는 그대로 유지되죠~</p>
 	
-	<div class="code-flex-basis-1 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="flex-basis: 100px;">AAA</div>
-			<div class="meal-css-tester-item" style="flex-basis: 100px;">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="flex-basis: 100px;">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code-flex-basis-1 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code-flex-basis-1', codeTarget: '', property: '', values: [], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: 'flex-basis: 100px;' });</script>
 	
 	<p>반면에 width를 설정하면, 원래 100px을 넘는 BBB도 100px로 맞춰집니다.</p>
@@ -506,14 +461,7 @@ flex-basis: 100px;
 width: 100px;
 }</code></pre>
 
-	<div class="code-flex-basis-2 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="width: 100px;">AAA</div>
-			<div class="meal-css-tester-item" style="width: 100px;">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="width: 100px;">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code-flex-basis-2 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code-flex-basis-2', codeTarget: '', property: '', values: [], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: 'width: 100px;' });</script>
 	
 	<p>둘 다 설정하면?</p>
@@ -523,14 +471,7 @@ flex-basis: 100px;
 width: 100px;
 }</code></pre>
 
-	<div class="code-flex-basis-3 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="flex-basis: 100px; width: 100px;">AAA</div>
-			<div class="meal-css-tester-item" style="flex-basis: 100px; width: 100px;">BBBBBBBBBBB</div>
-			<div class="meal-css-tester-item" style="flex-basis: 100px; width: 100px;">CCCCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code-flex-basis-3 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code-flex-basis-3', codeTarget: '', property: '', values: [], itemText: ['AAA', 'BBBBBBBBBBB', 'CCCCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: 'flex-basis: 100px; width: 100px;' });</script>
 	
 	<h2>유연하게 늘리기<br>flex-grow</h2>
@@ -543,17 +484,7 @@ flex-grow: 1;
 /* flex-grow: 0; */ /* 기본값 */
 }</code></pre>
 
-	<div class="code7 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="">AAAAA</div>
-			<div class="meal-css-tester-item" style="">B</div>
-			<div class="meal-css-tester-item" style="">CCC</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="flex-grow" value="0" data-value="0"
-				id="flex-grow-0" checked="checked"><label for="flex-grow-0" data-value="0">0</label><input
-				type="radio" name="flex-grow" value="1" data-value="1" id="flex-grow-1"><label for="flex-grow-1"
-				data-value="1">1</label></div>
-	</div>
+	<div class="code7 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code7', codeTarget: 'item', property: 'flex-grow', values: [0, 1], itemText: ['AAAAA', 'B', 'CCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: '' });</script>
 	<div class="meal-css-tester-desc">flex-grow에 0과 1을 세팅한 경우</div>
 	
@@ -565,20 +496,12 @@ flex-grow: 1;
 .item:nth-child(2) { flex-grow: 2; }
 .item:nth-child(3) { flex-grow: 1; }</code></pre>
 
-	<div class="code8 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="flex-grow: 1;">AAAAA</div>
-			<div class="meal-css-tester-item" style="flex-grow: 2;">B</div>
-			<div class="meal-css-tester-item" style="flex-grow: 1;">CCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code8 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code8', codeTarget: 'item', property: 'flex-grow', values: [], itemText: ['AAAAA', 'B', 'CCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code8 .meal-css-tester-item'); items[0].style.flexGrow = 1; items[1].style.flexGrow = 2; items[2].style.flexGrow = 1; }) });</script>
 	
-	<figure class="wp-block-image size-large"><img loading="lazy" width="732" height="290"
-			src="https://studiomeal.com/wp-content/uploads/2020/01/13-1.jpg" alt="" class="wp-image-464"
-			srcset="https://studiomeal.com/wp-content/uploads/2020/01/13-1.jpg 732w, https://studiomeal.com/wp-content/uploads/2020/01/13-1-300x119.jpg 300w"
-			sizes="(max-width: 732px) 100vw, 732px"></figure>
+	<figure class="wp-block-image size-large">
+		<img width="732" height="290" src="../resources/images/flex/13-1.jpg" alt="" class="wp-image-464">
+	</figure>
 			
 	<p>각 아이템의 컨텐츠가 “AAAAA”, “B”, “CCC”로 원래의 크기가 다르기 때문에 전체 아이템의 크기가 살짝 애매한 비율로 보이지만, <strong>여백의 비</strong>로 생각해 보면
 		정확히 1:2:1이죠!<br>정수 뿐 아니라 3.141592같은 소수도 가능합니다.</p>
@@ -608,18 +531,9 @@ width: 100px;
 flex-grow: 1;
 }</code></pre>
 
-	<div class="code9 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; width: 100%;">
-			<div class="meal-css-tester-item" style="flex-shrink: 0; width: 100px;">AAA</div>
-			<div class="meal-css-tester-item" style="flex-grow: 1;">Lorem ipsum dolor sit amet consectetur
-				adipisicing elit. Saepe, sunt.</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="width" value="100%" data-value="100%"
-				id="width-100%" checked="checked"><label for="width-100%" data-value="100%">100%</label><input
-				type="radio" name="width" value="250px" data-value="250px" id="width-250px"><label for="width-250px"
-				data-value="250px">250px</label></div>
-	</div>
+	<div class="code9 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code9', codeTarget: 'container', property: 'width', values: ['100%', '250px'], itemText: ['AAA', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, sunt.'], containerBaseCSS: 'display: flex; width: 100%', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code9 .meal-css-tester-item'); items[0].style.cssText = 'flex-shrink: 0; width: 100px'; items[1].style.cssText = 'flex-grow: 1;'; }) });</script>
+	
 	<div class="meal-css-tester-desc">컨테이너의 폭을 100%와 250px로 왔다리갔다리. flex-shrink: 0; 덕분에 컨테이너가 아무리 작아져도 첫번째 아이템은
 		찌그러지지 않고 폭이 100px로 유지된다.</div>
 		
@@ -648,14 +562,7 @@ flex: 1 1 0;
 flex: 2 1 0;
 }</code></pre>
 
-	<div class="code-flex-1 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="flex: 1 1 0px;">AAAAA</div>
-			<div class="meal-css-tester-item" style="flex: 2 1 0px;">B</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 0px;">CCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code-flex-1 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code-flex-1', codeTarget: 'item', property: 'flex', values: [], itemText: ['AAAAA', 'B', 'CCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code-flex-1 .meal-css-tester-item'); items[0].style.cssText = 'flex: 1 1 0'; items[1].style.cssText = 'flex: 2 1 0'; items[2].style.cssText = 'flex: 1 1 0'; }) });</script>
 	
 	<p>flex-basis: 0; 으로, 기본 점유 크기를 0으로 만들어버려 결국 전체 크기를 1:2:1로 나누어 가져서, 영역 자체의 크기가 정확히 1:2:1의 비율로 설정되었습니다.<br>여백의 비가
@@ -673,24 +580,7 @@ flex: 1 1 40%;
 
 	<p>flex-basis가 40%면, 100%에는 2개까지만 들어가므로 하나의 row에는 2개까지만 남고 다음줄로 넘어가게 되어서 2단 컬럼이 유지가 됩니다.</p>
 	
-	<div class="code-flex-2 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; flex-wrap: wrap; padding: 5px;">
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-			<div class="meal-css-tester-item" style="flex: 1 1 40%;">ITEM</div>
-		</div>
-		<div class="meal-css-tester-controls"><input type="radio" name="flex" value="1 1 40%" data-value="1 1 40%"
-				id="flex-1 1 40%" checked="checked"><label for="flex-1 1 40%" data-value="1 1 40%">1 1
-				40%</label><input type="radio" name="flex" value="1 1 30%" data-value="1 1 30%"
-				id="flex-1 1 30%"><label for="flex-1 1 30%" data-value="1 1 30%">1 1 30%</label></div>
-	</div>
+	<div class="code-flex-2 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code-flex-2', codeTarget: 'item', property: 'flex', values: ['1 1 40%', '1 1 30%'], itemText: ['ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM', 'ITEM'], containerBaseCSS: 'display: flex; flex-wrap: wrap; padding: 5px;', itemBaseCSS: 'flex: 1 1 40%;' });</script>
 	<div class="meal-css-tester-desc">flex: 1 1 40%는 2단, flex: 1 1 30%는 3단</div>
 	
@@ -713,16 +603,7 @@ align-self: auto;
 		
 	<p>아래는 align-self 값을 BBB는 center, CCC는 flex-start로 설정한 예시예요.</p>
 	
-	<div class="code13 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex; height: 15rem;">
-			<div class="meal-css-tester-item" style="">AAA</div>
-			<div class="meal-css-tester-item" style="align-self: center;">BBB</div>
-			<div class="meal-css-tester-item" style="align-self: flex-start;">CCC</div>
-			<div class="meal-css-tester-item" style="">DDD</div>
-			<div class="meal-css-tester-item" style="">EEE</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code13 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code13', codeTarget: 'container', property: '', values: [], itemText: ['AAA', 'BBB', 'CCC', 'DDD', 'EEE'], containerBaseCSS: 'display: flex; height: 15rem;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code13 .meal-css-tester-item'); items[1].style.alignSelf = 'center'; items[2].style.alignSelf = 'flex-start'; }) });</script>
 	
 	<h2>배치 순서<br>order</h2>
@@ -734,14 +615,7 @@ align-self: auto;
 .item:nth-child(2) { order: 1; } /* B */
 .item:nth-child(3) { order: 2; } /* C */</code></pre>
 
-	<div class="code14 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="order: 3;">A</div>
-			<div class="meal-css-tester-item" style="order: 1;">B</div>
-			<div class="meal-css-tester-item" style="order: 2;">C</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code14 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code14', codeTarget: 'container', property: '', values: [], itemText: ['A', 'B', 'C'], containerBaseCSS: 'display: flex;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code14 .meal-css-tester-item'); items[0].style.order = 3; items[1].style.order = 1; items[2].style.order = 2; }) });</script>
 	
 	<h2>z-index</h2>
@@ -754,58 +628,15 @@ transform: scale(2);
 }
 /* z-index를 설정 안하면 0이므로, 1만 설정해도 나머지 아이템을 보다 위로 올라온다 */</code></pre>
 
-	<div class="code15 meal-css-tester">
-		<div class="meal-css-tester-container" style="display: flex;">
-			<div class="meal-css-tester-item" style="opacity: 0.8;">AAA</div>
-			<div class="meal-css-tester-item" style="z-index: 1; transform: scale(2); opacity: 0.8;">BBB</div>
-			<div class="meal-css-tester-item" style="opacity: 0.8;">CCC</div>
-		</div>
-		<div class="meal-css-tester-controls"></div>
-	</div>
+	<div class="code15 meal-css-tester"></div>
 	<script>new CSSTester({ viewerElem: '.code15', codeTarget: 'container', property: '', values: [], itemText: ['AAA', 'BBB', 'CCC'], containerBaseCSS: 'display: flex;', itemBaseCSS: requestAnimationFrame(function () { const items = document.querySelectorAll('.code15 .meal-css-tester-item'); items[0].style.cssText = 'opacity: 0.8'; items[1].style.cssText = 'z-index: 1; transform: scale(2); opacity: 0.8'; items[2].style.cssText = 'opacity: 0.8'; }) });</script>
 	
-	<figure class="wp-block-image size-large is-resized"><img loading="lazy"
-			src="http://3.35.125.9/wp-content/uploads/2020/01/ilbuni-clap.gif" alt="" class="wp-image-527"
-			width="226" height="185">
+	<figure class="wp-block-image size-large is-resized"><img src="../resources/images/flex/ilbuni-clap.gif" alt="" class="wp-image-527" width="226" height="185">
 		<figcaption>고생 많이 하셨습니다!</figcaption>
 	</figure>
 	
-	<ul class="post-index">
-		<li class="current-post">이번에야말로 CSS Flex를 익혀보자</li>
-		<li><a href="/archives/533">이번에야말로 CSS Grid를 익혀보자</a></li>
-	</ul>
 	
-	<p>Flex와 Grid에 대해 더 깊게 공부하고 싶다면 아래 링크의 온라인 강좌를 살펴보세요~<br>1분코딩에서 출시한 따끈한 신작입니다.</p>
-	
-	<figure class="wp-block-image size-large is-resized"><a
-			href="https://www.inflearn.com/course/css-flex-grid-제대로-익히기?inst=86d8c4bb" target="_blank"
-			rel="noreferrer noopener"><img loading="lazy"
-				src="http://3.35.125.9/wp-content/uploads/2020/03/banner-flex-grid.jpg" alt="" class="wp-image-1018"
-				width="375" height="200"
-				srcset="https://studiomeal.com/wp-content/uploads/2020/03/banner-flex-grid.jpg 750w, https://studiomeal.com/wp-content/uploads/2020/03/banner-flex-grid-300x160.jpg 300w"
-				sizes="(max-width: 375px) 100vw, 375px"></a>
-		<figcaption>수강평을_확인해보세요.jpg</figcaption>
-	</figure>
-	
-	<p></p>
 
-	<div class="fb-like fb_iframe_widget" data-href="https://studiomeal.com/archives/197" data-width=""
-		data-layout="button_count" data-action="like" data-size="large" data-share="true" fb-xfbml-state="rendered"
-		fb-iframe-plugin-query="action=like&amp;app_id=601760870383429&amp;container_width=1058&amp;href=https%3A%2F%2Fstudiomeal.com%2Farchives%2F197&amp;layout=button_count&amp;locale=ko_KR&amp;sdk=joey&amp;share=true&amp;size=large&amp;width=">
-		<span style="vertical-align: bottom; width: 174px; height: 28px;"><iframe name="f3cb0681089b748"
-				width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin"
-				title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true"
-				allowfullscreen="true" scrolling="no" allow="encrypted-media"
-				src="https://www.facebook.com/v5.0/plugins/like.php?action=like&amp;app_id=601760870383429&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df1e0ca651a53bc4%26domain%3Dstudiomeal.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fstudiomeal.com%252Ff2e0b7a02122a3%26relation%3Dparent.parent&amp;container_width=1058&amp;href=https%3A%2F%2Fstudiomeal.com%2Farchives%2F197&amp;layout=button_count&amp;locale=ko_KR&amp;sdk=joey&amp;share=true&amp;size=large&amp;width="
-				style="border: none; visibility: visible; width: 174px; height: 28px;" class=""></iframe></span>
-	</div>
-
-	<!-- <div class="share-btn share-facebook">
-		<button onclick="(function () { FB.ui({method: 'share', href: 'https://studiomeal.com/archives/197'}, function(response){}); })();" class="facebook-share-button">
-			<i class="fab fa-facebook-square"></i>
-			<span class="share__btn-label">게시물을 페이스북에 공유</span>
-		</button>
-	</div> -->
 </section>
 
 
