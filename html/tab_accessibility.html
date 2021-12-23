@@ -184,8 +184,7 @@ var tabControlFn = function(target) {
 		var _thisIdx = _tabItems.index(this);
 		var _tagName = _this.prop('tagName').toUpperCase();
 
-		if(_tagName === 'A') return;
-		_tabChangeFn(_thisIdx);
+		if(_tagName === 'BUTTON') _tabChangeFn(_thisIdx);
 	});
 
 	// key event
