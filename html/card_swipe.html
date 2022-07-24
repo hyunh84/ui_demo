@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title>Document</title>
+
+	<link rel="stylesheet" type="text/css" href="./../resources/css/base.css">
+
+	<script type="text/javascript" src="../resources/js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="../resources/js/swiper-bundle.js"></script>
+
+	
+	<style type="text/css">
+	
+	#wrap {overflow:hidden;padding:0 20px;}
+	
+	.gd2 {margin:30px 0 0;}
+
+	[class^="account_box"] {position:relative;margin:10px 0 0;border-radius:10px;background-color:#fff;}
+	[class^="account_box"]:first-child {margin:0;}
+	[class^="account_box"] .account_case {position:relative;box-sizing:border-box;min-height:50px;padding:10px;border:1px solid #eee;border-radius:10px;background-color:#fff;z-index:1;}
+	[class^="account_box"] .account_util {display:flex;justify-content:space-between;position:absolute;left:0;top:0;right:0;bottom:0;}
+	[class^="account_box"] .account_util .item_col > button {display:flex;align-items:center;box-sizing:border-box;height:100%;padding:0 10px;font-size:20px;}
+	[class^="account_box"] .account_util .item_col > button em {display:inline-block;;}
+	[class^="account_box"] .account_util .item_col > .btn_acct_modi {color:#fff;}
+	[class^="account_box"] .account_util .item_col > .btn_acct_del {}
+
+
+	</style>
+</head>
+<body>
+
+<div id="wrap">
+	
+	<h2 class="gd2">카드박스 Swipe이벤트</h2>
+	<div class="account_box da">
+		<div class="account_case">
+			계좌정보
+		</div>
+		<div class="account_util">
+			<div class="item_col">
+				<button type="button" class="btn_acct_modi"><em>수정</em></button>
+			</div>
+			<div class="item_col">
+				<button type="button" class="btn_acct_del"><em>삭제</em></button>
+			</div>
+		</div>
+	</div>
+
+	<div class="account_box as">
+		<div class="account_case" style="transition-property: transform; transition-timing-function: ease;">
+			계좌정보
+		</div>
+		<div class="account_util">
+			<div class="item_col">
+				<button type="button" class="btn_acct_modi"><em>수정</em></button>
+			</div>
+			<div class="item_col">
+				<button type="button" class="btn_acct_del"><em>삭제</em></button>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+ <script type="text/javascript">
+
+	var acctCardSwipeFnc = function(target) {
+		var _target = $(target)
+		var _current = {};
+		var _delta = {};
+		var _maxAngle = 30;
+		var _minTouchDist = 10;
+		var _rads;
+		var _deg;
+		var _dir;
+		var _posX;
+		var _speed = 800;
+		var _moveDist;
+	
+		var _accoutWrap;
+		var _accountCase;
+		var _accountCaseW;
+		var _accountUtil;
+		var _btnUtil;
+		var _btnUtilW;
+	
+		var start = function(e, el) {
+			_accountCase = $(el);
+			_accoutWrap = _accountCase.closest('.account_box');
+			_accountCaseW = _accountCase.outerWidth();
+			_accountUtil = $('.account_util', _accoutWrap);
+			_btnUtil = $('button', _accountUtil);
+			_btnUtilW = _btnUtil.outerWidth();
+			_posX = Number(_accountCase.data('posX'));
+	
+			var _touchObj = e.originalEvent.changedTouches[0];
+			_current = {
+				X : _touchObj.pageX,
+				Y : _touchObj.pageY
+			}
+		}
+		var move = function(e) {
+			var _touchObj = e.originalEvent.changedTouches[0];
+			var _bgCode = '#fff';
+	
+			_delta = {
+				X : _touchObj.pageX - _current.X,
+				Y : _touchObj.pageY - _current.Y
+			}
+	
+			_rads = Math.atan(_delta.Y/_delta.X);
+			_deg = Math.abs(_rads * (180 / Math.PI));
+			_dir = _delta.X < 0 ? 'left' : 'right';
+	
+			if(Math.abs(_delta.X) > _minTouchDist && _deg < _maxAngle) {
+				e.preventDefault();
+				_moveDist = _dir === 'left' ? -(Math.abs(_delta.X) - _minTouchDist) + _posX : (_delta.X - _minTouchDist) + _posX;
+	
+				if(_moveDist > (_accountCaseW / 4) * 3) {
+					_moveDist = (_accountCaseW / 4) * 3;
+				} else if(_moveDist < -(_accountCaseW / 4) * 3) {
+					_moveDist = -(_accountCaseW / 4) * 3
+				}
+	
+				if(_moveDist < 0) {
+					_bgCode = '#ccc';
+				} else if(_moveDist > 0) {
+					_bgCode = 'red';
+				}
+	
+				_chBgColor(_accoutWrap, _bgCode);
+				_translate(_accountCase, _moveDist, 0);
+			}
+	
+		}
+		var end = function(e) {
+			if(-(_btnUtilW / 2) < _moveDist < 0) {
+				_moveDist = 0;
+			} else if(-(_btnUtilW / 2) > _moveDist) {
+				_moveDist = -_btnUtilW;
+			} else if((_btnUtilW / 2) > _moveDist > 0) {
+				_moveDist = 0;
+			} else if(_btnUtilW / 2 < _moveDist) {
+				_moveDist = _btnUtilW;
+			}
+	
+			_translate(_accountCase, _moveDist, 700);
+			_accountCase.data('posX', _moveDist)
+		}
+	
+		var _translate = function(target, dist, speed) {
+			target.css({
+				'transform' : 'translate(' + dist + 'px, 0)',
+				'transition-duration' : speed+'ms'
+			});
+		}
+	
+		var _chBgColor = function(target, bg) {
+			target.css({
+				'background-color' : bg
+			});
+		}
+	
+		$('.account_case', _target).css({
+			'transition-property' : 'transform',
+			'transition-timing-function' : 'ease'
+		}).data('posX', '0');
+	
+		$('.account_case', _target).off('touchstart').on('touchstart', function(e) {start(e, this);});
+		$('.account_case', _target).off('touchmove').on('touchmove', function(e) {move(e);});
+		$('.account_case', _target).off('touchend').on('touchend', function(e) {end(e);});
+		$('.account_case', _target).off('transitionend').on('transitionend', function() {
+			if(_moveDist === 0) {
+				_chBgColor(_accoutWrap, '#fff');
+			}
+		});
+	}
+	
+	acctCardSwipeFnc('.account_box');
+	
+	var acctCardClickFnc = function(target) {
+		var _target = $(target);
+		var _clearT;
+	
+		$('.account_case', _target).off('click dblclick').on('click dblclick', function(e) {
+			var _this = $(this);
+			var _lastTouch = _this.data('lastTouch');
+			console.log(_lastTouch);
+			if(_lastTouch != 0) {
+				_clearT = setTimeout(function() {
+					console.log('click');
+				}, 300);
+			} else if(_lastTouch == 0) {
+				clearTimeout(_clearT);
+				console.log('dblclick');
+			}
+		});
+	}
+	
+	acctCardClickFnc('.account_box');
+	
+	</script>
+</body>
+</html>
