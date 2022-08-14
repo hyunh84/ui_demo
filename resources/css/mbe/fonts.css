@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+/*********************************************************************************************************
+	@font -face
+*********************************************************************************************************/
+/* SpoqaHanSansNeo */
+@font-face {
+    font-family: 'SpoqaHanSansNeo';
+    font-style: normal;
+    font-weight: 400;
+    src: local('SpoqaHanSansNeo Regular'),
+    url('/resource/font/mbe/SpoqaHanSansNeo-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'SpoqaHanSansNeo';
+    font-style: normal;
+    font-weight: 500;
+    src: local('SpoqaHanSansNeo Medium'),
+    url('/resource/font/mbe/SpoqaHanSansNeo-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'SpoqaHanSansNeo';
+    font-style: normal;
+    font-weight: 700;
+    src: local('SpoqaHanSansNeo Bold'),
+    url('/resource/font/mbe/SpoqaHanSansNeo-Bold.woff2') format('woff2');
+}
+
+/* NotoSans */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url("/resource/font/mbe/NotoSansKR-Regular.woff2") format("woff2")
+}
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 500;
+	src:
+		url("/resource/font/mbe/NotoSansKR-Medium.woff2") format("woff2")
+}
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 700;
+	src:
+		url("/resource/font/mbe/NotoSansKR-Bold.woff2") format("woff2")
+}
