@@ -633,17 +633,19 @@ var expandedSwipeFn = function(target) {
 	var _current = {};
 	var _delta = {};
 	var _maxAngle = 30;
-	var _chTouchDist = 100;
 	var _minTouchDist = 10;
 	var _maxH = window.innerHeight * 0.6;
 	var _rads;
 	var _deg;
 	var _dir;
+	var _startTime;
+	var _endTime;
 	var _isExpanded = false;
 
 	var start = function(e, el) {
 		var _touchObj = e.originalEvent.changedTouches[0];
 
+		_startTime = new Date().getTime();
 		_current = {
 			X : _touchObj.pageX,
 			Y : _touchObj.pageY
@@ -662,11 +664,13 @@ var expandedSwipeFn = function(target) {
 
 		_movDist = _isExpanded ? window.innerHeight - _delta.Y : _maxH - _delta.Y;
 
-		expandedBoxFn(_movDist, 0);
+		expandedAniFn(_movDist, 0);
 	}
 	var end = function(e) {
 		var _touchObj = e.originalEvent.changedTouches[0];
+		var _duration = 600;
 
+		_endTime = new Date().getTime();
 		_delta = {
 			X : _touchObj.pageX - _current.X,
 			Y : _touchObj.pageY - _current.Y
@@ -674,21 +678,33 @@ var expandedSwipeFn = function(target) {
 
 		if(_minTouchDist > Math.abs(_delta.Y)) return;
 
+		if(_endTime - _startTime < 600) _duration = _endTime - _startTime;
+
+		if(_endTime - _startTime < 200) {
+			if(_delta.Y < -10) {
+				expandedStateFn(e, _duration, true);
+			} else if(_delta.Y > 10) {
+				expandedStateFn(e, _duration, false);
+			}
+			return;
+		}
+
 		if(_delta.Y < -100 || _delta.Y < 100) {//확장
-			e.preventDefault();
-			expandedBoxFn(window.innerHeight, '.3');
-			_btnExpanded.attr('aria-expanded', true);
-			_isExpanded = true;
+			expandedStateFn(e, _duration, true);
 		} else if(_delta.Y > -100 || _delta.Y > 100) {//축소
-			e.preventDefault();
-			expandedBoxFn(_maxH, '.3');
-			_btnExpanded.attr('aria-expanded', false);
-			_isExpanded = false;
+			expandedStateFn(e, _duration, false);
 		}
 
 	}
 
-	var expandedBoxFn = function(dist, speed) {
+	var expandedStateFn = function(e, duration, isExpanded) {
+		e.preventDefault();
+		expandedAniFn(isExpanded ? window.innerHeight : _maxH, duration);
+		_btnExpanded.attr('aria-expanded', isExpanded);
+		_isExpanded = isExpanded;
+	}
+
+	var expandedAniFn = function(dist, speed) {
 		var _boxH = dist;
 		var _maxH = window.innerHeight * 0.6;
 		var _containH;
@@ -706,11 +722,11 @@ var expandedSwipeFn = function(target) {
 
 		_layerBox.css({
 			'height' : _boxH,
-			'transition-duration' : speed + 's'
+			'transition-duration' : speed + 'ms'
 		});
 		_layerContainer.css({
 			'height' : _containH,
-			'transition-duration' : speed + 's'
+			'transition-duration' : speed + 'ms'
 		});
 
 	}
