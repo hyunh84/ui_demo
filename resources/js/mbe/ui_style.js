@@ -689,9 +689,9 @@ var expandedSwipeFn = function(target) {
 			return;
 		}
 
-		if(_delta.Y < -100 || _delta.Y < 100) {//확장
+		if(_delta.Y < -100 && !_isExpanded || _delta.Y < 100 && _isExpanded) {//확장
 			expandedStateFn(e, _duration, true);
-		} else if(_delta.Y > -100 || _delta.Y > 100) {//축소
+		} else if(_delta.Y > 100 && _isExpanded || _delta.Y > -100 && !_isExpanded) {//축소
 			expandedStateFn(e, _duration, false);
 		}
 
