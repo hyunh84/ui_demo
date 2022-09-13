@@ -1,4 +1,191 @@
 @charset "utf-8";
 
+/* 컨텐츠 비주얼 이미지 */
+[class^="visual_image_box"] {}
 
+/* FULL팝업 약관동의 상세 */
+.agree_detail_box [class^="tab_list_wrap"] {position:sticky;top:0;z-index:1;}
+
+/*********************************************************************************************************
+	조회/이체, 계좌관리
+*********************************************************************************************************/
+/* 이체 화면 */
+[class^="tran_proccess_wrap"] .tran_register_box {margin:40px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
+[class^="tran_proccess_wrap"] .tran_register_box:first-child {margin:0;padding:16px 0 0;}
+[class^="tran_proccess_wrap"] > [class^="regist_bundle_box"] {margin:60px 0 0;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info {font-weight:500;color:#999;border-bottom:1px solid #999;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money {margin:24px 0 0 ;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money:first-child {margin:0;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .inp_amount02 {display:block;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money {margin:16px 0 0;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .possibility {display:inline-block;padding:3px 10px;line-height:18px;font-size:12px;font-weight:400;color:#666;border-radius:24px;background-color:#f4f4f4;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .error {line-height:20px;font-size:13px;font-weight:400;color:#999;}
+[class^="tran_proccess_wrap"] + .list_view_box03 {margin:60px 0 0;}
+[class^="tran_proccess_wrap"] .tab_list_wrap03 {margin:60px 0 16px;}
+
+[class^="tran_depsoit_box"] {position:relative;margin:60px 0 0;padding:73px 0 0;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed {position:absolute;top:0;left:0;right:0;padding:0 0 12px;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed.fixed {position:fixed;top:44px;margin:0;background-color:#fff;z-index:90;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .tab_list_wrap {margin:0;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .srch_deposit_btn {right:24px;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search {margin:24px 0 0;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search[aria-hidden="true"] {display:none;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search[aria-hidden="false"] {display:block;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .tran_deposit_search {margin:24px 24px 0;}
+[class^="tran_depsoit_box"] .deposit_result_list[aria-hidden="true"] {display:none;}
+[class^="tran_depsoit_box"] .deposit_result_list[aria-hidden="false"] {display:block;}
+[class^="tran_depsoit_box"] .tab_panel_wrap[aria-hidden="true"] {display:none;}
+[class^="tran_depsoit_box"] .tab_panel_wrap[aria-hidden="false"] {display:block;}
+
+[class^="tran_depsoit_box"] .srch_acc_navi {display:none;position:fixed;bottom:96px;right:24px;box-sizing:border-box;min-width:120px;padding:4px 16px;border-radius:8px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.08);}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li {border-top:1px solid #eee;}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li:first-child {border-top:none;}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn strong {font-weight:400;}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn span {color:#666;}
+[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn span.diabled {color:#ccc;}
+/* 계좌관리 */
+.tran_depsoit_box02 {padding:0;}
+
+/* 전계좌조회 - 거래내역조회 상단 */
+.tran_inquiry_box {margin:0 -24px;padding:32px 24px 0;background-color:#fff;}
+.tran_inquiry_box:after {display:block;content:"";height:44px;margin:-18px -24px 0;background-color:#eee;}
+.tran_inquiry_box .tran_inquiry_util {display:flex;margin:-18px -24px -44px;padding:18px 24px 0;background-color:#eee;}
+.tran_inquiry_box .tran_inquiry_util .col {width:100%;}
+.tran_inquiry_box .tran_inquiry_util button {position:relative;width:100%;height:62px;}
+.tran_inquiry_box .tran_inquiry_util button span {line-height:26px;font-size:16px;}
+.tran_inquiry_box .tran_inquiry_util .col + .col button:before {display:block;content:"";position:absolute;left:-1px;top:50%;width:1px;height:16px;margin:-8px 0 0;background-color:#979797;}
+.tran_inquiry_box + .list_top_box02 {margin:0 -24px;}
+
+/*********************************************************************************************************
+	인증센터
+*********************************************************************************************************/
+/* 간편인증 리스트 */
+.certifi_method_box ul li {margin:8px 0 0;}
+.certifi_method_box ul li:first-child {margin:0;}
+.certifi_method_box ul li .chip_chk02 {width:100%;}
+.certifi_method_box ul li .chip_chk02 em {padding:0 28px 0 36px;}
+.certifi_method_box ul li .chip_chk02 em:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-color:#ff0;background-position:center;background-repeat:no-repeat;background-size:100%;}
+.certifi_method_box ul li .chip_chk02 em.ico_finger {}
+.certifi_method_box ul li .chip_chk02 em.ico_face {}
+.certifi_method_box ul li .chip_chk02 em.ico_pattern {}
+.certifi_method_box ul li .chip_chk02 em.ico_password {}
+
+.certifi_method_box ul li .btn_link02 span {padding:11px 0 11px 36px;}
+.certifi_method_box ul li .btn_link02 span:before {display:block;content:"";position:absolute;left:16px;top:11px;width:24px;height:24px;background-color:#ff0;background-position:center;background-repeat:no-repeat;background-size:100%;}
+.certifi_method_box ul li .btn_link02 span.ico_finger {}
+.certifi_method_box ul li .btn_link02 span.ico_face {}
+.certifi_method_box ul li .btn_link02 span.ico_pattern {}
+.certifi_method_box ul li .btn_link02 span.ico_password {}
+
+/* 간편인증 가이드  */
+.certifi_guide_box:before {display:block;content:"";width:65px;height:65px;margin:0 0 40px;background-color:#00f;background-repeat:no-repeat;background-position:center;background-size:100%;}
+.certifi_guide_box .txt {line-height:36px;font-size:26px;font-weight:700;color:#111;}
+.certifi_guide_box .txt02 {margin:16px 0 0;}
+.certifi_guide_box.ico_finger:before {}
+.certifi_guide_box.ico_face:before {}
+.certifi_guide_box.ico_pattern:before {}
+.certifi_guide_box.ico_password:before {}
+.certifi_guide_box .mssg_certifi_fixed {position:fixed;left:0;right:0;bottom:116px;padding:0 24px;line-height:20px;font-size:13px;color:#999;text-align:center;background-color:#fff;}
+
+/* 간편인증 설정 */
+.certifi_set_box {padding:19px;border:1px solid #eee;border-radius:12px;box-shadow:0 0 12px rgba(0, 0, 0, .04);}
+.certifi_set_box ul li {display:flex;justify-content:space-between;margin:12px 0 0;padding:12px 0 0;border-top:1px solid #eee;}
+.certifi_set_box ul li:first-child {margin:0;padding:0;border:none;}
+.certifi_set_box ul li strong {font-weight:400;color:#111;}
+.certifi_set_box ul li strong,
+.certifi_set_box ul li [class^="inp_switch"] {display:block;}
+
+/*********************************************************************************************************
+	고객센터
+*********************************************************************************************************/
+/* faq/고객상담 */
+.counsel_srch_box {}
+.counsel_srch_box .hash_case {margin:16px 0 0;}
+.counsel_srch_box .hash_case .btn_hash {margin:0 4px 0 0;}
+.counsel_srch_box .hash_case .btn_hash:last-child {margin:0;}
+
+/* 공지사항 상단 슬라이드 */
+.notice_swipe_wrap {overflow:hidden;margin:-32px -24px 0;padding:24px 0;background-color:#f8f8f8;}
+.notice_swipe_wrap .noti_card_item {display:block;box-sizing:border-box;height:100%;padding:20px;border-radius:12px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
+.notice_swipe_wrap .noti_card_item .title {line-height:28px;font-size:18px;font-weight:500;color:#111;}
+.notice_swipe_wrap .noti_card_item .conts {display:-webkit-box;overflow:hidden;margin:8px 0 0;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.notice_swipe_wrap .noti_card_item .date {margin:16px 0 0;line-height:20px;font-size:13px;color:#999;}
+.notice_swipe_wrap .swiper-container .swiper-wrapper {height:160px;}
+.notice_swipe_wrap .swiper-container .swiper-wrapper .swiper-slide {position:relative;box-sizing:border-box;height:100%;padding:0 24px;}
+
+/* 소비자보호헌장 */
+.cunsumer_charter_box {margin:12px 0 0;padding:19px;border:1px solid #eee;border-radius:12px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
+.cunsumer_charter_box ul li {position:relative;margin:12px 0 0;padding:0 0 0 34px;}
+.cunsumer_charter_box ul li:first-child {margin:0;}
+.cunsumer_charter_box ul li .charter {position:absolute;left:0;top:0;color:#111;}
+
+/* 민원신청 접수하기 */
+.complaint_link_box ul {display:flex;}
+.complaint_link_box ul li {width:100%;margin:0 0 0 9px;}
+.complaint_link_box ul li:first-child {margin:0;}
+.complaint_link_box ul li a {display:block;padding:20px 0;font-weight:500;color:#111;text-align:center;border:1px solid #ddd;border-radius:12px;}
+.complaint_link_box ul li a:before {display:block;content:"";width:56px;height:56px;margin:0 auto 12px;background-repeat:no-repeat;background-position:center;background-size:56px;background-color:#0f0;}
+.complaint_link_box ul li a.member:before {background-image:url(/resource/img/mbe/common/);}
+.complaint_link_box ul li a.non_member:before {background-image:url(/resource/img/mbe/common/);}
+
+/* 민원신청 접수안내 */
+.step_group {padding-top: 10px;}
+.step_group > ul > li {display:flex;position:relative;margin-bottom:32px}
+.step_group > ul > li:last-child {margin-bottom:0;}
+.step_group > ul > li:last-child::after{display:none;}
+.step_group > ul > li::after{position:absolute;top:62px;left:30px;content:'';display:block;width:2px;height:100px;background-color:rgba(210,19,0,0.1)}
+.step_group > ul > li .step_num {display: flex;justify-content:center;align-items:center;width:60px;height:60px;border:1px solid #f2f2f2;border-radius: 50%;background-color:#fff;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04)}
+.step_group > ul > li .step_num strong{width:34px;font-size:13px;font-weight:bold;color:#d21300;letter-spacing:-0.3px;text-align: center;line-height: 18px;}
+.step_group > ul > li dl {width: calc(100% - 74px);margin-left: 12px;}
+.step_group > ul > li dl > dt.tit_sub02 {margin:0 0 8px}
+
+/*********************************************************************************************************
+	기간별 명세서 스와이프 - 이용대금 명세서
+*********************************************************************************************************/
+.pay_statement_wrap {position:relative;padding:66px 0 0;margin:-24px -24px 0;}
+/* 기간 */
+.period_swipe_box {position:fixed;left:0;top:44px;right:0;padding:20px 0;background-color:#f8f8f8;z-index:90;}
+.period_swipe_box .period_btn {display:block;width:100%;height:26px;font-size:16px;}
+.period_swipe_box .period_swipe_inner {overflow:hidden;position:relative;width:170px;margin:0 auto;}
+.period_swipe_box .swiper-btn-prev {width:24px;height:24px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_left.png) no-repeat center/100%;}
+.period_swipe_box .swiper-btn-next {width:24px;height:24px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_right.png) no-repeat center/100%;}
+/* 명세서 컨텐츠 */
+.statement_swipe_box {}
+.statement_swipe_box .swiper-container .swiper-wrapper .swiper-slide {padding:0 24px;}
+.statement_swipe_box .headline_wrap {margin:40px 0 60px;}
+
+/*********************************************************************************************************
+	소비자 보호공시
+*********************************************************************************************************/
+.consumer_announce_box table {margin:12px 0 0;table-layout:fiexd;width:100%;border-collapse:collapse;border-top:1px solid #eee !important;}
+.consumer_announce_box table td {box-sizing:border-box;padding:6px;font-size:0.8571rem;line-height:1.4285rem;color:#111;text-align:center;border:1px solid #eee;word-break:break-all;}
+.consumer_announce_box table td strong {font-weight:400;}
+.consumer_announce_box table td:first-child {border-left:none;}
+.consumer_announce_box table td:last-child {border-right:none;}
+.consumer_announce_box .tit_type1 {margin:32px 0 12px;}
+.consumer_announce_box .tit_type1:first-child {margin:0 0 12px;}
+.consumer_announce_box .tit_type1 h3 {color:#111;font-size:16px;font-weight:500 !important;line-height:26px;}
+.consumer_announce_box .only_one > h3 {font-size:1rem;font-weight:400;text-align:left !important;color:#111;}
+.consumer_announce_box .txt_result {margin:8px 0 0;padding:0 !important;}
+.consumer_announce_box .txt_result br {display:none;}
+.consumer_announce_box .txt_result h2 {padding:4px 0 0 9px !important;font-size:1rem;line-height:1.7142rem;font-weight:400;text-indent:-9px;}
+.consumer_announce_box .txt_result h2:first-child {padding:0 0 0 9px !important;}
+.consumer_announce_box .txt_result h2 sup {display:inline-block;margin:0 4px 0 0;font-size:1rem;line-height:1.7142rem;vertical-align:middle;text-indent:0;}
+.consumer_announce_box .list_bul {margin:8px 0 0;}
+.consumer_announce_box .list_bul li {position:relative;padding:0 0 0 9px;margin:4px 0 0;}
+.consumer_announce_box .list_bul li:before {display:block;content:"-";position:absolute;left:0;top:0;}
+.consumer_announce_box .list_bul li:first-child {margin:0;}
+
+@media screen and (max-width:320px) {
+	.consumer_announce_box table td {padding:3px;font-size:0.7857rem;}
+}
+
+/*********************************************************************************************************
+	IBsheet UI
+*********************************************************************************************************/
+/* ibsheet grid */
+.ibsheet_wrap {margin:0 -24px;}
+.ibsheet_wrap .ibsheet_veiw_more {margin:16px 24px 0;}
 

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user_scalable=no, viewport-fit=cover" />
+<title>부산은행 기업금융 비대면 채널 개선</title>
+
+<link rel="stylesheet" type="text/css" href="../resources/css/mbe/mbe.css">
+
+<script type="text/javascript" src="../resources/js/mbe/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../resources/js/mbe/ui_style.js"></script>
+
+<script type="text/javascript" src="../resources/js/mbe/layout_html.js"></script>
+
+<style type="text/css">
+/* 탭 - Swiper */
+[class^="panel_swiper_box"] {overflow:hidden;margin:-32px -24px -40px;}
+[class^="panel_swiper_box"] > .swiper-container > .swiper-wrapper {align-items:start;}
+[class^="panel_swiper_box"] > .swiper-container > .swiper-wrapper .tab_panel {display:block;overflow:hidden;position:relative;padding:0;}
+[class^="panel_swiper_box"] > .swiper-container > .swiper-wrapper .tab_panel .panel_scroll_box {overflow-x:hidden;overflow-y:auto;box-sizing:border-box;height:100%;padding:0 24px 40px;}
+
+[class^="panel_swiper_box"] .acc_inquiry_fixed .tran_inquiry_box {margin:0 -24px;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box {position:absolute;left:0;top:0;right:0;padding:16px 24px 0;margin:0;z-index:10;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_regi_nick {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_name {margin:0;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_holder {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_withdrawn {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_date {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box [class^="acc_plate_wrap"] .acc_arnings {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed.fixed .tran_inquiry_box .tran_inquiry_util {display:none;}
+[class^="panel_swiper_box"] .acc_inquiry_fixed + .list_top_box02 {margin:0 -24px;}
+
+[class^="panel_swiper_box"] .list_top_box02.fixed {position:absolute;left:0;top:168px;right:0;margin:0;}
+
+
+</style>
+
+</head>
+<body>
+
+<!-- wrap -->
+<div id="wrap">
+	<!-- header -->
+	<script>
+		headerHtml('거래내역조회');
+	</script>
+	<!-- //header -->
+
+	<!-- gnb -->
+	<script>
+		gnbHtml();
+	</script>
+	<!-- gnb -->
+
+	<!-- container -->
+	<div id="container">
+		<!-- pageStack -->
+		<div id="pageStack">
+			<!-- contents -->
+			<div class="contents">
+
+				<div class="tab_list_wrap" tab-name="transInquiry">
+					<div class="tab_list_inner">
+						<ul role="tablist">
+							<li class="tab_item active">
+								<button type="button" role="tab"><em>거래내역조회</em></button>
+							</li>
+							<li class="tab_item">
+								<button type="button" role="tab"><em>계좌정보</em></button>
+							</li>
+							<li class="tab_item">
+								<button type="button" role="tab"><em>계좌관리</em></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="panel_swiper_box">
+					<div class="swiper-container">
+						<div class="tab_panel_wrap swiper-wrapper" tab-name="panel_transInquiry">
+
+							<div role="tabpanel" class="tab_panel swiper-slide">
+								<div class="panel_scroll_box">
+									<div class="acc_inquiry_fixed">
+										<div class="tran_inquiry_box">
+											<div class="acc_plate_wrap03">
+												<div class="acc_state">
+													<span class="flag_item09">주계좌</span>
+												</div>
+												<div class="acc_plate_info">
+													<div class="acc_regi_nick">
+														<div class="modify_bundle_item04">
+															<div aria-hidden="true">계좌별칭계좌별칭계좌별칭</div>
+															<span class="inp_modify02" aria-hidden="true">
+																<input type="text" title="계좌별칭을 입력하세요." value="계좌별칭계좌별칭계좌별칭" >
+															</span>
+														</div>
+													</div>
+													<div class="acc_name">
+														<strong class="name02">사업자금융입출금상품명</strong>
+													</div>
+													<div class="acc_code">
+														<span aria-hidden="true" class="ico_bank04" style="background-image:url(/resource/img/mbe/temp/ico_bnk.png);"></span>
+														<button type="button" class="code">123-1234-5678-90</button>
+														<button type="button" class="share"><em class="blind">공유하기</em></button>
+													</div>
+												</div>
+
+												<div class="acc_plate_info02">
+													<div class="acc_holder">예금주는 김똑똑</div>
+													<div class="acc_amount"><span class="bold5">324,345,678,000</span> 원</div>
+													<!-- <div class="acc_withdrawn">출금가능금액 200,000,000,000 원</div> -->
+													<div class="acc_date">
+														<span class="flag_item10">D-3</span>
+														<span>만기일 2023.06.30</span>
+													</div>
+												</div>
+											</div>
+
+											<div class="tran_inquiry_util">
+												<div class="col">
+													<button type="button"><span>가져오기</span></button>
+												</div>
+												<div class="col">
+													<button type="button"><span>이체</span></button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+
+									<div class="list_top_box02">
+										<div class="list_sort_case">
+											<div class="word_search_case">
+												<button type="button">검색</button>
+												<div class="word_inp" aria-hidden="true"><input type="text" title="검색어를 입력하세요"></div>
+											</div>
+											<div class="sort_ctrl_case">
+												<span><em class="blind">조회기간</em>1개월</span>
+												<span><em class="blind">조회구분</em>전체</span>
+												<span><em class="blind">조회정렬</em>최신순</span>
+												<button type="button" aria-haspopup="true" class="sort_ctrl_btn" title="검색조건 선택">
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="ibsheet_wrap">
+										<div style="background-color:#000;color:#fff;height:1000px;line-height:300px;text-align:center;font-size:30px;">
+											ibsheet area
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div role="tabpanel" class="tab_panel swiper-slide">
+								<div class="panel_scroll_box">
+									<div class="acc_inquiry_fixed">
+										<div class="tran_inquiry_box">
+											<div class="acc_plate_wrap03">
+												<div class="acc_state">
+													<span class="flag_item09">주계좌</span>
+												</div>
+												<div class="acc_plate_info">
+													<div class="acc_regi_nick">
+														<div class="modify_bundle_item04">
+															<div aria-hidden="true">계좌별칭계좌별칭계좌별칭</div>
+															<span class="inp_modify02" aria-hidden="true">
+																<input type="text" title="계좌별칭을 입력하세요." value="계좌별칭계좌별칭계좌별칭" >
+															</span>
+														</div>
+													</div>
+													<div class="acc_name">
+														<strong class="name02">사업자금융입출금상품명</strong>
+													</div>
+													<div class="acc_code">
+														<span aria-hidden="true" class="ico_bank04" style="background-image:url(/resource/img/mbe/temp/ico_bnk.png);"></span>
+														<button type="button" class="code">123-1234-5678-90</button>
+														<button type="button" class="share"><em class="blind">공유하기</em></button>
+													</div>
+												</div>
+
+												<div class="acc_plate_info02">
+													<div class="acc_holder">예금주는 김똑똑</div>
+													<div class="acc_amount"><span class="bold5">324,345,678,000</span> 원</div>
+													<!-- <div class="acc_withdrawn">출금가능금액 200,000,000,000 원</div> -->
+													<div class="acc_date">
+														<span class="flag_item10">D-3</span>
+														<span>만기일 2023.06.30</span>
+													</div>
+												</div>
+											</div>
+
+											<div class="tran_inquiry_util">
+												<div class="col">
+													<button type="button"><span>가져오기</span></button>
+												</div>
+												<div class="col">
+													<button type="button"><span>이체</span></button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="info_view_box">
+										<div class="info_view_row">
+											<div class="tit_view">
+												<strong class="tit">기본정보</strong>
+											</div>
+
+											<div class="conts_view">
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">예금주</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">㈜부산솔루션</span>
+													</div>
+												</div>
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">신규일</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">2020-01-03</span>
+													</div>
+												</div>
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">최종거래일</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">2022-08-15</span>
+													</div>
+												</div>
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">관리점</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">범내골지점</span>
+													</div>
+												</div>
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">금리</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">0.10 %</span>
+													</div>
+												</div>
+
+												<div class="info_veiw_case">
+													<div class="tit_area">
+														<strong class="tit">맞춤계좌번호</strong>
+													</div>
+													<div class="txt_area">
+														<span class="txt">-</span>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="info_view_box">
+										<div class="info_view_row">
+											<div class="tit_view">
+												<strong class="tit">추가정보</strong>
+											</div>
+
+											<div class="conts_view">
+
+												<div class="info_view_item">
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">미결재타점권(자기앞수표)</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">0 원</span>
+														</div>
+													</div>
+
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">미결재타점권(기타타점권)</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">0 원</span>
+														</div>
+													</div>
+												</div>
+												<div class="info_view_item">
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">BC카드결제계좌 여부</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">부</span>
+														</div>
+													</div>
+
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">대출자동이체계좌여부</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">부(종합통장대출만해당)</span>
+														</div>
+													</div>
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">세금우대가입여부(한도)</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">0 원</span>
+														</div>
+													</div>
+
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">자동화기기출금가능여부</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt"></span>
+														</div>
+													</div>
+												</div>
+												<div class="info_view_item">
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">사고신고</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">-</span>
+														</div>
+													</div>
+
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">비밀번호오류횟수</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt">0 회</span>
+														</div>
+													</div>
+													<div class="info_veiw_case">
+														<div class="tit_area">
+															<strong class="tit">한도제한등록일</strong>
+														</div>
+														<div class="txt_area">
+															<span class="txt"></span>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="points_noti_box">
+										<div class="tit_noti">
+											<strong>예금자보호안내</strong>
+										</div>
+
+										<div class="conts_noti">
+											<p class="txt_blit">예금자 보호법에 따라 원금과 소정의 이자를 합하여 1인당 5천만원까지 예금자보호가 됩니다. </p>
+										</div>
+									</div>
+
+									<div class="btn_conts_box">
+										<div class="btn_col">
+											<button type="button" class="btn_func"><span>영수증 보기</span></button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div role="tabpanel" class="tab_panel swiper-slide">
+								<div class="panel_scroll_box">
+									<div class="acc_inquiry_fixed">
+										<div class="tran_inquiry_box">
+											<div class="acc_plate_wrap03">
+												<div class="acc_state">
+													<span class="flag_item09">주계좌</span>
+												</div>
+												<div class="acc_plate_info">
+													<div class="acc_regi_nick">
+														<div class="modify_bundle_item04">
+															<div aria-hidden="true">계좌별칭계좌별칭계좌별칭</div>
+															<span class="inp_modify02" aria-hidden="true">
+																<input type="text" title="계좌별칭을 입력하세요." value="계좌별칭계좌별칭계좌별칭" >
+															</span>
+														</div>
+													</div>
+													<div class="acc_name">
+														<strong class="name02">사업자금융입출금상품명</strong>
+													</div>
+													<div class="acc_code">
+														<span aria-hidden="true" class="ico_bank04" style="background-image:url(/resource/img/mbe/temp/ico_bnk.png);"></span>
+														<button type="button" class="code">123-1234-5678-90</button>
+														<button type="button" class="share"><em class="blind">공유하기</em></button>
+													</div>
+												</div>
+
+												<div class="acc_plate_info02">
+													<div class="acc_holder">예금주는 김똑똑</div>
+													<div class="acc_amount"><span class="bold5">324,345,678,000</span> 원</div>
+													<!-- <div class="acc_withdrawn">출금가능금액 200,000,000,000 원</div> -->
+													<div class="acc_date">
+														<span class="flag_item10">D-3</span>
+														<span>만기일 2023.06.30</span>
+													</div>
+												</div>
+											</div>
+
+											<div class="tran_inquiry_util">
+												<div class="col">
+													<button type="button"><span>가져오기</span></button>
+												</div>
+												<div class="col">
+													<button type="button"><span>이체</span></button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="tit_sub_box">
+										<strong class="tit_sub">기본관리</strong>
+									</div>
+
+									<div class="list_board_wrap03">
+										<ul>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">입금계좌관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">출금계좌관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">빠른이체관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">맞춤계좌번호</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">자동이체관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">보안계좌관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">계좌비밀번호 관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">계좌해지</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+
+									<div class="tit_sub_box">
+										<strong class="tit_sub">증명서 및 알림 관리</strong>
+									</div>
+									<div class="list_board_wrap03">
+										<ul>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">증명서</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">통장사본</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">입출금통지서비스</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">맞춤계좌번호</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">자동이체관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">보안계좌관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">계좌비밀번호 관리</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="board_card_item05">
+													<a href="#" class="board_info">
+														<div class="board_tit">
+															<strong class="tit">계좌해지</strong>
+														</div>
+													</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- //contents -->
+
+		</div>
+		<!-- pageStack -->
+
+	</div>
+	<!-- //container -->
+
+
+	<!-- footer -->
+	<footer id="footer">
+
+	</footer>
+	<!-- //footer -->
+</div>
+<!-- //wrap -->
+
+<script>
+var tabExFnc = new tabControlFn('[tab-name="transInquiry"]', {
+	swiperUI : true,
+	setInit : function(idx, panelEls) {
+		var _swiperWrap = panelEls.closest('.panel_swiper_box');
+		var _swiperOffset = _swiperWrap.offset().top;
+		var _height = window.innerHeight - _swiperOffset;
+		panelEls.css({
+			'height' : _height
+		});
+
+		var _accFixedWrap = panelEls.eq(idx).find('.acc_inquiry_fixed');
+		var _inquiryBox =  $('.tran_inquiry_box', _accFixedWrap);
+		_accFixedWrap.css({
+			'height' : _inquiryBox.outerHeight()
+		});
+	},
+	panelChangeAfter : function(idx, panelEl) {
+		// tabpanel 변경 후 콜백 함수
+		// idx : 현재 활성화된 탭 인덱스 번호
+		// panelEl : 현재 활성화된 tabpanel 엘레멘트
+		var _accFixedWrap = panelEl.find('.acc_inquiry_fixed');
+		var _inquiryBox =  $('.tran_inquiry_box', _accFixedWrap);
+		_accFixedWrap.css({
+			'height' : _inquiryBox.outerHeight()
+		});
+	}
+});
+
+$('.panel_swiper_box .tab_panel .panel_scroll_box').on('scroll', function() {
+	var _this = $(this);
+	var _accInquiryFixed = $('.acc_inquiry_fixed', _this);
+	var _tranInquiry = $('.tran_inquiry_box', _accInquiryFixed);
+	var _listTop = $('.list_top_box02', _this);
+	var _scrollT = _this.scrollTop();
+
+	console.log(`_scrollT = ${_scrollT}`);
+	if(_scrollT >= 135) {
+		console.lo
+		_accInquiryFixed.addClass('fixed');
+		_listTop.addClass('fixed');
+
+	} else {
+		_accInquiryFixed.removeClass('fixed');
+		_listTop.removeClass('fixed');
+	}
+
+});
+
+</script>
+</body>
+</html>
