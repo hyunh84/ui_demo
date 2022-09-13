@@ -1562,34 +1562,19 @@ $(document).on('click', '.select_opt_box button', function() {
 *********************************************************************************************************/
 var isWebfontLoaded = false;
 var wewFontloadFnc = [];
-$('#wrap').append('<p>' + ${document.fonts} + '</p>');
 var fontFaceOnload = function(options) {
 	var options = options || {};
+
 	document.fonts.onloading = function() {
-		if(options.loading) options.loading();
+		// if(options.loading) options.loading();
 	}
 	document.fonts.onloadingdone = function() {
 		if(options.success) options.success();
 	}
 	document.fonts.onloadingerror = function() {
-		if(options.error) options.error();
+		// if(options.error) options.error();
 	}
 }
 
-fontFaceOnload({
-	loading : function() {
-		alert('Font is loading');
-	},
-	success : function() {
-		alert('Font successfully loaded');
-		isWebfontLoaded = true;
-		for(var i = fontloadFnc - 1; i >= 0; i--) {
-			wewFontloadFnc[i]();
-		}
-	},
-	error : function() {
-		alert('Error loading font');
-	}
-});
 
 
