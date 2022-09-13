@@ -1562,6 +1562,7 @@ $(document).on('click', '.select_opt_box button', function() {
 *********************************************************************************************************/
 var isWebfontLoaded = false;
 var wewFontloadFnc = [];
+$('#wrap').append('<p>' + ${document.fonts} + '</p>');
 var fontFaceOnload = function(options) {
 	var options = options || {};
 	document.fonts.onloading = function() {
