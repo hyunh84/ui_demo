@@ -15,13 +15,11 @@
 .drop_hold_box {position:relative;box-sizing:border-box;padding:24px;min-height:100%;}
 
 .present_bank_box {min-height:52px;}
-.present_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout: none;}
-.present_bank_box button span {-webkit-touch-callout: none;}
+.present_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;}
 .present_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;}
 
 .another_bank_box {margin:32px 0 0;}
-.another_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout: none;}
-.another_bank_box button span {-webkit-touch-callout: none;}
+.another_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;}
 .another_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;}
 .another_bank_box ul li {min-height:52px;margin:16px 0 0;}
 .another_bank_box ul li:first-child {margin:0;}
@@ -152,9 +150,10 @@ var dropHoldFn = function(target, options) {
 	var _delta = {};
 	var _holdTime = 500;
 	var _tapStartTime;
-	var _tapLastTime;
+	var _tapEndTime;
 	var _holdSetTime = undefined;
 	var _itemInfo = {};
+	var _isTapHold = false;
 
 	var options = options || {};
 
@@ -181,7 +180,7 @@ var dropHoldFn = function(target, options) {
 		}		
 		_tapStartTime = new Date().getTime();
 		_holdSetTime = setTimeout(function(_evtItme) {
-			e.preventDefault();
+			_isTapHold = true;
 			holdItemFn(_evtItem);
 		}, 700);
 	}
@@ -193,19 +192,21 @@ var dropHoldFn = function(target, options) {
 			X : _touchObj.pageX - _current.X,
 			Y : _touchObj.pageY - _current.Y
 		}
-		
+
+		if(_isTapHold) e.preventDefault();
+
 	}
 	var dhEnd = function(e) {
 		console.log('dhEnd');
 		var _touchObj = e.originalEvent.changedTouches[0];
 
-		_tapLastTime = new Date().getTime();
+		_tapEndTime = new Date().getTime();
 		_delta = {
 			X : _touchObj.pageX - _current.X,
 			Y : _touchObj.pageY - _current.Y
 		}
 
-		if(_tapLastTime - _tapStartTime <= _holdTime) {
+		if(_tapEndTime - _tapStartTime <= _holdTime) {
 			clearTimeout(_holdSetTime);
 			_holdSetTime = undefined;
 			return;
@@ -219,7 +220,10 @@ var dropHoldFn = function(target, options) {
 	_items.unbind('touchstart', dhStart).bind('touchstart', dhStart);
 	_items.unbind('touchmove', dhMove).bind('touchmove', dhMove);
 	_items.unbind('touchend', dhEnd).bind('touchend', dhEnd);
-
+	_items.unbind('contextmenu').bind('contextmenu', function(e) {
+		e.preventDefault(); // 기본 태그 기능 막기
+		return false;
+	});
 }
 
 var dropHoldFnc = new dropHoldFn('.drop_hold_box');
