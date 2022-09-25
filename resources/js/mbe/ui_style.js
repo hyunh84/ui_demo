@@ -1,29 +1,34 @@
 /*********************************************************************************************************
 DOCUMENT READY
 *********************************************************************************************************/
+var $page_ID = null;
 $(document).ready(function() {
 
-	contsPaddingSet();
+	if($page_ID == null) {
+		$page_ID = $('.contents');
+	}
+
 	goToTop();
 
 });
 
-var contsPaddingSet = function() {
-	var _layoutContain = $('#container');
-	var _pageBotFixed = $('[class^="page_bottom_fixed"]');
-	var _btnGroupBox = $('[class^="btn_group_wrap"]', _pageBotFixed);
+var reAct = function() {
+	contsPaddingSet($page_ID);
+//	goToTop($page_ID);
+}
 
-	if(_pageBotFixed.length) {
-		_pageBotFixed.each(function() {
-			$(this).closest('.contents').css({
-				'padding-bottom' : $(this).outerHeight() + 40
-			});
-		});
-	}
+var contsPaddingSet = function(pageID) {
+	var _pageID = pageID;
+	var _pageBotFixed = $('[class^="page_bottom_fixed"]', _pageID);
+	var _btnGroupBox = $('[class^="btn_group_wrap"]', _pageBotFixed);
+	var _padB = _pageBotFixed.length ? _pageBotFixed.outerHeight() + 40 : 40;
+
+	_pageID.css('padding-bottom', _padB);
 }
 
 /* 탑으로가기 */
-var goToTop = function() {
+var goToTop = function(pageID) {
+	var _pageID = pageID;
 	var _btnTop = $('.btn_go_top');
 
 	/* 스크로로 방향 체크 */
@@ -135,7 +140,7 @@ var gnbCloseFn = function() {
 	input text
 *********************************************************************************************************/
 //inp_bundle 포커스 dom클릭시 포커스 아웃 처리
-$(document).on('click', function(e) {
+$(document).on('click focusin', function(e) {
 	$('[class^="inp_bundle"]').removeClass('focus').find('.btn_inp_del').remove();
 });
 //inp_bundle 클릭시 input[type="text"]에 포커스 이동
@@ -143,59 +148,66 @@ $(document).on('click', '[class^="inp_bundle"]', function(e) {
 	e.stopPropagation();
 	var _this = $(this);
 	var _inpTxt = $('[class^="inp_txt"]', _this);
+	var _inp = $('input', _this);
 
-	_inpTxt.each(function(i) {
-		var _thisInpBox = $(this);
-		if(_thisInpBox.find('input').length) {
-			_thisInpBox.find('input').focus()
-			return false;
-		}
-	});
-
+	_inp.eq(0).focus();
 });
 //inp_bundle 클릭시 input[type="text"] click 이벤트 방지
-$(document).on('click', '[class^="inp_bundle"] input, [class^="inp_bundle"] .inp_util', function(e) {e.stopPropagation();});
+$(document).on('click focusin', '[class^="inp_bundle"] input, [class^="inp_bundle"] button, [class^="inp_bundle"] textarea', function(e) {e.stopPropagation();});
 //input[type="text"]에 focus in
-$(document).on('focusin keyup change', '[class^="inp_bundle"] input[type="text"], [class^="inp_bundle"] input[type="tel"], [class^="inp_bundle"] input[type="password"]', function(e) {
-	e.stopPropagation();
+$(document).on('focusin', '[class^="inp_bundle"] input, [class^="inp_bundle"] textarea', function(e) {
 	var _this = $(this);
 	var _val = _this.val();
 	var _bundle = _this.closest('[class^="inp_bundle"]');
 	var _inpTxt = _this.closest('[class^="inp_txt"]');
-	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-label="입력삭제"></button>';
-	var _appendEl = _inpTxt;
+	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
 	var _inpFlexCase = _inpTxt.closest('[class^="inp_flex"]');
-	var _isSetVal = $('.btn_inp_del', _bundle).length ? true : false;
+	var _appendEl = _inpTxt;
 	if(_inpFlexCase.length) {
 		if(_inpFlexCase.attr('class').indexOf('inp_flex_amount') < 0) _appendEl = _inpFlexCase;
 	}
 
 	$('[class^="inp_bundle"]').removeClass('focus').find('.btn_inp_del').remove();
+
 	_bundle.addClass('focus');
-	if(_isSetVal) _appendEl.append(_btnDelHtml)
+	_appendEl.append(_btnDelHtml);
+
 	if(_val == '') {
-		if(!_isSetVal) $('.btn_inp_del', _appendEl).remove();
+		$('.btn_inp_del', _appendEl).hide().attr('aria-hidden', 'true');
 	}else {
-		if(!$('.btn_inp_del', _appendEl).length) _appendEl.append(_btnDelHtml);
+		$('.btn_inp_del', _appendEl).show().attr('aria-hidden', 'false');
+	}
+});
+$(document).on('keyup change', '[class^="inp_bundle"] input', function(e) {
+	var _this = $(this);
+	var _val = _this.val();
+	var _bundle = _this.closest('[class^="inp_bundle"]');
+	var _inpTxt = _this.closest('[class^="inp_txt"]');
+	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
+	var _inpFlexCase = _inpTxt.closest('[class^="inp_flex"]');
+	var _appendEl = _inpTxt;
+	if(_inpFlexCase.length) {
+		if(_inpFlexCase.attr('class').indexOf('inp_flex_amount') < 0) _appendEl = _inpFlexCase;
+	}
+
+	if(_val == '') {
+		$('.btn_inp_del', _appendEl).hide().attr('aria-hidden', 'true');
+	}else {
+		$('.btn_inp_del', _appendEl).show().attr('aria-hidden', 'false');
 	}
 });
 //btn_inp_del 클릭시 value삭제
-$(document).on('click', '[class^="inp_bundle"] .btn_inp_del', function(e) {
-	e.stopPropagation();
+$(document).on('click', '[class^="inp_bundle"] .btn_inp_del', function() {
 	var _this = $(this);
 	var _bundle = _this.closest('[class^="inp_bundle"]');
 	var _inpTxt = $('[class^="inp_txt"]', _bundle);
+	var _inp = $('input', _bundle);
 
-	$('input', _inpTxt).val('');
-	_inpTxt.each(function(i) {
-		var _thisInpBox = $(this);
-		if(_thisInpBox.find('input').length) {
-			_this.remove();
-			_thisInpBox.find('input').focus();
-			return false;
-		}
-	});
-
+	_inp.val('').eq(0).focus();
+});
+/*통합검색 입력 박스 키보드 음성변경 버튼*/
+$(document).on('click', '[class^="inp_bundle"] .keyboard_btn, [class^="inp_bundle"] .voice_btn', function(e) {
+	e.stopPropagation();
 });
 
 /*********************************************************************************************************
@@ -236,9 +248,94 @@ $(document).on('keyup change focusout paste', '[class^="modify_bundle_item"] [cl
 	var _this = $(this);
 	var _bundleWrap = _this.closest('[class^="modify_bundle_item"]');
 	var _hiddenTxt = $('> div', _bundleWrap);
-	var _inpModify = $('[class^="inp_modify"]', _bundleWrap);
 
 	_hiddenTxt.text(_this.val());
+});
+$(document).on('keyup change focusout paste', '.inp_amount02 input', function(e) {
+	var _this = $(this);
+	var _bundleWrap = _this.closest('.inp_amount02');
+	var _hiddenTxt = $('.hide_txt', _bundleWrap);
+
+	_hiddenTxt.text(_this.val());
+});
+
+/*********************************************************************************************************
+	SELECT DROP DOWN
+ *********************************************************************************************************/
+$(document).on('click focusin', function() {
+	$('.combo_bundle02').removeClass('focus');
+	$('.combo_bundle02 > button').attr('aria-expanded', 'false');
+	$('.combo_bundle02 .combo_opt_box').hide().attr('aria-hidden', 'true');
+	$('.combo_bundle02 .combo_opt_box .comboFoucsMov').remove();
+});
+$(document).on('click', '.combo_bundle02 > button', function(e) {
+	e.stopPropagation();
+	var _this = $(this);
+	var _bundle = _this.closest('.combo_bundle02');
+	var _optBox = $('.combo_opt_box', _bundle);
+	var _isExpanded = _this.attr('aria-expanded');
+
+	$('.combo_bundle02').removeClass('focus');
+	$('.combo_bundle02 > button').attr('aria-expanded', 'false');
+	$('.combo_bundle02 .combo_opt_box').hide().attr('aria-hidden', 'true');
+	$('.combo_bundle02 .combo_opt_box .comboFoucsMov').remove();
+
+	_bundle.addClass('focus');
+	if(_isExpanded == 'false') {
+		_this.attr('aria-expanded', 'true');
+		_optBox.slideDown(300).attr('aria-hidden', 'false');
+		_optBox.append('<div class="comboFoucsMov" style="overflow:hidden;height:0;line-height:0;font-size:1px;" tabindex="0" aria-hidden="true"></div>')
+		$('.comboFoucsMov', _optBox).off().on('focusin', function(e) {
+			e.stopPropagation();
+			$('li:first button', _optBox).focus()
+		});
+	} else if(_isExpanded == 'true') {
+		_this.attr('aria-expanded', 'false');
+		_optBox.slideUp(300, function() {$(this).attr('aria-hidden', 'true');});
+		$('.comboFoucsMov', _optBox).remove();
+	}
+});
+$(document).on('focusin', '.combo_bundle02 button', function(e) {
+	e.stopPropagation();
+	console.log('focusin');
+	var _this = $(this);
+	var _bundle = _this.closest('.combo_bundle02');
+	var _optBox = $('.combo_opt_box', _bundle);
+	var _isExpanded = _this.attr('aria-expanded');
+
+	_bundle.addClass('focus');
+});
+$(document).on('focusout', '.combo_bundle02 button', function(e) {
+	e.stopPropagation();
+	console.log('focusout');
+	var _this = $(this);
+	var _bundle = _this.closest('.combo_bundle02');
+	var _optBox = $('.combo_opt_box', _bundle);
+	var _isExpanded = _this.attr('aria-expanded');
+
+	_bundle.removeClass('focus');
+});
+$(document).on('click', '.combo_bundle02 .combo_opt_box button', function(e) {
+	e.stopPropagation();
+	var _this = $(this);
+	var _thisVal = _this.data('value');
+	var _thisTxt = $('> span', _this).text();
+	var _bundle = _this.closest('.combo_bundle02');
+	var _btnBundle = $('> button', _bundle);
+	var _inpHidden = $('input[type="hidden"]', _bundle);
+	var _optBox = $('.combo_opt_box', _bundle);
+	var _selectView = $('.selected', _btnBundle);
+
+	if(_inpHidden.val != _thisVal) {
+		_selectView.text(_thisTxt);
+		_inpHidden.val(_thisVal);
+	}
+	_btnBundle.attr('aria-expanded', 'false');
+	_optBox.slideUp(300, function() {
+		$(this).attr('aria-hidden', 'true');
+		_btnBundle.focus();
+	});
+	$('.comboFoucsMov', _optBox).remove();
 });
 
 /*********************************************************************************************************
@@ -265,9 +362,9 @@ var tabControlFn = function(target, options) {
 	var _nowIdx;
 
 	// rol = tablist
-	var _tabList = $('[role="tablist"]', _innerWrap);
-	var _tabItemsCase = $('[class^="tab_item"]', _tabList);
-	var _tabItems = $('[role="tab"]', _tabItemsCase);
+	var _tabList = $(' > [role="tablist"], > .tab_list', _innerWrap);
+	var _tabItemsCase = $('> [class^="tab_item"]', _tabList);
+	var _tabItems = $(' > [role="tab"], > .tab_item', _tabItemsCase);
 
 	// expanded list button
 	var _btnFold = $('> [class^="btn_tab_fold"]', _targetWrap);
@@ -279,12 +376,19 @@ var tabControlFn = function(target, options) {
 	var _tabPanelItems = $('> [role="tabpanel"]', _tabPanelWrap);
 	var _panelSwiperFn;
 
+	// fixed box
+	var _tabFixedWrap = _targetWrap.closest('[class^="tab_fixed_box"]');
+
+	// layer wrap
+	var _layerWrap = _targetWrap.closest('[class^="layer_wrap"]');
+
 	// swiper
 	var _isSwiperUI = options.swiperUI != undefined ? options.swiperUI : false;
 
 	// id, aria 속성 셋팅
 	var _setTabAttrFn = function() {
 		var _lastInt = _tabItems.length;
+
 		_tabItems.each(function(i) {
 			var _this = $(this);
 			var _num = i + 1;
@@ -322,23 +426,31 @@ var tabControlFn = function(target, options) {
 					_scrollMov(_nowIdx);
 					_tabChFn (_nowIdx);
 					_panelChFn(_nowIdx);
-
+					_tabPanelItems.scrollTop(0);
 				}
+			});
+
+			var _swiperOffset = _tabPanelSwipeBox.offset().top;
+			var _height = window.innerHeight - _swiperOffset;
+
+			_tabPanelItems.css({
+				'height' : _height
 			});
 		}
 
 		if(_tabItemsCase.eq(_nowIdx).position()) {
-				var _activeLeft = _tabItemsCase.eq(_nowIdx).position().left;
-				var _activeWidth = _tabItemsCase.eq(_nowIdx).outerWidth();
+			var _activeLeft = _tabItemsCase.eq(_nowIdx).position().left;
+			var _activeWidth = _tabItemsCase.eq(_nowIdx).outerWidth();
 
-				if(_activeLeft > 0) {
-					var _spillover = _activeLeft + _activeWidth;
+			if(_activeLeft > 0) {
+				var _spillover = _activeLeft + _activeWidth;
 
-					if(_innerWrap.outerWidth() < _spillover) {
-						_scrollMov(_nowIdx);
-					}
+				if(_innerWrap.outerWidth() < _spillover) {
+					_scrollMov(_nowIdx);
 				}
+			}
 		}
+
 		if(_btnFold.length) {
 			_btnFold.attr('aria-hidden', false);
 		}
@@ -412,7 +524,6 @@ var tabControlFn = function(target, options) {
 	}
 
 	var _scrollMov = function(i) {
-		console.log(`_scrollMov = ${i}`);
 		var _positionL = _tabItemsCase.eq(i).position().left;
 //		var _mov = _positionL - (_innerWrap.outerWidth() / 2);
 		var _tabListType;
@@ -423,7 +534,7 @@ var tabControlFn = function(target, options) {
 			_tabListType = 'type02';
 		}
 		if(_tabListType == 'type01') {
-			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 14 : _innerWrap.scrollLeft() + (_positionL - 14);
+			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 24 : _innerWrap.scrollLeft() + (_positionL - 24);
 		} else if(_tabListType == 'type02') {
 			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 24 : _innerWrap.scrollLeft() + (_positionL - 24);
 		} else {
@@ -433,6 +544,63 @@ var tabControlFn = function(target, options) {
 		_innerWrap.animate({
 			scrollLeft : _mov
 		}, 300);
+	}
+
+	// 화면 스크롤시 상단 고정
+	if(_tabFixedWrap.length) {
+		var _tabOffsetT;
+		var _tabTopFixFn = function(fixT, movT) {
+			if(movT >= fixT) {
+				_tabFixedWrap.addClass('fixed');
+			}else{
+				_tabFixedWrap.removeClass('fixed');
+			}
+
+		}
+
+		if(_layerWrap.length) { // 팝업 내부 탭이 존재 할 경우
+			_tabOffsetT = _targetWrap.position().top
+			$('.layer_container', _layerWrap).scroll(function() {
+				var _fixT = _tabOffsetT - options.fixedT || _tabOffsetT - 68;
+				var _scrollT = $(this).scrollTop();
+				var _movT = _scrollT + _fixT;
+
+				_tabTopFixFn(_fixT, _movT);
+			});
+		} else { // 본 화면에 탭이 존재할 경우
+			_tabOffsetT = _targetWrap.offset().top;
+			$(window).scroll(function() {
+				var _fixT = _tabOffsetT - options.fixedT || _tabOffsetT - 68;
+				var _scrollT = $(window).scrollTop();
+				var _movT = _scrollT;
+
+				_tabTopFixFn(_fixT, _movT);
+			});
+		}
+	}
+
+
+	if(_tabList.attr('role') == 'tablist') {// TAB TYPE
+		_initialFn();
+	}else{// NAVI TYPE
+		_nowIdx = $('> .tab_list > .tab_item.active', _innerWrap).index();
+		if(_tabItemsCase.eq(_nowIdx).position()) {
+			var _activeLeft = _tabItemsCase.eq(_nowIdx).position().left;
+			var _activeWidth = _tabItemsCase.eq(_nowIdx).outerWidth();
+
+			console.log(_nowIdx);
+			console.log(_activeLeft);
+
+			if(_activeLeft > 0) {
+				var _spillover = _activeLeft + _activeWidth;
+
+				if(_innerWrap.outerWidth() < _spillover) {
+					_scrollMov(_nowIdx);
+				}
+			}
+		}
+
+		return;
 	}
 
 	// 2Depth tab 클릭이벤트 중복방지
@@ -502,8 +670,19 @@ var tabControlFn = function(target, options) {
 
 	});
 
-	_initialFn();
+	return {
+		'goToPanel' : function(idx) {
+			_oldIdx = _nowIdx;
+			_nowIdx = idx;
+			_tabChFn(_nowIdx);
+			_panelChFn(_nowIdx);
+			_scrollMov(_nowIdx);
 
+			if(_isSwiperUI) {
+				_panelSwiperFn.swiper.slideTo(_nowIdx);
+			}
+		}
+	}
 }
 
 /*********************************************************************************************************
@@ -717,6 +896,24 @@ $(document).on('click', '[class^="inq_card_case"] .check_item', function() {
 });
 
 /*********************************************************************************************************
+	chip button
+*********************************************************************************************************/
+$(document).on('click', '[class^="chip_rdo_btn"]', function() {
+	var _this = $(this);
+	var _name = '[name="' + _this.attr('name') + '"]';
+	var _items = $(_name);
+	var _isChecked = _this.attr('aria-pressed');
+
+	if(_isChecked != 'true') {
+		_items.attr('aria-pressed', 'false').removeClass('active');
+		_this.attr('aria-pressed', 'true').addClass('active');
+	}else{
+		_this.attr('aria-pressed', 'false').removeClass('active');
+	}
+
+});
+
+/*********************************************************************************************************
 	하단 체크 토탈 플리팅 UI
  *********************************************************************************************************/
 var totalFloatFn = function(state) {
@@ -870,6 +1067,7 @@ var layerOpenFn = function(target, clickEl) {
 	var _layerBox = $('.layer_box', _layerWrap).attr('tabindex', '0');
 	var _layerHeader = $('.layer_header', _layerBox);
 	var _layerContainer = $('.layer_container', _layerBox);
+	var _layerConents = $('.layer_contents', _layerContainer);
 	var _btnExpanded = $('[class^="btn_layer_expanded"] button', _layerBox);
 	var _btnGroupBox = $('[class^="btn_layer_wrap"]', _layerBox);
 	var _btnClose = $('.layer_close', _layerBox);
@@ -888,11 +1086,16 @@ var layerOpenFn = function(target, clickEl) {
 	_layerWrap.attr('aria-hidden', false).show(1, function() {
 		$('.layer_mask', _layerWrap).addClass('active');
 		if(_layerWrap.hasClass('dialog_up')) {
+			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight()})}
 			layerScrollCalc(_layerBox);
 		} else if(_layerWrap.hasClass('full')) {
+			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight() + 16})}
 			fullScrollCalc(_layerBox);
+		}else{
+			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight() + 8})}
 		}
 	});
+
 
 	_layerBox.addClass('active');
 
@@ -901,16 +1104,18 @@ var layerOpenFn = function(target, clickEl) {
 	_accessbility02 = $('.AccessibilityHtml2', _layerWrap);
 
 	// S :팝업 close
-	_btnClose.off('click').on('click', function() {
+	_btnClose.on('click', function(e) {
+		e.stopPropagation();
 		layerCloseFn(target);
 	});
-	$('.layer_mask', _layerWrap).off('click').on('click', function() {
+	$('.layer_mask', _layerWrap).on('click', function(e) {
 		layerCloseFn(target);
 	});
 	// E :팝업 close
 
 	// S : 팝업 처음, 마지막 포커스 이동 컨트롤
-	_accessbility01.off('focusin').on('focusin', function() {
+	_accessbility01.on('focusin', function(e) {
+		e.stopPropagation();
 		if(_btnClose.is(':hidden') || !_btnClose.length) {//팝업 닫기 버튼이 없을 경우
 			if(_btnGroupBox.length) {//하단 버튼 그룹 박스 있을경우
 				$('button:last', _btnGroupBox).focus();
@@ -921,7 +1126,8 @@ var layerOpenFn = function(target, clickEl) {
 			_btnClose.focus();
 		}
 	});
-	_accessbility02.off('focusin').on('focusin', function() {
+	_accessbility02.off('focusin').on('focusin', function(e) {
+		e.stopPropagation();
 		_layerBox.focus();
 	});
 	// E : 팝업 처음, 마지막 포커스 이동 컨트롤
@@ -934,30 +1140,35 @@ var layerOpenFn = function(target, clickEl) {
 }
 
 var layerCloseFn = function(target) {
+	console.log('sss');
 	var _layerWrap = $(target);
 	var _layerBox = $('.layer_box', _layerWrap);
 	var _layerContainer = $('.layer_container', _layerBox);
+	var _btnClose = $('.layer_close', _layerBox);
 	var _btnExpanded = $('[class^="btn_layer_expanded"] button', _layerBox);
 	var _accessbility01 = $('.AccessibilityHtml1', _layerWrap);
 	var _accessbility02 = $('.AccessibilityHtml2', _layerWrap);
 
 
+	$('body').removeClass('isPop');
+
 	_layerBox.removeClass('active');
 	$('.layer_mask', _layerWrap).removeClass('active');
-	if(_layerWrap.hasClass('dialog_up')) {
-		_layerBox.css({
-			'height' : 0,
-			'transition-duration' : '300ms'
-		});
-	}
+
+	// S : layer box focus stopPropagation
+	_layerBox.off('focusin');
+	// E : layer box focus stopPropagation
+
+	// S :팝업 close
+	_btnClose.off('click');
+	// E :팝업 close
 
 	_layerBox.one('transitionend', function() {
-		$('body').removeClass('isPop');
+		if(!_layerWrap.length) return;
 		_accessbility01.remove();
 		_accessbility02.remove();
 		$('.layer_mask', _layerWrap).remove();
 		_layerBox.removeAttr('tabindex');
-		if(_layerWrap.hasClass('dialog_up')) _layerBox.css({'height' : 0});
 		_layerWrap.attr('aria-hidden', true).hide();
 
 		if(_btnExpanded.length) {
@@ -977,6 +1188,7 @@ var layerCloseFn = function(target) {
 // max height 60% 설정 함수
 var layerScrollCalc = function(target, speed) {
 	var _layerBox = $(target);
+	var _layerWrap = _layerBox.closest('[class^="layer_wrap"]');
 	var _layeraHeader = $('.layer_header', _layerBox);
 	var _layerContainer = $('.layer_container', _layerBox);
 	var _layerContents = $('.layer_contents', _layerBox);
@@ -984,40 +1196,26 @@ var layerScrollCalc = function(target, speed) {
 	var _btnExpanded = $('.btn_layer_expanded', _layerBox);
 	var _maxH = window.innerHeight * 0.6;
 	var _standardH = _maxH;
-	var _containH = _layerContents.outerHeight();
-	var _calcH = _containH;
-	var _speed = speed != undefined ? speed : 300;
+
+
+
+	if(_layerWrap.data('height') === 'free') {//바텀시트 max height free
+		_maxH = window.innerHeight - 44;
+		_standardH = _maxH;
+	}
 
 	if(_layeraHeader.length) {
 		_standardH = _standardH - _layeraHeader.outerHeight();
-		_calcH = _calcH + _layeraHeader.outerHeight();
 	}else{
 		_standardH = _standardH - 32;
-		_calcH = _calcH + 32;
-	}
-	if(_btnGroupWrap.length) {
-		_standardH = _standardH - _btnGroupWrap.outerHeight();
-		_calcH = _calcH + _btnGroupWrap.outerHeight();
-	}else{
-		_standardH = _standardH;
-		_calcH = _calcH + 16;
 	}
 
-	if(_standardH < _containH || _btnExpanded.length) {
-		_layerBox.css({
-			'height' : _maxH,
-			'transition-duration' : _speed + 'ms'
-		}).data('max-height', _maxH);
-		_layerContainer.css({
-			'height' : _standardH,
-			'transition-duration' : _speed + 'ms'
-		});
-	}else{
-		_layerBox.css({
-			'height' : _calcH,
-			'transition-duration' : _speed + 'ms'
-		});
-	}
+	_layerBox.css({
+		'max-height' : _maxH
+	}).data('max-height', _maxH);
+	_layerContainer.css({
+		'max-height' : _standardH
+	});
 }
 
 // 풀팝업 스크롤 영역 계산
@@ -1029,10 +1227,10 @@ var fullScrollCalc = function(target) {
 	var _containH = window.innerHeight;
 
 	_containH = _layeraHeader.length ? _containH - _layeraHeader.outerHeight() : _containH;
-	_containH = _btnGroupWrap.length ? _containH - _btnGroupWrap.outerHeight() : _containH;
+//	_containH = _btnGroupWrap.length ? _containH - _btnGroupWrap.outerHeight() : _containH;
 
 	_layerContainer.css({
-		'height' : _containH
+		'max-height' : _containH
 	});
 }
 
@@ -1059,13 +1257,10 @@ $(document).on('click', '[class^="layer_wrap"] [class^="btn_layer_expanded"] but
 	}
 
 	if(_layeraHeader.length) _containH = _containH - _layeraHeader.outerHeight();
-	if(_btnGroupWrap.length) _containH = _containH - _btnGroupWrap.outerHeight();
 
 	_layerBox.css({
+		'max-height' : _boxH,
 		'height' : _boxH
-	});
-	_layerContainer.css({
-		'height' : _containH
 	});
 });
 
@@ -1164,19 +1359,15 @@ var expandedSwipeFn = function(target) {
 		_containH = _boxH;
 
 		if(_layeraHeader.length) _containH = _containH - _layeraHeader.outerHeight();
-		if(_btnGroupWrap.length) _containH = _containH - _btnGroupWrap.outerHeight();
 
 		_layerBox.css({
+			'max-height' : _boxH,
 			'height' : _boxH,
 			'transition-duration' : speed + 'ms'
 		});
-
-		if(_boxH >= _maxH) {
-			_layerContainer.css({
-				'height' : _containH,
-				'transition-duration' : speed + 'ms'
-			});
-		}
+		_layerContainer.css({
+			'max-height' : _containH
+		});
 
 	}
 
@@ -1227,8 +1418,8 @@ var swiperFn = function(target, options) {
 	var _slideTotal = _swipeSlide.length;
 	var _options = options || {};
 
-	var _prevEl = $(' > .swiper-btn-prev, _wrap').length != 0 ? target + '> .swiper-btn-prev' : target + '> .swiper-container > .swiper-btn-prev';
-	var _nextEl = $(' > .swiper-btn-next, _wrap').length != 0 ? target + '> .swiper-btn-next' : target + '> .swiper-container > .swiper-btn-next';
+	var _prevEl = $(' > .swiper-btn-prev', _wrap).length != 0 ? target + '> .swiper-btn-prev' : target + '> .swiper-container > .swiper-btn-prev';
+	var _nextEl = $(' > .swiper-btn-next', _wrap).length != 0 ? target + '> .swiper-btn-next' : target + '> .swiper-container > .swiper-btn-next';
 
 	var _swiperOpt = {
 		initialSlide : 0,
@@ -1556,25 +1747,5 @@ $(document).on('click', '.select_opt_box button', function() {
 		_this.attr('aria-pressed', 'true');
 	}
 });
-
- /*********************************************************************************************************
-	font face onload
-*********************************************************************************************************/
-var isWebfontLoaded = false;
-var wewFontloadFnc = [];
-var fontFaceOnload = function(options) {
-	var options = options || {};
-
-	document.fonts.onloading = function() {
-		// if(options.loading) options.loading();
-	}
-	document.fonts.onloadingdone = function() {
-		if(options.success) options.success();
-	}
-	document.fonts.onloadingerror = function() {
-		// if(options.error) options.error();
-	}
-}
-
 
 

@@ -7,16 +7,69 @@
 .agree_detail_box [class^="tab_list_wrap"] {position:sticky;top:0;z-index:1;}
 
 /*********************************************************************************************************
+	통합검색
+*********************************************************************************************************/
+/* 검색어 입력 박스 */
+.integrate_serach_wrap .integrate_inp .inp_bundle_search {position:relative;padding:9px 55px 9px 15px}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search .inp_txt {padding:0 0 0 32px}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button {position:absolute;right:0;top:0;width:51px;height:46px;border-radius:0 24px 24px 0;background-color:#f8f8f8;background-position:center;background-repeat:no-repeat;background-size:34px;z-index:1;}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="true"] {display:none;}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="false"] {display:block;}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.keyboard_btn {background-image:url(/resource/img/mbe/common/ico_serch_keyboard.png);}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.voice_btn {background-image:url(/resource/img/mbe/common/ico_serch_voice.png);}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search.focus .inp_txt {padding:0 24px 0 32px}
+
+/* 통합검색 타이틀 */
+.integrate_serach_wrap .integrate_title strong {display:inline-block;line-height:28px;font-size:18px;font-weight:500;color:#111;}
+
+/* 검색결과 리스트 */
+.integrate_serach_wrap .integrate_search_box {margin:32px 0 0;}
+.integrate_serach_wrap .integrate_search_box[aria-hidden="true"] {display:none;}
+.integrate_serach_wrap .integrate_search_box .integrate_list {margin:12px 0 0;}
+.integrate_serach_wrap .integrate_search_box .integrate_list > ul {border-bottom:1px solid #eee;}
+.integrate_serach_wrap .integrate_search_box .integrate_list > ul > li {border-top:1px solid #eee;}
+.integrate_serach_wrap .integrate_search_box .integrate_list .integrate_item button {padding:12px 0;color:#111;}
+.integrate_serach_wrap .integrate_search_box .integrate_list .integrate_item .keyword {color:#d21300;}
+
+/* 최근검색어 리스트 */
+.integrate_serach_wrap .recent_search_box {margin:32px 0 0;}
+.integrate_serach_wrap .recent_search_box[aria-hidden="true"] {display:none;}
+.integrate_serach_wrap .recent_search_box .recent_list {margin:12px 0 0;}
+.integrate_serach_wrap .recent_search_box .recent_list > ul {border-bottom:1px solid #eee;}
+.integrate_serach_wrap .recent_search_box .recent_list > ul > li {border-top:1px solid #eee;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item {position:relative;padding:0 35px 0 0;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .word {color:#666;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .date {font-size:12px;color:#999;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .del_search {position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
+
+/* 인기검색어 리스트 */
+.integrate_serach_wrap .popular_search_box {margin:32px 0 0;}
+.integrate_serach_wrap .popular_search_box[aria-hidden="true"] {display:none;}
+.integrate_serach_wrap .popular_search_box .popular_list {margin:4px 0 0;}
+.integrate_serach_wrap .popular_search_box .popular_list .btn_hash {margin:8px 4px 0 0;}
+
+/*********************************************************************************************************
 	조회/이체, 계좌관리
 *********************************************************************************************************/
 /* 이체 화면 */
-[class^="tran_proccess_wrap"] .tran_register_box {margin:40px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
+[class^="tran_proccess_wrap"] .tran_register_box {position:relative;margin:40px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
 [class^="tran_proccess_wrap"] .tran_register_box:first-child {margin:0;padding:16px 0 0;}
 [class^="tran_proccess_wrap"] > [class^="regist_bundle_box"] {margin:60px 0 0;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info {font-weight:500;color:#999;border-bottom:1px solid #999;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn {position:absolute;right:-24px;top:12px;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] {padding:12px;border-radius:24px 0 0 24px;background-color:#555;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] span {display:block;position:relative;padding:0 0 0 28px;line-height:24px;color:#fff;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] span:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-color:#fff;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"][aria-hidden="true"] {display:none;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn .tran_btn02 {}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info {display:inline-block;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank span {display:inline-block;vertical-align:middle;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank .ico_bank + .bank_code {margin:0 0 0 4px;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank .bank_code {line-height:28px;font-size:18px;font-weight:500;color:#666;border-bottom:1px solid #666;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .recipient span {display:inline-block;margin:8px 0 0;line-height:28px;font-size:18px;font-weight:500;color:#666;border-bottom:1px solid #666;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money {margin:24px 0 0 ;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money:first-child {margin:0;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .inp_amount02 {display:block;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money > .tran_money_inp {line-height:0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money {margin:16px 0 0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .possibility {display:inline-block;padding:3px 10px;line-height:18px;font-size:12px;font-weight:400;color:#666;border-radius:24px;background-color:#f4f4f4;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .error {line-height:20px;font-size:13px;font-weight:400;color:#999;}
@@ -25,6 +78,8 @@
 
 [class^="tran_depsoit_box"] {position:relative;margin:60px 0 0;padding:73px 0 0;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed {position:absolute;top:0;left:0;right:0;padding:0 0 12px;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .tab_list_wrap {padding:0 48px 0 0;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .tab_list_wrap:after {right:48px;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed {position:fixed;top:44px;margin:0;background-color:#fff;z-index:90;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .tab_list_wrap {margin:0;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
@@ -49,7 +104,7 @@
 .tran_depsoit_box02 {padding:0;}
 
 /* 전계좌조회 - 거래내역조회 상단 */
-.tran_inquiry_box {margin:0 -24px;padding:32px 24px 0;background-color:#fff;}
+.tran_inquiry_box {margin:0 -24px;padding:0 24px;background-color:#fff;}
 .tran_inquiry_box:after {display:block;content:"";height:44px;margin:-18px -24px 0;background-color:#eee;}
 .tran_inquiry_box .tran_inquiry_util {display:flex;margin:-18px -24px -44px;padding:18px 24px 0;background-color:#eee;}
 .tran_inquiry_box .tran_inquiry_util .col {width:100%;}
@@ -57,6 +112,46 @@
 .tran_inquiry_box .tran_inquiry_util button span {line-height:26px;font-size:16px;}
 .tran_inquiry_box .tran_inquiry_util .col + .col button:before {display:block;content:"";position:absolute;left:-1px;top:50%;width:1px;height:16px;margin:-8px 0 0;background-color:#979797;}
 .tran_inquiry_box + .list_top_box02 {margin:0 -24px;}
+
+/* 은행/증권사 선택 */
+.bank_select_box .bank_search_top {position:sticky;top:0;margin:0 -24px;padding:0 24px;background-color:#fff;}
+.bank_select_box .tab_list_wrap[aria-hidden="true"] {display:none;}
+.bank_select_box .tab_list_wrap[aria-hidden="false"] {display:block;}
+.bank_select_box .tab_panel_wrap[aria-hidden="true"] {display:none;}
+.bank_select_box .tab_panel_wrap[aria-hidden="false"] {display:block;}
+.bank_select_box .bank_search_result[aria-hidden="true"] {display:none;}
+.bank_select_box .bank_search_result[aria-hidden="false"] {display:block;}
+.bank_list_box > ul {display:flex;flex-wrap:wrap;margin:-16px -9px 0;}
+.bank_list_box > ul > li {box-sizing:border-box;width:25%;padding:0 9px 0 0;margin:16px 0 0;}
+.bank_list_box > ul > li > button {box-sizing:border-box;width:100%;height:100%;min-height:103px;padding:8px 0;border-radius:12px;}
+.bank_list_box > ul > li > button:active,
+.bank_list_box > ul > li > button:focus {background-color:#f8f8f8;}
+.bank_list_box > ul > li > button > div {height:100%;text-align:center;}
+.bank_list_box > ul > li > button > div {height:100%;text-align:center;}
+.bank_list_box > ul > li > button > div .bank_name {display:block;margin:8px 0 0;}
+.bank_list_box > ul > li > button > div .bank_Code {display:none;}
+.bank_list_box > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
+.bank_list_box > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
+.bank_search_result {margin:32px 0 0;}
+
+/*********************************************************************************************************
+	외환환율
+*********************************************************************************************************/
+/* 차트 박스 */
+.chart_wrap {margin:16px 0 0;}
+
+/* 통화선택 */
+.coin_list_box > ul {display:flex;flex-wrap:wrap;margin:-16px -9px 0;}
+.coin_list_box > ul > li {box-sizing:border-box;width:25%;padding:0 9px 0 0;margin:16px 0 0;}
+.coin_list_box > ul > li > button {box-sizing:border-box;width:100%;height:100%;min-height:80px;padding:8px 0;border-radius:12px;}
+.coin_list_box > ul > li > button:active,
+.coin_list_box > ul > li > button:focus {background-color:#f8f8f8;}
+.coin_list_box > ul > li > button > div {height:100%;text-align:center;}
+.coin_list_box > ul > li > button > div {height:100%;text-align:center;}
+.coin_list_box > ul > li > button > div .bank_name {display:block;margin:8px 0 0;}
+.coin_list_box > ul > li > button > div .bank_Code {display:none;}
+.coin_list_box > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
+.coin_list_box > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
 
 /*********************************************************************************************************
 	인증센터
@@ -132,25 +227,30 @@
 
 /* 민원신청 접수안내 */
 .step_group {padding-top: 10px;}
-.step_group > ul > li {display:flex;position:relative;margin-bottom:32px}
-.step_group > ul > li:last-child {margin-bottom:0;}
-.step_group > ul > li:last-child::after{display:none;}
-.step_group > ul > li::after{position:absolute;top:62px;left:30px;content:'';display:block;width:2px;height:100px;background-color:rgba(210,19,0,0.1)}
-.step_group > ul > li .step_num {display: flex;justify-content:center;align-items:center;width:60px;height:60px;border:1px solid #f2f2f2;border-radius: 50%;background-color:#fff;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04)}
+.step_group > ul {position:relative;}
+.step_group > ul > li {display:flex;margin:32px 0 0;padding:6px 0 0;}
+.step_group > ul > li::after{position:absolute;top:62px;left:30px;bottom:62px;content:'';display:block;width:2px;background-color:rgba(210,19,0,0.1)}
+.step_group > ul > li:first-child {margin:0;}
+.step_group > ul > li:first-child::after{display:none;}
+.step_group > ul > li .step_num {display: flex;justify-content:center;flex-shrink:0;align-items:center;position:relative;width:60px;height:60px;margin:-6px 0 0;border:1px solid #f2f2f2;border-radius: 50%;background-color:#fff;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04);z-index:1;}
 .step_group > ul > li .step_num strong{width:34px;font-size:13px;font-weight:bold;color:#d21300;letter-spacing:-0.3px;text-align: center;line-height: 18px;}
-.step_group > ul > li dl {width: calc(100% - 74px);margin-left: 12px;}
+.step_group > ul > li dl {width: calc(100% - 74px);margin:-6px 0 0 12px;}
 .step_group > ul > li dl > dt.tit_sub02 {margin:0 0 8px}
+.step_group > ul > li .step_conts {margin:0 0 0 12px;line-height:24px;font-size:14px;}
 
 /*********************************************************************************************************
 	기간별 명세서 스와이프 - 이용대금 명세서
 *********************************************************************************************************/
-.pay_statement_wrap {position:relative;padding:66px 0 0;margin:-24px -24px 0;}
+.pay_statement_wrap {position:relative;padding:0;margin:32px -24px;}
 /* 기간 */
-.period_swipe_box {position:fixed;left:0;top:44px;right:0;padding:20px 0;background-color:#f8f8f8;z-index:90;}
-.period_swipe_box .period_btn {display:block;width:100%;height:26px;font-size:16px;}
-.period_swipe_box .period_swipe_inner {overflow:hidden;position:relative;width:170px;margin:0 auto;}
-.period_swipe_box .swiper-btn-prev {width:24px;height:24px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_left.png) no-repeat center/100%;}
-.period_swipe_box .swiper-btn-next {width:24px;height:24px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_right.png) no-repeat center/100%;}
+.period_swipe_box {padding:0 24px;background-color:#fff;z-index:20;}
+.period_swipe_box.fixed {position:fixed;left:0;top:44px;right:0;}
+.period_swipe_box .period_btn {position:relative;height:26px;padding:0 0 0 32px;line-height:24px;font-size:14px;font-weight:500;}
+.period_swipe_box .period_btn:before {display:block;content:"";position:absolute;left:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/ico_calendar.png) no-repeat center/24px;}
+.period_swipe_box .period_swipe_inner {overflow:hidden;position:relative;margin:0 auto;padding:12px 0;border-radius:25px;background-color:#f8f8f8;}
+.period_swipe_box .swiper-wrapper .swiper-slide {text-align:center;}
+.period_swipe_box .swiper-btn-prev {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_left.png) no-repeat center/24px;}
+.period_swipe_box .swiper-btn-next {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_right.png) no-repeat center/24px;}
 /* 명세서 컨텐츠 */
 .statement_swipe_box {}
 .statement_swipe_box .swiper-container .swiper-wrapper .swiper-slide {padding:0 24px;}
@@ -160,7 +260,7 @@
 	소비자 보호공시
 *********************************************************************************************************/
 .consumer_announce_box table {margin:12px 0 0;table-layout:fiexd;width:100%;border-collapse:collapse;border-top:1px solid #eee !important;}
-.consumer_announce_box table td {box-sizing:border-box;padding:6px;font-size:0.8571rem;line-height:1.4285rem;color:#111;text-align:center;border:1px solid #eee;word-break:break-all;}
+.consumer_announce_box table td {box-sizing:border-box;padding:6px;font-size:0.8571rem;line-height:1.4285rem;color:#111;text-align:center;border:1px solid #eee;}
 .consumer_announce_box table td strong {font-weight:400;}
 .consumer_announce_box table td:first-child {border-left:none;}
 .consumer_announce_box table td:last-child {border-right:none;}
