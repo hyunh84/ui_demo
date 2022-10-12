@@ -15,8 +15,8 @@
 .integrate_serach_wrap .integrate_inp .inp_bundle_search > button {position:absolute;right:0;top:0;width:51px;height:46px;border-radius:0 24px 24px 0;background-color:#f8f8f8;background-position:center;background-repeat:no-repeat;background-size:34px;z-index:1;}
 .integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="true"] {display:none;}
 .integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="false"] {display:block;}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.keyboard_btn {background-image:url(/resource/img/mbe/common/ico_serch_keyboard.png);}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.voice_btn {background-image:url(/resource/img/mbe/common/ico_serch_voice.png);}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.keyboard_btn {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_serch_keyboard.png);}
+.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.voice_btn {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_serch_voice.png);}
 .integrate_serach_wrap .integrate_inp .inp_bundle_search.focus .inp_txt {padding:0 24px 0 32px}
 
 /* 통합검색 타이틀 */
@@ -41,7 +41,7 @@
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .word {color:#666;}
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .date {font-size:12px;color:#999;}
-.integrate_serach_wrap .recent_search_box .recent_list .recent_item .del_search {position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .del_search {position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
 
 /* 인기검색어 리스트 */
 .integrate_serach_wrap .popular_search_box {margin:32px 0 0;}
@@ -50,11 +50,76 @@
 .integrate_serach_wrap .popular_search_box .popular_list .btn_hash {margin:8px 4px 0 0;}
 
 /*********************************************************************************************************
+	비대면 회원관리
+*********************************************************************************************************/
+/* 준비물 리스트 */
+[class^="list_img_view"] {margin-top:16px;}
+[class^="list_img_view"] > li + li {margin-top:16px;}
+[class^="list_img_view"] .inner {overflow:hidden;}
+[class^="list_img_view"] .img {float:left;width:48px;height:48px;margin-right:12px;}
+[class^="list_img_view"] .txt_wrap {display:flex;overflow:hidden;min-height:48px;align-items:center;}
+
+/*********************************************************************************************************
+	전계좌 조회 메인
+*********************************************************************************************************/
+.inquiry_main {position:relative;margin:-32px -24px -40px;padding:32px 24px 40px;background-color:#f8f8f8;}
+.inquiry_main .tab_panel {position:relative;}
+.inquiry_main .balance_box {display:flex;justify-content:space-between;;padding:18px 20px;color:#fff;border-radius:12px;background-color:#d21300;box-shadow:0 2px 10px rgba(210, 19, 0, 0.2);}
+.inquiry_main .balance_box .tit {flex-shrink:0;}
+.inquiry_main .balance_box .tit strong {display:inilne-block;font-size:16px;font-weight:400;vertical-align:middle;}
+.inquiry_main .balance_box .tit .tip_info_box {margin:0 0 0 4px;vertical-align:middle;}
+.inquiry_main .balance_box .balance {line-height:30px;font-size:20px;font-weight:700;}
+.inquiry_main .main_list_util {display:flex;justify-content:space-between;margin:32px 0 0;}
+.inquiry_main .main_list_util:first-child {margin:0;}
+.inquiry_main .inq_main_list {margin:16px -24px 0;padding:19px 24px 0;border-top:1px solid #eee;}
+.inquiry_main .inq_main_list .inq_main_item {margin:34px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item:first-child {margin:0;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit {position:relative;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner {display:flex;justify-content:space-between;box-sizing:border-box;width:100%;padding:3px 32px 3px 0;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn {display:block;content:"";position:absolute;right:0;top:0;bottom:0;width:24px;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/arrow_accordion_open.png) no-repeat center / 24px;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn[aria-expanded="true"] {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/arrow_accordion_close.png);}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .tit {display:inline-block;line-height:28px;font-size:18px;font-weight:500;color:#111;vertical-align:middle;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .num {display:inline-block;box-sizing:border-box;min-width:20px;line-height:20px;font-size:13px;font-weight:500;color:#d21300;text-align:center;border-radius:100%;background-color:#fcedeb;vertical-align:middle;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .tip_info_box {margin:0 4px 0 0;vertical-align:middle;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .price {display:inline-block;line-height:28px;font-size:16px;color:#111;vertical-align:middle;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .price span {font-weight:500;}
+.inquiry_main .inq_main_list .inq_main_item .list_box {display:none;padding:20px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box .withdrawal_box {display:flex;justify-content:space-between;padding:8px 16px;line-height:20px;font-size:13px;color:#999;border-radius:8px;background-color:#eee;}
+.inquiry_main .inq_main_list .inq_main_item .list_box .withdrawal_box .tit {font-weight:500;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul {margin:16px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul:first-child {margin:0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li {margin:16px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li:first-child {margin:0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 a.inner,
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 button.inner {width:100%;-webkit-touch-callout:none;-webkit-user-select:none;text-align:left;}
+.inquiry_main .inq_main_list .inq_main_item .list_box .more_box {margin:32px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box .more_box .btn_more {background-color:transparent;}
+.inquiry_main .inq_main_list .hold_trans_guide {display:none;position:fixed;top:44px;left:0;right:0;text-align:center;background-color:#fff;z-index:60;}
+.inquiry_main .inq_main_list .hold_trans_guide .inner {box-sizing:border-box;height:65px;padding:9px 0 0;border:1px dashed #ddd;}
+.inquiry_main .inq_main_list .hold_trans_guide strong {display:block;line-height:26px;font-size:16px;font-weight:700;color:#111;}
+.inquiry_main .inq_main_list .hold_trans_guide span {display:block;line-height:20px;font-size:13px;color:#111;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .inq_item_tit > .inner > div:last-child {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li {box-sizing:border-box;border:1px dashed #ddd;border-radius:0 12px 12px 0;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 {margin:-1px;-webkit-touch-callout:none;-webkit-userselect:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_name .name {font-size:14px;color:#111;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_falg {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_code {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_amount {line-height:28px;font-size:18px;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_withdrawn {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_btn {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_hover {position:relative;overflow:hidden;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_hover:after {display:block;content:"";position:absolute;left:0;top:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.3);}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case {position:fixed;left:38px;right:10px;border:1px solid #d21300;transition:top 300ms ease;z-index:10;box-shadow:0 6px 30px rgba(0, 0, 0, 0.24);}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_amount {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_withdrawn {display:block;line-height:28px;font-size:18px;font-weight:500;color:#111;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_withdrawn em {display:inline-block;margin-right:4px;font-size:12px;font-weight:400;}
+
+/*********************************************************************************************************
 	조회/이체, 계좌관리
 *********************************************************************************************************/
 /* 이체 화면 */
 [class^="tran_proccess_wrap"] .tran_register_box {position:relative;margin:40px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
-[class^="tran_proccess_wrap"] .tran_register_box:first-child {margin:0;padding:16px 0 0;}
+[class^="tran_proccess_wrap"] .tran_register_box:first-child {margin-top:16px;}
 [class^="tran_proccess_wrap"] > [class^="regist_bundle_box"] {margin:60px 0 0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn {position:absolute;right:-24px;top:12px;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] {padding:12px;border-radius:24px 0 0 24px;background-color:#555;}
@@ -82,7 +147,7 @@
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tab_list_wrap:after {right:48px;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed {position:fixed;top:44px;margin:0;background-color:#fff;z-index:90;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .tab_list_wrap {margin:0;}
-[class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .srch_deposit_btn {right:24px;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search {margin:24px 0 0;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search[aria-hidden="true"] {display:none;}
@@ -106,6 +171,7 @@
 /* 전계좌조회 - 거래내역조회 상단 */
 .tran_inquiry_box {margin:0 -24px;padding:0 24px;background-color:#fff;}
 .tran_inquiry_box:after {display:block;content:"";height:44px;margin:-18px -24px 0;background-color:#eee;}
+.tran_inquiry_box .combo_bundle_acc02 {margin:0 0 16px;}
 .tran_inquiry_box .tran_inquiry_util {display:flex;margin:-18px -24px -44px;padding:18px 24px 0;background-color:#eee;}
 .tran_inquiry_box .tran_inquiry_util .col {width:100%;}
 .tran_inquiry_box .tran_inquiry_util button {position:relative;width:100%;height:62px;}
@@ -114,11 +180,15 @@
 .tran_inquiry_box + .list_top_box02 {margin:0 -24px;}
 
 /* 은행/증권사 선택 */
-.bank_select_box .bank_search_top {position:sticky;top:0;margin:0 -24px;padding:0 24px;background-color:#fff;}
+.bank_select_box .bank_search_top {position:sticky;top:0;margin:0 -24px;padding:0 24px;background-color:#fff;z-index:1;}
+.bank_select_box .bank_search_top [class^="tab_list_wrap"] {margin:32px -24px 0;}
+.bank_select_box .bank_search_top [class^="tab_list_wrap"]:first-child {margin:0 -24px;}
 .bank_select_box .tab_list_wrap[aria-hidden="true"] {display:none;}
 .bank_select_box .tab_list_wrap[aria-hidden="false"] {display:block;}
 .bank_select_box .tab_panel_wrap[aria-hidden="true"] {display:none;}
 .bank_select_box .tab_panel_wrap[aria-hidden="false"] {display:block;}
+.bank_select_box .tab_panel_wrap .tab_panel {padding:32px 0 0;}
+.bank_select_box .tab_panel_wrap .tab_panel .bank_search_top {position:sticky;top:41px;margin:-32px -24px 0;padding:32px 24px 24px;z-index:1;}
 .bank_select_box .bank_search_result[aria-hidden="true"] {display:none;}
 .bank_select_box .bank_search_result[aria-hidden="false"] {display:block;}
 .bank_list_box > ul {display:flex;flex-wrap:wrap;margin:-16px -9px 0;}
@@ -147,11 +217,80 @@
 .coin_list_box > ul > li > button:active,
 .coin_list_box > ul > li > button:focus {background-color:#f8f8f8;}
 .coin_list_box > ul > li > button > div {height:100%;text-align:center;}
-.coin_list_box > ul > li > button > div {height:100%;text-align:center;}
+.coin_list_box > ul > li > button > div [class^="ico_coin"] {width:32px;height:32px;}
 .coin_list_box > ul > li > button > div .bank_name {display:block;margin:8px 0 0;}
 .coin_list_box > ul > li > button > div .bank_Code {display:none;}
 .coin_list_box > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
 .coin_list_box > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
+
+/*********************************************************************************************************
+	금융상품몰
+*********************************************************************************************************/
+/* 상품 배너 */
+.swiper_banner {margin-top:40px;}
+.swiper_banner:first-child,
+.blind:first-child + .swiper_banner {margin-top:0;}
+.swiper_banner .swiper-slide {padding-right:16px;}
+.bnr_wrap {position:relative;}
+.bnr_wrap .img {overflow:hidden;border-radius:12px;}
+.bnr_wrap .inner {position:absolute;top:0;left:0;bottom:0;width:100%;padding:24px 20px;box-sizing:border-box;color:#000;}
+.bnr_wrap .sup_wrap {padding:2px 68px 12px 0;font-size:0;}
+.bnr_wrap .sup_wrap [class^="flag_item"] + [class^="flag_item"] {margin-left:8px;}
+.bnr_wrap .tit_wrap:first-child {padding-right:60px}
+.bnr_wrap .tit_wrap .tit {display:block;line-height:30px;font-size:24px;font-weight:500;}
+.bnr_wrap .tit_wrap .desc {display:block;margin-top:8px;line-height:18px;font-size:14px;}
+.bnr_wrap .cont_wrap {position:absolute;bottom:24px;left:20px;right:20px;}
+.bnr_wrap .txt_per {line-height:24px;font-size:0;}
+.bnr_wrap .txt_per span {display:inline-block;line-height:24px;font-size:14px;vertical-align:top;}
+.bnr_wrap .txt_per .lab {margin-right:8px;}
+.bnr_wrap .txt_per .per {font-size:16px;font-weight:500;}
+.bnr_wrap .txt_per .per .num {font-size:24px;}
+.bnr_wrap .area_btn {position:absolute; top:24px;right:20px;}
+.bnr_wrap .area_btn button {width:24px;height:24px;}
+.bnr_wrap .area_btn button + button {margin-left:8px;}
+
+/* 상품 카드 */
+.info_product_wrap {position:relative;min-height:68px;padding-right:60px;}
+.info_product_wrap .img {float:left;width:48px;height:48px;margin-right:12px;background-position:50% 50%;background-size:100% auto;}
+.info_product_wrap .tit_wrap {overflow:hidden;}
+.info_product_wrap .tit_wrap .tit {display:block;line-height:24px;font-size:16px;color:#000;font-weight:500;}
+.info_product_wrap .tit_wrap .desc {display:block;margin-top:4px;line-height:18px;color:#999;}
+.info_product_wrap  .cont_wrap {margin-top:12px;}
+.info_product_wrap .txt_per {font-size:0;color:#000;}
+.info_product_wrap .txt_per span {display:inline-block;line-height:24px;vertical-align:top;}
+.info_product_wrap .txt_per .lab {margin-right:8px;font-size:12px;}
+.info_product_wrap .txt_per .per {font-size:16px;font-weight:bold;}
+.info_product_wrap [class^="btn_tiny"] {position:absolute;bottom:0;right:0;}
+.info_product_wrap [class^="btn_bookmark"] {position:absolute;top:0;right:0;}
+
+/* 상품 비교 */
+.list_compare li {position:relative;}
+.list_compare li + li {margin-top:12px;}
+.item_box .inner {padding:16px 48px 16px 16px;;background:#f8f8f8;border-radius:12px;}
+.item_box .tit {display:block;line-height:24px;font-size:16px;font-weight:500;color:#000;}
+.item_box .desc {display:block;color:#111;}
+.item_box .btn_del02 {position:absolute;top:16px;right:16px;width:24px;height:24px;}
+.list_compare .empty .inner {display:flex;width:100%;height:80px;padding:16px;border:1px dashed #cdcdcd;background:none;box-sizing:border-box;flex-direction:column;justify-content:center;}
+.list_compare .empty .mssg_empty {color:#999;}
+.tbl_compare th,
+.tbl_compare td {width:50%;text-align:left;word-break:break-all;vertical-align:top;}
+.tbl_compare th {font-size:16px;color:#111;font-weight:500;}
+.tbl_compare thead th {position:relative;padding-bottom:8px;line-height:22px;}
+.tbl_compare thead th:after {content:"";position:absolute;bottom:0;height:2px;background:#111;}
+.tbl_compare thead th:first-child:after {left:0;right:6px;}
+.tbl_compare thead th:last-child:after {left:6px;right:0;}
+.tbl_compare thead .num {display:block;font-size:26px;line-height:1;font-weight:500;}
+.tbl_compare thead .tit {display:block;font-size:16px;font-weight:500;}
+.tbl_compare tbody th {padding:24px 0 8px;}
+.tbl_compare th:first-child,
+.tbl_compare td:first-child {padding-right:6px;}
+.tbl_compare th:last-child,
+.tbl_compare td:last-child {padding-left:6px;}
+.tbl_compare th:only-child,
+.tbl_compare td:only-child {padding-left:0;padding-right:0;}
+.tbl_compare .txt {display:block;padding:16px 0 8px;border-top:1px solid #eee;}
+.tbl_compare tfoot td {padding-top:24px;}
+
 
 /*********************************************************************************************************
 	인증센터
@@ -161,18 +300,22 @@
 .certifi_method_box ul li:first-child {margin:0;}
 .certifi_method_box ul li .chip_chk02 {width:100%;}
 .certifi_method_box ul li .chip_chk02 em {padding:0 28px 0 36px;}
-.certifi_method_box ul li .chip_chk02 em:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-color:#ff0;background-position:center;background-repeat:no-repeat;background-size:100%;}
-.certifi_method_box ul li .chip_chk02 em.ico_finger {}
-.certifi_method_box ul li .chip_chk02 em.ico_face {}
-.certifi_method_box ul li .chip_chk02 em.ico_pattern {}
-.certifi_method_box ul li .chip_chk02 em.ico_password {}
+.certifi_method_box ul li .chip_chk02 em:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-position:center;background-repeat:no-repeat;background-size:100%;}
+.certifi_method_box ul li .chip_chk02 em.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password_on.png);}
 
 .certifi_method_box ul li .btn_link02 span {padding:11px 0 11px 36px;}
-.certifi_method_box ul li .btn_link02 span:before {display:block;content:"";position:absolute;left:16px;top:11px;width:24px;height:24px;background-color:#ff0;background-position:center;background-repeat:no-repeat;background-size:100%;}
-.certifi_method_box ul li .btn_link02 span.ico_finger {}
-.certifi_method_box ul li .btn_link02 span.ico_face {}
-.certifi_method_box ul li .btn_link02 span.ico_pattern {}
-.certifi_method_box ul li .btn_link02 span.ico_password {}
+.certifi_method_box ul li .btn_link02 span:before {display:block;content:"";position:absolute;left:16px;top:11px;width:24px;height:24px;background-position:center;background-repeat:no-repeat;background-size:100%;}
+.certifi_method_box ul li .btn_link02 span.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger.png);}
+.certifi_method_box ul li .btn_link02 span.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face.png);}
+.certifi_method_box ul li .btn_link02 span.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern.png);}
+.certifi_method_box ul li .btn_link02 span.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password.png);}
 
 /* 간편인증 가이드  */
 .certifi_guide_box:before {display:block;content:"";width:65px;height:65px;margin:0 0 40px;background-color:#00f;background-repeat:no-repeat;background-position:center;background-size:100%;}
@@ -222,8 +365,8 @@
 .complaint_link_box ul li:first-child {margin:0;}
 .complaint_link_box ul li a {display:block;padding:20px 0;font-weight:500;color:#111;text-align:center;border:1px solid #ddd;border-radius:12px;}
 .complaint_link_box ul li a:before {display:block;content:"";width:56px;height:56px;margin:0 auto 12px;background-repeat:no-repeat;background-position:center;background-size:56px;background-color:#0f0;}
-.complaint_link_box ul li a.member:before {background-image:url(/resource/img/mbe/common/);}
-.complaint_link_box ul li a.non_member:before {background-image:url(/resource/img/mbe/common/);}
+.complaint_link_box ul li a.member:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/);}
+.complaint_link_box ul li a.non_member:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/);}
 
 /* 민원신청 접수안내 */
 .step_group {padding-top: 10px;}
@@ -246,11 +389,11 @@
 .period_swipe_box {padding:0 24px;background-color:#fff;z-index:20;}
 .period_swipe_box.fixed {position:fixed;left:0;top:44px;right:0;}
 .period_swipe_box .period_btn {position:relative;height:26px;padding:0 0 0 32px;line-height:24px;font-size:14px;font-weight:500;}
-.period_swipe_box .period_btn:before {display:block;content:"";position:absolute;left:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/ico_calendar.png) no-repeat center/24px;}
+.period_swipe_box .period_btn:before {display:block;content:"";position:absolute;left:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_calendar.png) no-repeat center/24px;}
 .period_swipe_box .period_swipe_inner {overflow:hidden;position:relative;margin:0 auto;padding:12px 0;border-radius:25px;background-color:#f8f8f8;}
 .period_swipe_box .swiper-wrapper .swiper-slide {text-align:center;}
-.period_swipe_box .swiper-btn-prev {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_left.png) no-repeat center/24px;}
-.period_swipe_box .swiper-btn-next {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_right.png) no-repeat center/24px;}
+.period_swipe_box .swiper-btn-prev {width:50px;height:50px;background:#f8f8f8 url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_period_left.png) no-repeat center/24px;}
+.period_swipe_box .swiper-btn-next {width:50px;height:50px;background:#f8f8f8 url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_period_right.png) no-repeat center/24px;}
 /* 명세서 컨텐츠 */
 .statement_swipe_box {}
 .statement_swipe_box .swiper-container .swiper-wrapper .swiper-slide {padding:0 24px;}
@@ -283,9 +426,17 @@
 }
 
 /*********************************************************************************************************
+	PDF 박스
+*********************************************************************************************************/
+.pdf_box {}
+.pdf_box img {width:100%;}
+
+/*********************************************************************************************************
 	IBsheet UI
 *********************************************************************************************************/
 /* ibsheet grid */
 .ibsheet_wrap {margin:0 -24px;}
+.ibsheet_wrap [class^="inq_card_case"] {border-top:1px solid #eee;}
+.ibsheet_wrap [class^="list_card_box"] {border-top:1px solid #eee;}
 .ibsheet_wrap .ibsheet_veiw_more {margin:16px 24px 0;}
 

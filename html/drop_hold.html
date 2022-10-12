@@ -1,253 +1,871 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-	<title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user_scalable=no, viewport-fit=cover" />
+<title>부산은행 기업금융 비대면 채널 개선</title>
 
-	<link rel="stylesheet" type="text/css" href="./../resources/css/base.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/mbe/mbe.css">
 
-	<script type="text/javascript" src="../resources/js/jquery-3.5.1.min.js"></script>
-	<!-- <script type="text/javascript" src="../resources/js/swiper-bundle.js"></script> -->
-
-<style type="text/css">
-#wrap {height:100%;min-height:100%;height:auto !important;}
-.drop_hold_box {position:relative;box-sizing:border-box;padding:24px;min-height:100%;}
-
-.present_bank_box {min-height:52px;}
-.present_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
-.present_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;background-color:#0f0;z-index:10;}
-
-.another_bank_box {margin:32px 0 0;}
-.another_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
-.another_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;background-color:#0f0;z-index:10;}
-.another_bank_box ul li {min-height:52px;margin:16px 0 0;}
-.another_bank_box ul li:first-child {margin:0;}
+<script type="text/javascript" src="../resources/js/mbe/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../resources/js/mbe/swiper.min.8.2.4.js"></script>
+<script type="text/javascript" src="../resources/js/mbe/ui_style.js"></script>
 
 
+<script type="text/javascript" src="../resources/js/mbe/layout_html.js"></script>
 
-</style>
 </head>
 <body>
 
+<!-- wrap -->
 <div id="wrap">
-	
-	<div class="drop_hold_box">
+	<!-- header -->
+	<script>
+		headerHtml('거래내역조회');
+	</script>
+	<!-- //header -->
 
-		<div class="present_bank_box">
-			<button type="button">
-				<span>부산은행 주계좌<span>
-			</button>
+	<!-- gnb -->
+	<script>
+		gnbHtml();
+	</script>
+	<!-- gnb -->
+
+	<!-- container -->
+	<div id="container">
+		<!-- pageStack -->
+		<div id="pageStack">
+			<!-- contents -->
+			<div class="contents">
+
+				<div class="tab_fixed_box">
+					<div class="tab_list_wrap" tab-name="inquiryMain">
+						<div class="tab_list_inner">
+							<ul class="tab_list" role="tablist">
+								<li class="tab_item active">
+									<button type="button" role="tab"><em>부산은행</em></button>
+								</li>
+								<!-- <li class="tab_item">
+									<button type="button" role="tab"><em>오픈뱅킹</em></button>
+								</li>
+								<li class="tab_item">
+									<button type="button" role="tab"><em>다른은행</em></button>
+								</li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab_panel_wrap inquiry_main" tab-name="panel_inquiryMain">
+
+					<div role="tabpanel" class="tab_panel">
+
+						<div class="balance_box">
+							<div class="tit">
+								<strong>총 자산</strong>
+								<div class="tip_info_box">
+									<button type="button" class="btn_tip_open02" aria-haspopup="true" aria-expanded="false"><em class="blind">우대금리</em></button>
+									<div class="tip_conts_box" role="tooltip" aria-hidden="true">
+										<div class="tip_conts_case">
+											<ul>
+												<li>* 총자산 금액은 입출금+예적금+펀드평가금액+외화+신탁금액-대출금으로 계산됩니다.</li>
+												<li>* 보험은 총 자산에서 제외</li>
+											</ul>
+										</div>
+										<span class="tip_tail" aria-hidden="true"></span>
+										<button type="button" class="btn_tip_close"><em class="blind">닫기</em></button>
+									</div>
+								</div>
+							</div>
+							<div class="balance">
+								549,176,000,000 원
+							</div>
+						</div>
+
+						<div class="main_list_util">
+							<div>
+								<button type="button" class="btn_order03"><span>순서변경</span></button>
+							</div>
+							<div>
+								<span class="inp_switch">
+									<input type="checkbox" checked>
+									<span class="ico_switch"><span>잔액</span></span>
+								</span>
+							</div>
+						</div>
+
+						<div class="inq_main_list">
+							<div class="hold_trans_guide" aria-hidden="true">
+								<div class="inner">
+									<strong>Hold &amp; Drop 이체</strong>
+									<span>입금하실 계좌 위에서 손을 놓아주세요.</span>
+								</div>
+							</div>
+							<div class="inq_main_item hold_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">입출금</strong>
+											<span class="num">3</span>
+										</div>
+										<div>
+											<div class="price"><span>65,123,456,780</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="true"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box"  aria-hidden="false" style="display:block;">
+									<div class="withdrawal_box">
+										<div class="tit">출금가능금액</div>
+										<div class="price"><span>500,000,000</span> 원</div>
+									</div>
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<button type="button" class="inner hold">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item09">주계좌</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금융입출금계좌</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">324,345,678,000  원</div>
+														<div class="acc_withdrawn"><em>출금가능금액</em>200,000,000,000 원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이체</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<button type="button" class="inner hold">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금융입출금계좌</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">324,345,678,000  원</div>
+														<div class="acc_withdrawn"><em>출금가능금액</em>200,000,000,000 원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이체</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<button type="button" class="inner hold">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금융입출금계좌</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">324,345,678,000  원</div>
+														<div class="acc_withdrawn"><em>출금가능금액</em>200,000,000,000 원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이체</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item hold_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">예적금</strong>
+											<span class="num">3</span>
+										</div>
+										<div>
+											<div class="price"><span>500,000,000</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">정기적금</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">BNK사업자정기적금</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">200,000,000  원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>계좌정보</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">자유적금</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금용자유적금</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">100,000,000  원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>입금</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">정기예금</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">상품명</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">200,000,000  원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>계좌정보</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">대출</strong>
+											<span class="num">3</span>
+										</div>
+										<div>
+											<div class="price"><span>500,000,000</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">원리금균등</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금대출계좌2</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">200,000,000  원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이자납입</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">원금균등</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">BNK사업자대출통장</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">100,000,000  원</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_date">
+															<span class="flag_item10">D-3</span>
+															<span>만기일 2023.06.30</span>
+														</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이자납입</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">마이너스</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">BNK사업자대출통장</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">200,000,000  원</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이자납입</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">펀드</strong>
+											<span class="num">2</span>
+										</div>
+										<div>
+											<div class="price"><span>200,000,000</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">고위험2</span>
+															<span class="flag_item13">주식형</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금대출계좌2</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">100,000,000  원</div>
+														<div class="acc_withdrawn">투자금액 100,000,000,000 원</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_arnings">
+															<div class="ico_rise02">8.20</div>
+														</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>추가투자</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">고위험2</span>
+															<span class="flag_item13">주식형</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금대출계좌2</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">100,000,000  원</div>
+														<div class="acc_withdrawn">투자금액 100,000,000,000 원</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_arnings">
+															<div class="ico_rise02">8.20</div>
+														</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>추가투자</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">외화</strong>
+											<span class="num">2</span>
+										</div>
+										<div>
+											<div class="tip_info_box">
+												<button type="button" class="btn_tip_open" aria-haspopup="true" aria-expanded="false"><em class="blind">우대금리</em></button>
+												<div class="tip_conts_box" role="tooltip" aria-hidden="true">
+													<div class="tip_conts_case">
+														<ul>
+															<li>* 외화의 원화 환산 금액은 조회시점의    고시회차를 기준으로 계산됩니다.</li>
+														</ul>
+													</div>
+													<span class="tip_tail" aria-hidden="true"></span>
+													<button type="button" class="btn_tip_close"><em class="blind">닫기</em></button>
+												</div>
+											</div>
+											<div class="price"><span>200,000,000</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">입출금</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">상품명</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount"><span class="bold4">USD</span> 30,000.00</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>이체</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">정기적금</span>
+														</div>
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-1234-5678-90</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">사업자금용외화적금</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount"><span class="bold4">CNY</span> 300,000</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>계좌정보</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">보험</strong>
+											<span class="num">2</span>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">정상</span>
+														</div>
+														<div class="insurance_corp">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="corp">NH손해보험</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">NH운전자보험</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">
+															<span class="txt">일시납</span>
+															678,000  원
+														</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_date02">
+															<span>계약일 2022-08-15</span>
+														</div>
+													</div>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_falg">
+															<span class="flag_item13">정상</span>
+														</div>
+														<div class="insurance_corp">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="corp">라이나생명</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">라이나생명연금보험</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">
+															<span class="txt">월남</span>
+															200,000  원
+														</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_date02">
+															<span>계약일 2022-08-15</span>
+														</div>
+													</div>
+												</button>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="inq_main_item">
+								<div class="inq_item_tit">
+									<div class="inner">
+										<div>
+											<strong class="tit">신탁</strong>
+											<span class="num">2</span>
+										</div>
+										<div>
+											<div class="price"><span>3,000,000</span> 원</div>
+										</div>
+									</div>
+									<button type="button" class="expand_btn" aria-expanded="false"><span class="blind">상세 열기</span></button>
+								</div>
+
+								<div class="list_box" aria-hidden="true">
+									<ul>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-4567-3456-10</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">특정금전신탁</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">
+															1,000,000 원
+														</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_arnings">
+															<div class="ico_rise02">8.20</div>
+														</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>지급</span></button>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="acc_plate_wrap04 acc01">
+												<a href="#" class="inner">
+													<div class="acc_plate_info">
+														<div class="acc_code">
+															<span aria-hidden="true" class="ico_bank" style="background-image:url(../resources/img/mbe/temp/ico_bnk.png);"></span>
+															<span class="code">123-4567-3456-10</span>
+														</div>
+														<div class="acc_name">
+															<span class="name">퇴직연금신탁</span>
+														</div>
+													</div>
+													<div class="acc_plate_price">
+														<div class="acc_amount">
+															2,000,000 원
+														</div>
+													</div>
+													<div class="acc_plate_info02">
+														<div class="acc_arnings">
+															<div class="ico_fall02">8.20</div>
+														</div>
+													</div>
+												</button>
+												<div class="acc_btn">
+													<button type="button" class="btn_tiny03"><span>입금</span></button>
+												</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="more_box">
+										<button type="button" class="btn_more"><span>더보기</span></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- <div role="tabpanel" class="tab_panel">
+
+					</div>
+
+					<div role="tabpanel" class="tab_panel">
+
+					</div> -->
+
+				</div>
+
+			</div>
+			<!-- //contents -->
+
 		</div>
-
-		<div class="another_bank_box">
-			<ul>
-				<li>
-					<button type="button">
-						<span>국민은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>하나은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>SB은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>신한은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>우리은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>카카오은행 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>국민은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>하나은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>SB은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>신한은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>우리은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>카카오은행2 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>국민은행3 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>하나은행3 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>SB은행3 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>신한은행3 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>우리은행3 계좌<span>
-					</button>
-				</li>
-				<li>
-					<button type="button">
-						<span>카카오은행3 계좌<span>
-					</button>
-				</li>
-			</ul>
-
-		</div>
+		<!-- pageStack -->
 
 	</div>
+	<!-- //container -->
 
+
+	<!-- footer -->
+	<footer id="footer">
+
+	</footer>
+	<!-- //footer -->
 </div>
+<!-- //wrap -->
 
 <script>
+var accHoldTrans1 = undefined;
+var accHoldTrans2 = undefined;// 2차 시 사용 오픈뱅킹
+var accHoldTrans3 = undefined;// 2차 시 사용 함께보기
+var tabExFnc = new tabControlFn('[tab-name="inquiryMain"]', {
 
-var dropHoldFn = function(target, options) {
-	var _wrap = $(target);
-	var _items = $('button', _wrap);
-	var _tapItem = undefined;
-	var _tapItemPos = undefined;
-	var _current = {};
-	var _delta = {};
-	var _movY = 0;
-	var _holdTime = 500;
-	var _tapStartTime;
-	var _tapEndTime;
-	var _holdSetTime = undefined;
-	var _itemInfo = {};
-	var _itemInfoKey = [];
-	var _isTapHold = false;
+	setInit : function(idx, panelEl) {
+		var holdLibTarget = $('.inq_main_list', panelEl);
 
-	var options = options || {};
-
-	_items.each(function(i) {
-		var _this = $(this);
-		_this.data('positionT', _this.position().top);
-		_itemInfo[_this.position().top] = this;
-		_itemInfoKey.push(_this.position().top);
-	});
-
-	var holdItemFn = function(item) {
-		console.log('item tap hold');
-		_tapItem = $(item);
-		_tapItem.addClass('hold').css('top', _tapItem.data('positionT'));
-		_tapItemPos = _tapItem.data('positionT');
-	}
-
-	var dhStart = function(e) {
-		console.log('dhStart');
-		var _touchObj = e.originalEvent.changedTouches[0];
-		var _evtItem = e.currentTarget;
-		
-		_current = {
-			X : _touchObj.pageX,
-			Y : _touchObj.pageY
-		}		
-		_tapStartTime = new Date().getTime();
-		_holdSetTime = setTimeout(function(_evtItme) {
-			_isTapHold = true;
-			holdItemFn(_evtItem);
-		}, 700);
-	}
-	var dhMove = function(e) {
-		console.log('dhMove');
-		var _touchObj = e.originalEvent.changedTouches[0];
-
-		_delta = {
-			X : _touchObj.pageX - _current.X,
-			Y : _touchObj.pageY - _current.Y
+		if(idx == 0) {
+			accHoldTrans1 = new accTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans1 selected = ${bool}`);
+				}
+			});
+		}
+		if(idx == 1) {
+			accHoldTrans2 = new accTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans2 selected = ${bool}`);
+				}
+			});
+		}
+		if(idx == 2) {
+			accHoldTrans3 = new accTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans3 selected = ${bool}`);
+				}
+			});
 		}
 
-		if(_isTapHold) {
-			e.preventDefault();
+	},
+	panelChangeAfter : function(idx, panelEl) {
+		// tabpanel 변경 후 콜백 함수
+		// idx : 현재 활성화된 탭 인덱스 번호
+		// panelEl : 현재 활성화된 tabpanel 엘레멘트
+		var holdLibTarget = $('.inq_main_list', panelEl);
 
-			if(_tapItemPos + _delta.Y <= _itemInfoKey[0]) {
-				_movY = _itemInfoKey[0];
-			} else if(_tapItemPos + _delta.Y >= _itemInfoKey[_itemInfoKey.length - 1]) {
-				_movY = _itemInfoKey[_itemInfoKey.length - 1];
-			} else {
-				_movY = _tapItemPos + _delta.Y;
-			}
-
-			_tapItem.css({'top' : _movY});
+		if(idx == 0 && accHoldTrans1 != undefined) {
+			accHoldTrans1 = new aaccTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans1 selected = ${bool}`);
+				}
+			});
 		}
-
+		if(idx == 1 && accHoldTrans2 != undefined) {
+			accHoldTrans2 = new accTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans2 selected = ${bool}`);
+				}
+			});
+		}
+		if(idx == 2 && accHoldTrans3 != undefined) {
+			accHoldTrans3 = new accTabHoldFn(holdLibTarget, {
+				'holdEnd' : function(holdEl, selectEl, bool) {
+					// holdEl : hold 계좌 element반환
+					// selectEl : 선택된 계좌 element반환
+					// bool : 선택된 값이 있을경우  true 없으면 false 반환
+					console.log(`accHoldTrans3 selected = ${bool}`);
+				}
+			});
+		}
 	}
-	var dhEnd = function(e) {
-		console.log('dhEnd');
-		var _touchObj = e.originalEvent.changedTouches[0];
+});
 
-		_tapEndTime = new Date().getTime();
-		_delta = {
-			X : _touchObj.pageX - _current.X,
-			Y : _touchObj.pageY - _current.Y
-		}
+$('.main_list_util .inp_switch input').click(function() {
+	var _this = $(this);
+	var _thisPanel = _this.closest('.tab_panel');
+	var _accPlate = $('.inq_main_list .acc_plate_wrap04', _thisPanel);
+	var _isChecked = _this.prop('checked');
 
-		if(_tapEndTime - _tapStartTime <= _holdTime) {
-			clearTimeout(_holdSetTime);
-			_holdSetTime = undefined;
-			return;
-		}
-		e.preventDefault();
-		_tapItem.removeClass('hold');
-		_tapItem.css({'top' : _tapItemPos});
-		_isTapHold = false;
+	if(_isChecked) {
+		_accPlate.find('.acc_plate_price').show().attr('aria-hidden', 'false');
+	}else{
+		_accPlate.find('.acc_plate_price').hide().attr('aria-hidden', 'true');
 	}
+});
 
-	_items.unbind('touchstart', dhStart).bind('touchstart', dhStart);
-	_items.unbind('touchmove', dhMove).bind('touchmove', dhMove);
-	_items.unbind('touchend', dhEnd).bind('touchend', dhEnd);
-	_items.unbind('contextmenu').bind('contextmenu', function(e) {
-		e.preventDefault(); // 기본 태그 기능 막기
-		return false;
-	});
-	$('span', _items).unbind('contextmenu').bind('contextmenu', function(e) {
-		e.preventDefault(); // 기본 태그 기능 막기
-		return false;
-	});
-}
+$('.inq_main_list .expand_btn').click(function() {
+	var _this = $(this);
+	var _section = _this.closest('.inq_main_item');
+	var _listBox = $('.list_box', _section);
 
-var dropHoldFnc = new dropHoldFn('.drop_hold_box');
+	if(_listBox.is(':hidden')) {
+		_listBox.show().attr('aria-hidden', 'false');
+		_this.attr('aria-expanded', 'true');
+	}else{
+		_listBox.hide().attr('aria-hidden', 'true');
+		_this.attr('aria-expanded', 'false');
+	}
+});
 
 </script>
 </body>
