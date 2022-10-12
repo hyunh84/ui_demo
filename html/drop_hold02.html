@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title>Document</title>
+
+	<link rel="stylesheet" type="text/css" href="./../resources/css/base.css">
+
+	<script type="text/javascript" src="../resources/js/jquery-3.5.1.min.js"></script>
+	<!-- <script type="text/javascript" src="../resources/js/swiper-bundle.js"></script> -->
+
+<style type="text/css">
+#wrap {height:100%;min-height:100%;height:auto !important;}
+.drop_hold_box {position:relative;box-sizing:border-box;padding:24px;min-height:100%;}
+
+.present_bank_box {min-height:52px;}
+.present_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
+.present_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;background-color:#0f0;z-index:10;}
+
+.another_bank_box {margin:32px 0 0;}
+.another_bank_box button {display:block;width:100%;height:52px;line-height:52px;border:1px solid #eee;border-radius:8px;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
+.another_bank_box button.hold {position:absolute;left:24px;right:24px;width:auto;background-color:#0f0;z-index:10;}
+.another_bank_box ul li {min-height:52px;margin:16px 0 0;}
+.another_bank_box ul li:first-child {margin:0;}
+
+
+
+</style>
+</head>
+<body>
+
+<div id="wrap">
+	
+	<div class="drop_hold_box">
+
+		<div class="present_bank_box">
+			<button type="button">
+				<span>부산은행 주계좌<span>
+			</button>
+		</div>
+
+		<div class="another_bank_box">
+			<ul>
+				<li>
+					<button type="button">
+						<span>국민은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>하나은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>SB은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>신한은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>우리은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>카카오은행 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>국민은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>하나은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>SB은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>신한은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>우리은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>카카오은행2 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>국민은행3 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>하나은행3 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>SB은행3 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>신한은행3 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>우리은행3 계좌<span>
+					</button>
+				</li>
+				<li>
+					<button type="button">
+						<span>카카오은행3 계좌<span>
+					</button>
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+
+</div>
+
+<script>
+
+var dropHoldFn = function(target, options) {
+	var _wrap = $(target);
+	var _items = $('button', _wrap);
+	var _tapItem = undefined;
+	var _tapItemPos = undefined;
+	var _current = {};
+	var _delta = {};
+	var _movY = 0;
+	var _holdTime = 500;
+	var _tapStartTime;
+	var _tapEndTime;
+	var _holdSetTime = undefined;
+	var _itemInfo = {};
+	var _itemInfoKey = [];
+	var _isTapHold = false;
+
+	var options = options || {};
+
+	_items.each(function(i) {
+		var _this = $(this);
+		_this.data('positionT', _this.position().top);
+		_itemInfo[_this.position().top] = this;
+		_itemInfoKey.push(_this.position().top);
+	});
+
+	var holdItemFn = function(item) {
+		console.log('item tap hold');
+		_tapItem = $(item);
+		_tapItem.addClass('hold').css('top', _tapItem.data('positionT'));
+		_tapItemPos = _tapItem.data('positionT');
+	}
+
+	var dhStart = function(e) {
+		console.log('dhStart');
+		var _touchObj = e.originalEvent.changedTouches[0];
+		var _evtItem = e.currentTarget;
+		
+		_current = {
+			X : _touchObj.pageX,
+			Y : _touchObj.pageY
+		}		
+		_tapStartTime = new Date().getTime();
+		_holdSetTime = setTimeout(function(_evtItme) {
+			_isTapHold = true;
+			holdItemFn(_evtItem);
+		}, 700);
+	}
+	var dhMove = function(e) {
+		console.log('dhMove');
+		var _touchObj = e.originalEvent.changedTouches[0];
+
+		_delta = {
+			X : _touchObj.pageX - _current.X,
+			Y : _touchObj.pageY - _current.Y
+		}
+
+		if(_isTapHold) {
+			e.preventDefault();
+
+			if(_tapItemPos + _delta.Y <= _itemInfoKey[0]) {
+				_movY = _itemInfoKey[0];
+			} else if(_tapItemPos + _delta.Y >= _itemInfoKey[_itemInfoKey.length - 1]) {
+				_movY = _itemInfoKey[_itemInfoKey.length - 1];
+			} else {
+				_movY = _tapItemPos + _delta.Y;
+			}
+
+			_tapItem.css({'top' : _movY});
+		}
+
+	}
+	var dhEnd = function(e) {
+		console.log('dhEnd');
+		var _touchObj = e.originalEvent.changedTouches[0];
+
+		_tapEndTime = new Date().getTime();
+		_delta = {
+			X : _touchObj.pageX - _current.X,
+			Y : _touchObj.pageY - _current.Y
+		}
+
+		if(_tapEndTime - _tapStartTime <= _holdTime) {
+			clearTimeout(_holdSetTime);
+			_holdSetTime = undefined;
+			return;
+		}
+		e.preventDefault();
+		_tapItem.removeClass('hold');
+		_tapItem.css({'top' : _tapItemPos});
+		_isTapHold = false;
+	}
+
+	_items.unbind('touchstart', dhStart).bind('touchstart', dhStart);
+	_items.unbind('touchmove', dhMove).bind('touchmove', dhMove);
+	_items.unbind('touchend', dhEnd).bind('touchend', dhEnd);
+	_items.unbind('contextmenu').bind('contextmenu', function(e) {
+		e.preventDefault(); // 기본 태그 기능 막기
+		return false;
+	});
+	$('span', _items).unbind('contextmenu').bind('contextmenu', function(e) {
+		e.preventDefault(); // 기본 태그 기능 막기
+		return false;
+	});
+}
+
+var dropHoldFnc = new dropHoldFn('.drop_hold_box');
+
+</script>
+</body>
+</html>
