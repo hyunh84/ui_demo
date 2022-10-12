@@ -4,7 +4,7 @@
 	Base(reset) style
 *****************************/
 html {font-size:14px;}
-html, body {height:100%;-webkit-touch-callout:none;-webkit-user-select:none;}
+html, body {height:100%;}
 html, body, blockquote, caption, dd, div, dl, dt, fieldset, form, frame, h1, h2, h3, h4, h5, h6, hr,
 iframe, input, legend, li, object, ol, p, pre, q, select, table, textarea, ul, tr, td{ margin:0;padding:0}
 ul, ol, li{list-style:none}

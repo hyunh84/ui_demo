@@ -91,7 +91,7 @@
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul > li {margin:16px 0 0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul > li:first-child {margin:0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 a.inner,
-.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 button.inner {width:100%;text-align:left;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 button.inner {width:100%;-webkit-touch-callout:none;-webkit-user-select:none;text-align:left;}
 .inquiry_main .inq_main_list .inq_main_item .list_box .more_box {margin:32px 0 0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box .more_box .btn_more {background-color:transparent;}
 .inquiry_main .inq_main_list .hold_trans_guide {display:none;position:fixed;top:44px;left:0;right:0;text-align:center;background-color:#fff;z-index:60;}
