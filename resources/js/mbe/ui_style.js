@@ -4,24 +4,36 @@ DOCUMENT READY
 var $page_ID = null;
 $(document).ready(function() {
 	if($page_ID == null) {
-		$page_ID = $('.contents');
+		$page_ID = $('#container');
 	}
 	goToTop();
 });
 
 var reAct = function() {
-	setTimeout(function() {contsPaddingSet();}, 0);
+	setTimeout(function() {
+		contsPaddingSet();// 메인 화면 하단 여백 삽입
+	}, 0);
+
+//	inputEvtFocus();// 인풋요소 포커스 디자인 인터렉션 이벤트 바인드
 //	goToTop();
 }
 
-var contsPaddingSet = function() {
-	var _pageID = $page_ID;
+var contsPaddingSet = function(dom) {
+	var _pageID = dom ? $(dom) : $page_ID;
+	var _contsEl = _pageID.hasClass('contents') ? _pageID : $('.contents', _pageID);
 	var _pageBotFixed = $('[class^="page_bottom_fixed"]', _pageID);
-	var _btnGroupBox = $('[class^="btn_group_wrap"]', _pageBotFixed);
-	var _padB = _pageBotFixed.length ? _pageBotFixed.outerHeight() + 40 : 40;
 
-	_pageID.css('padding-bottom', _padB);
+	if(_pageBotFixed.length) {
+		_pageBotFixed.each(function(i) {
+			var _this = $(this);
+
+//			var _padB = _this.outerHeight() + 16;
+//			_contsEl.css('padding-bottom', _padB);
+			_contsEl.css('padding-bottom', 114);
+		});
+	}
 }
+
 
 /* 탑으로가기 */
 var goToTop = function() {
@@ -63,105 +75,107 @@ var goToTop = function() {
 }
 
 /*********************************************************************************************************
-	Native 키패드
+	input focusin 일반 키패트 대응
 *********************************************************************************************************/
-var nativeKeypadH = function(el, h) {
-	var _el = el;
-	var _height = h;
-	var _cont = _el.closest('.contents');
-}
+var keypadFocusSetTime = undefined;
+var keypadFocusFn = function(el) {
+	var setScrollPos = function() {
+		var _targetEl = $(el).closest('[class^="inp_bundle"], [class^="modify_bundle_item"]');
+		var _scrollEl = $('body, html');
 
-/*********************************************************************************************************
-	GNB MENU
-*********************************************************************************************************/
-$(document).on('click', '.btn_header_gnb', function() {
-	gnbOpenFn(this)
-});
+		if(!_targetEl.length) return;
 
-// GNB OPEN FUNCTION
-var gnbOpenFn = function(clickEl) {
-	var _gnbWrap = $('#gnbWrap');
-	var _gnbBox = $('.btn_header_gnb', _gnbWrap).attr('tabindex', '0');
-	var _btnClose = $('.btn_gnb_close', _gnbWrap);
-	var _btnOpen = $('#header .btn_gnb');
-	var	_accessbility01;
-	var _accessbility02;
+		var _offT = _targetEl.offset().top;
+		var _scrollT = _scrollEl.scrollTop();
+		var _movY = undefined;
 
-	// _btnOpen.attr('aria-expanded', true);
-	_gnbWrap.attr('aria-hidden', false);
-	_gnbWrap.data('btn-gnb', clickEl);
-	_gnbWrap.prepend('<div class="AccessibilityHtml1" tabindex="0" aria-hidden="true"></div>');
-	_gnbWrap.append('<div class="AccessibilityHtml2" tabindex="0" aria-hidden="true"></div>');
-	_gnbWrap.addClass('active');
-	_gnbBox.focus();
+		if(IS_ANDROID) {
+			if(_targetEl.closest('.layer_container').length > 0) {
+				_scrollEl = _targetEl.closest('.layer_container');
+				_scrollT = _scrollEl.scrollTop();
+				_movY = _offT - 130;
+				_movY = Math.abs(_movY + _scrollT);
+			}else{
+				_movY = _offT - 130;
+			}
 
-	_accessbility01 = $('.AccessibilityHtml1', _gnbWrap);
-	_accessbility02 = $('.AccessibilityHtml2', _gnbWrap);
+			if(_movY) {
+				if(keypadFocusSetTime != undefined) clearTimeout(keypadFocusSetTime);
+				keypadFocusSetTime = setTimeout(function() {
+					_scrollEl.scrollTop(_movY)
+				}, 200);
+			}
 
-	// S :GNB close
-	_btnClose.off('click').on('click', function() {
-		gnbCloseFn();
-	});
-	_gnbWrap.off('click').on('click', function() {
-		gnbCloseFn();
-	});
-	// E :GNB close
-
-	// S : _gnbWrap.click 팝업 close 이벤트 상쇄
-	_gnbBox.off('click').on('click', function(e) {e.stopPropagation();});
-	// E : _gnbWrap.click 팝업 close 이벤트 상쇄
-
-	// S : GNB 처음, 마지막 포커스 이동 컨트롤
-	_accessbility01.off('focusin').on('focusin', function() {
-		if(_btnClose.is(':hidden') || !_btnClose.length) {
-			_gnbBox.focus();
-		}else{
-			_btnClose.focus();
+			_scrollEl.scrollTop(_movY);
 		}
-	});
-	_accessbility02.off('focusin').on('focusin', function() {
-		_gnbBox.focus();
-	});
-	// E : GNB 처음, 마지막 포커스 이동 컨트롤
-}
+//		else if(IS_IOS){
+//			var _scrollPos;
+//			if(_targetEl.closest('.layer_container').length > 0) {
+//				_scrollEl = _targetEl.closest('.layer_container');
+//				_scrollPos = $('.layer_contents', _scrollEl).outerHeight() - (_offT - _targetEl.closest('.layer_wrap').find('.layer_header').outerHeight());
+//			}else{
+//				_scrollPos = $('#wrap').outerHeight() - _offT;
+//			}
+//			if(window.innerHeight / 2 > _scrollPos) {
+//				_movY = _scrollT + 50;
+//			}
+//			if(_movY) setTimeout(function() {_scrollEl.scrollTop(_movY)}, 200);
+//		}
+	}
 
-// GNB CLOSE FUNCTION
-var gnbCloseFn = function() {
-	var _gnbWrap = $('#gnbWrap');
-	var _gnbBox = $('.btn_header_gnb', _gnbWrap);
-	var _clickEl = $(_gnbWrap.data('btn-gnb'));
-	var _accessbility01 = $('.AccessibilityHtml1', _gnbWrap);
-	var _accessbility02 = $('.AccessibilityHtml2', _gnbWrap);
+	if(keypadFocusSetTime != undefined) clearTimeout(keypadFocusSetTime);
+	keypadFocusSetTime = setTimeout(function() {
+		setScrollPos();
+//		_scrollEl.scrollTop(_movY)
+	}, 200);
 
-	_accessbility01.remove();
-	_accessbility02.remove();
-	_gnbWrap.attr('aria-hidden', true).removeClass('active');
-	// _clickEl.focus().attr('aria-expanded', false);
-	_clickEl.focus();
-	_gnbBox.removeAttr('tabindex');
-	_gnbWrap.removeData('btn-gnb');
 }
 
 /*********************************************************************************************************
-	input text
+	input event bind
 *********************************************************************************************************/
 //inp_bundle 포커스 dom클릭시 포커스 아웃 처리
-$(document).on('click focusin', function(e) {
-	$('[class^="inp_bundle"]').removeClass('focus').find('.btn_inp_del').remove();
+$(document).on('click', function(e) {
+	var _el = $(e.target);
+	var _inpWrap = _el.closest('[class^="inp_bundle"]');
+	var _inpReset = false;
+
+	if($('#wrap').find('input').length == 0) return;
+
+	if(_el.prop('tagName') != 'INPUT'){
+		if(_el.prop('tagName') != 'BUTTON' || !_el.hasClass('[class^="btn_inp_del"]')) {//인풋 컴포넌트 value삭제 버튼 예외처리
+			_inpReset = true;
+		}
+
+		if(_el.prop('tagName') == 'BUTTON') {
+			if(_el.closest('[class^="btn_group_wrap"]').length && _el.hasClass('disabled') && !_el.prop('disabled')) {//submit disabled 버튼 클릭 이벤트시
+				_inpReset = false;
+			}
+			if(_el.closest('[class^="btn_layer_wrap"]').length && _el.hasClass('disabled') && !_el.prop('disabled')) {//submit disabled 버튼 클릭 이벤트시
+				_inpReset = false;
+			}
+		}
+	}else if(_el.prop('tagName') == 'INPUT' && !_inpWrap.length){
+		_inpReset = true;
+	}
+
+	if(_inpReset) {
+		$('[class^="inp_bundle"]').removeClass('focus val').find('.btn_inp_del').remove();
+		$('.inp_bundle_email').removeClass('domain').find('.domain_box').hide().attr('aria-hidden', 'true');
+	}
 });
-//inp_bundle 클릭시 input[type="text"]에 포커스 이동
+//inp_bundle click시 인풋요소에 포커스
 $(document).on('click', '[class^="inp_bundle"]', function(e) {
 	e.stopPropagation();
 	var _this = $(this);
-	var _inpTxt = $('[class^="inp_txt"]', _this);
-	var _inp = $('input', _this);
-
-	_inp.eq(0).focus();
+	var _focusArea = $('input:first', _this);
+	if(!_this.hasClass('inp_bundle_textarea')) _focusArea.focus();
 });
-//inp_bundle 클릭시 input[type="text"] click 이벤트 방지
-$(document).on('click focusin', '[class^="inp_bundle"] input, [class^="inp_bundle"] button, [class^="inp_bundle"] textarea', function(e) {e.stopPropagation();});
+//input[type="text"]에 click이벤트 상쇄
+$(document).on('click', '[class^="inp_bundle"] input', function(e) {e.stopPropagation();});
 //input[type="text"]에 focus in
-$(document).on('focusin', '[class^="inp_bundle"] input, [class^="inp_bundle"] textarea', function(e) {
+$(document).on('focusin keyup change', '[class^="inp_bundle"] input', function(e) {
+	e.stopPropagation();
 	var _this = $(this);
 	var _val = _this.val();
 	var _bundle = _this.closest('[class^="inp_bundle"]');
@@ -169,41 +183,46 @@ $(document).on('focusin', '[class^="inp_bundle"] input, [class^="inp_bundle"] te
 	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
 	var _inpFlexCase = _inpTxt.closest('[class^="inp_flex"]');
 	var _appendEl = _inpTxt;
+	var _isVal = false;
+
 	if(_inpFlexCase.length) {
-		if(_inpFlexCase.attr('class').indexOf('inp_flex_amount') < 0) _appendEl = _inpFlexCase;
+		var _excepClass = ['inp_flex_amount', 'inp_flex_unit'];
+		var _hasExcepClass = false;
+
+		for(var i = 0; i < _excepClass.length; i++) {
+			if(!_hasExcepClass) _hasExcepClass = _inpFlexCase.attr('class').indexOf(_excepClass[i]) >= 0 ? true : false;
+		}
+
+		if(_hasExcepClass) {
+			_appendEl = _inpTxt;
+		}else{
+			_appendEl = _inpFlexCase;
+		}
 	}
+	$('input', _bundle).each(function() {
+		if(!_isVal) _isVal = $(this).val() == '' ? false : true;
+	});
 
-	$('[class^="inp_bundle"]').removeClass('focus').find('.btn_inp_del').remove();
+	if(e.type == 'focusin') {
+		$('[class^="inp_bundle"]').removeClass('focus val').find('.btn_inp_del').remove();
+		if(_bundle.hasClass('inp_bundle_email') && !_bundle.hasClass('domain')) {
+			$('.inp_bundle_email').removeClass('domain').find('.domain_box').hide().attr('aria-hidden', 'true');
+		}
 
+	}
 	_bundle.addClass('focus');
-	_appendEl.append(_btnDelHtml);
-
-	if(_val == '') {
+	if(!$('.btn_inp_del', _bundle).length) _appendEl.append(_btnDelHtml);
+	if(_val == '' && !_isVal) {
+		_bundle.removeClass('val');
 		$('.btn_inp_del', _appendEl).hide().attr('aria-hidden', 'true');
 	}else {
-		$('.btn_inp_del', _appendEl).show().attr('aria-hidden', 'false');
-	}
-});
-$(document).on('keyup change', '[class^="inp_bundle"] input', function(e) {
-	var _this = $(this);
-	var _val = _this.val();
-	var _bundle = _this.closest('[class^="inp_bundle"]');
-	var _inpTxt = _this.closest('[class^="inp_txt"]');
-	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
-	var _inpFlexCase = _inpTxt.closest('[class^="inp_flex"]');
-	var _appendEl = _inpTxt;
-	if(_inpFlexCase.length) {
-		if(_inpFlexCase.attr('class').indexOf('inp_flex_amount') < 0) _appendEl = _inpFlexCase;
-	}
-
-	if(_val == '') {
-		$('.btn_inp_del', _appendEl).hide().attr('aria-hidden', 'true');
-	}else {
-		$('.btn_inp_del', _appendEl).show().attr('aria-hidden', 'false');
+		_bundle.addClass('val');
+		$('.btn_inp_del', _appendEl).show().removeAttr('aria-hidden');
 	}
 });
 //btn_inp_del 클릭시 value삭제
-$(document).on('click', '[class^="inp_bundle"] .btn_inp_del', function() {
+$(document).on('click', '[class^="inp_bundle"] .btn_inp_del', function(e) {
+	e.stopPropagation();
 	var _this = $(this);
 	var _bundle = _this.closest('[class^="inp_bundle"]');
 	var _inpTxt = $('[class^="inp_txt"]', _bundle);
@@ -211,40 +230,94 @@ $(document).on('click', '[class^="inp_bundle"] .btn_inp_del', function() {
 
 	_inp.val('').eq(0).focus();
 });
+//btn_inp_del focusin 이벤트 상쇄
+$(document).on('focusin', '[class^="inp_bundle"] .btn_inp_del', function(e) {e.stopPropagation();});
 /*통합검색 입력 박스 키보드 음성변경 버튼*/
-$(document).on('click', '[class^="inp_bundle"] .keyboard_btn, [class^="inp_bundle"] .voice_btn', function(e) {
+$(document).on('click', '[class^="inp_bundle"] .keyboard_btn, [class^="inp_bundle"] .voice_btn', function(e) {e.stopPropagation();});
+//search_btn 클릭시 이벤트 상쇄
+$(document).on('click', '[class^="inp_bundle"] .search_btn', function(e) {
 	e.stopPropagation();
+	var _this = $(this);
+	var _bundle = _this.closest('[class^="inp_bundle"]');
+	_bundle.removeClass('val');
+	$('.btn_inp_del', _bundle).hide().attr('aria-hidden', 'true');
 });
+
+/* data-filter대응 */
+var addFilterUI = function(el) {
+	var _el = $(el);
+	_el.on('keyup change', function(e) {
+		e.stopPropagation();
+		var _this = $(this);
+		var _val = _this.val();
+		var _bundle = _this.closest('[class^="inp_bundle"]');
+		var _inpTxt = _this.closest('[class^="inp_txt"]');
+		var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
+		var _inpFlexCase = _inpTxt.closest('[class^="inp_flex"]');
+		var _appendEl = _inpTxt;
+		var _isVal = false;
+
+		if(_inpFlexCase.length) {
+			var _excepClass = ['inp_flex_amount', 'inp_flex_unit'];
+			var _hasExcepClass = false;
+
+			for(var i = 0; i < _excepClass.length; i++) {
+				if(!_hasExcepClass) _hasExcepClass = _inpFlexCase.attr('class').indexOf(_excepClass[i]) >= 0 ? true : false;
+			}
+
+			if(_hasExcepClass) {
+				_appendEl = _inpTxt;
+			}else{
+				_appendEl = _inpFlexCase;
+			}
+		}
+		$('input', _bundle).each(function() {
+			if(!_isVal) _isVal = $(this).val() == '' ? false : true;
+		});
+
+		if(e.type == 'focusin') $('[class^="inp_bundle"]').removeClass('focus val').find('.btn_inp_del').remove();
+		_bundle.addClass('focus');
+		if(!$('.btn_inp_del', _bundle).length) _appendEl.append(_btnDelHtml);
+		if(_val == '' && !_isVal) {
+			_bundle.removeClass('val');
+			$('.btn_inp_del', _appendEl).hide().attr('aria-hidden', 'true');
+		}else {
+			_bundle.addClass('val');
+			$('.btn_inp_del', _appendEl).show().removeAttr('aria-hidden');
+		}
+	}).change();
+}
 
 /*********************************************************************************************************
-input textarea
+	이메일 입력 포커스
 *********************************************************************************************************/
-//inp_bundle 클릭시 textarea에 포커스 이동
-$(document).on('click', '[class^="inp_bundle_textarea"]', function(e) {
+$(document).on('click', '.inp_bundle_email .domain_box button', function(e) {e.stopPropagation();});
+$(document).on('focusin', '.inp_bundle_email .domain_box button', function(e) {
+	e.stopPropagation();
 	var _this = $(this);
-	var _input = $('textarea', _this);
+	var _inpEmail = _this.closest('.inp_bundle_email');
+	var _domainBox = $('.domain_box', _inpEmail);
+	var _domainBoxInner = $('.inner', _domainBox);
 
-	_input.focus();
+	if(!_inpEmail.find('.emailFoucsMov').length) _domainBox.append('<div class="emailFoucsMov" aria-label="도메인 리스트 처음으로 이동 및 리스트 없을 시 입력박스로 이동" style="overflow:hidden;height:0;line-height:0;font-size:1px;" tabindex="0" aria-hidden="true"></div>');
+
 });
-$(document).on('click', '[class^="inp_bundle_textarea"] textarea', function(e) {e.stopPropagation();});
-//textarea에 focus in
-$(document).on('focusin keyup change', '[class^="inp_bundle_textarea"] textarea', function() {
+$(document).on('focusin', '.inp_bundle_email .emailFoucsMov', function(e) {
+	e.stopPropagation();
 	var _this = $(this);
-	var _val = _this.val();
-	var _inpBox = _this.closest('[class^="inp_bundle_textarea"]');
-	var _inpTxt = $('[class^="inp_txt"]', _inpBox);
-	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-label="입력삭제"></button>';
+	var _inpEmail = _this.closest('.inp_bundle_email');
+	var _inp = $('input', _inpEmail);
+	var _domainBox = $('.domain_box', _inpEmail);
+	var _domainBoxInner = $('.inner', _domainBox);
+	var _listItem = $('button', _domainBoxInner);
 
-	_inpBox.addClass('focus');
-});
-//textarea에 focus out
-$(document).on('focusout', '[class^="inp_bundle_textarea"] textarea', function() {
-	var _this = $(this);
-	var _val = _this.val();
-	var _inpBox = _this.closest('[class^="inp_bundle_textarea"]');
-	var _inpTxt = $('[class^="inp_txt"]', _inpBox);
+	if(_listItem.length) {
+		_listItem.eq(0).focus();
+	}else{
+		_inp.focus();
+	}
 
-	_inpBox.removeClass('focus');
+
 });
 
 /*********************************************************************************************************
@@ -253,28 +326,52 @@ $(document).on('focusout', '[class^="inp_bundle_textarea"] textarea', function()
 $(document).on('keyup change paste', '[class^="modify_bundle_item"] [class^="inp_modify"] input', function(e) {
 	var _this = $(this);
 	var _bundleWrap = _this.closest('[class^="modify_bundle_item"]');
-	var _hiddenTxt = $('> div[aria-hidden="true"]', _bundleWrap);
+	var _hiddenTxt = $('> .modify_view', _bundleWrap);
 	var _txt = _this.val() == '' ? _this.attr('placeholder') : _this.val();
 
 	_hiddenTxt.text(_txt);
 });
-$(document).on('focusout', '[class^="modify_bundle_item"] [class^="inp_modify"] input', function(e) {
-	var _this = $(this);
-	var _itemWrap = _this.closest('[class^="modify_bundle_item"]');
-	var _inp = $('[class^="inp_modify"] input', _itemWrap);
-
-	_inp.attr('disabled', true);
-	_itemWrap.removeClass('focus');
-});
 $(document).on('click', '[class^="modify_bundle_item"] [class^="modify_btn"]', function(e) {
 	var _this = $(this);
 	var _itemWrap = _this.closest('[class^="modify_bundle_item"]');
+	var _viewTxt = $('.modify_view', _itemWrap);
 	var _inp = $('[class^="inp_modify"] input', _itemWrap);
+	var _btn = $('.modify_btn', _itemWrap);
+	_viewTxt.attr('aria-hidden', 'true');
 
-	_inp.attr('disabled', false).focus();
+	_itemWrap.addClass('active');
 	_itemWrap.addClass('focus');
-
+	_inp.attr('disabled', false).focus();
+//	$('span', _btn).removeClass('blind').text('저장');
 });
+$(document).on('click', '[class^="modify_bundle_item"].active [class^="modify_btn"]', function(e) {
+	var _this = $(this);
+	var _itemWrap = _this.closest('[class^="modify_bundle_item"]');
+	var _viewTxt = $('.modify_view', _itemWrap);
+	var _inp = $('[class^="inp_modify"] input', _itemWrap);
+	var _btn = $('.modify_btn', _itemWrap);
+	_viewTxt.attr('aria-hidden', 'true');
+
+	_viewTxt.removeAttr('aria-hidden');
+	_itemWrap.removeClass('focus');
+	_itemWrap.removeClass('active');
+	_inp.attr('disabled', true);
+	_this.focus();
+//	$('span', _btn).addClass('blind').text('수정');
+});
+
+/*********************************************************************************************************
+	이체금액 입력
+**********************************************************************************************************/
+$(document).on('keyup change paste', '.inp_amount02 input', function(e) {
+	var _this = $(this);
+	var _bundleWrap = _this.closest('.inp_amount02');
+	var _hiddenTxt = $('.hide_txt', _bundleWrap);
+	var _txt = _this.val() == '' ? _this.attr('placeholder') : _this.val();
+
+	_hiddenTxt.text(_txt);
+});
+
 
 /*********************************************************************************************************
 	SELECT DROP DOWN
@@ -282,7 +379,7 @@ $(document).on('click', '[class^="modify_bundle_item"] [class^="modify_btn"]', f
 $(document).on('click focusin', function() {
 	$('.combo_bundle02').removeClass('focus');
 	$('.combo_bundle02 > button').attr('aria-expanded', 'false');
-	$('.combo_bundle02 .combo_opt_box').hide().attr('aria-hidden', 'true');
+	$('.combo_bundle02 .combo_opt_box').slideUp(300).attr('aria-hidden', 'true');
 	$('.combo_bundle02 .combo_opt_box .comboFoucsMov').remove();
 });
 $(document).on('click', '.combo_bundle02 > button', function(e) {
@@ -292,13 +389,14 @@ $(document).on('click', '.combo_bundle02 > button', function(e) {
 	var _optBox = $('.combo_opt_box', _bundle);
 	var _isExpanded = _this.attr('aria-expanded');
 
-	$('.combo_bundle02').removeClass('focus');
-	$('.combo_bundle02 > button').attr('aria-expanded', 'false');
-	$('.combo_bundle02 .combo_opt_box').hide().attr('aria-hidden', 'true');
-	$('.combo_bundle02 .combo_opt_box .comboFoucsMov').remove();
 
-	_bundle.addClass('focus');
 	if(_isExpanded == 'false') {
+		$('.combo_bundle02').removeClass('focus');
+		$('.combo_bundle02 > button').attr('aria-expanded', 'false');
+		$('.combo_bundle02 .combo_opt_box').hide().attr('aria-hidden', 'true');
+		$('.combo_bundle02 .combo_opt_box .comboFoucsMov').remove();
+
+		_bundle.addClass('focus');
 		_this.attr('aria-expanded', 'true');
 		_optBox.slideDown(300).attr('aria-hidden', 'false');
 		_optBox.append('<div class="comboFoucsMov" style="overflow:hidden;height:0;line-height:0;font-size:1px;" tabindex="0" aria-hidden="true"></div>')
@@ -308,7 +406,7 @@ $(document).on('click', '.combo_bundle02 > button', function(e) {
 		});
 	} else if(_isExpanded == 'true') {
 		_this.attr('aria-expanded', 'false');
-		_optBox.slideUp(300, function() {$(this).attr('aria-hidden', 'true');});
+		_optBox.slideUp(300).attr('aria-hidden', 'true');
 		$('.comboFoucsMov', _optBox).remove();
 	}
 });
@@ -342,18 +440,17 @@ $(document).on('click', '.combo_bundle02 .combo_opt_box button', function(e) {
 	var _selectView = $('.selected', _btnBundle);
 
 	if(_inpHidden.val() != _thisVal) {
-		if(_thisChild.children().length) {
-			_selectView.empty().append(_thisChild.children().clone());
+		if(_thisChild.children().length > 0) {
+			_selectView.empty().append(_thisChild.children().clone()).attr('aria-hidden', 'false');
 		}else{
-			_selectView.text(_thisChild.text());
+			_selectView.text(_thisChild.text()).attr('aria-hidden', 'false');
 		}
 		_inpHidden.val(_thisVal);
 	}
 	_btnBundle.attr('aria-expanded', 'false');
 	_optBox.slideUp(300, function() {
-		$(this).attr('aria-hidden', 'true');
 		_btnBundle.focus();
-	});
+	}).attr('aria-hidden', 'true');
 	$('.comboFoucsMov', _optBox).remove();
 });
 
@@ -378,359 +475,390 @@ $(document).on('click', '[class^="btn_check"]', function() {
 /*********************************************************************************************************
 	TAB
 *********************************************************************************************************/
-var tabControlFn = function(target, options) {
-	// initial function
-	this.initialFn = function() {
-		_innerWrap.scrollLeft(0);
-		_setTabAttrFn();
-	}
+var initTabFn = function(dom, el, opt) {
+	var tabExFnc = new tabControlFn(el, opt, dom);
 
-	// 함수 옵션
-	var options = options || {};
+	$(dom).data('uiTabFnc', tabExFnc);
+}
 
-	var _targetWrap = $(target);
-	var _innerWrap = $('> .tab_list_inner', _targetWrap);
+var tabControlFn = function(target, options, dom) {
+	var gl = this;
+	this.el = {}
+
+	if(dom) this.el.dom = $(dom);
+
+	this.el.targetWrap = dom ? $(target, this.el.dom) : $(target);
+	this.el.innerWrap = $('> .tab_list_inner', this.el.targetWrap);
 
 	// data-tab-name
-	var _tabUiName = _targetWrap.attr('tab-name');
+	this.el.tabUiName = this.el.targetWrap.attr('tab-name');
 
-	// tab position index
-	var _oldIdx;
-	var _nowIdx;
-
-	// rol = tablist
-	var _tabList = $(' > [role="tablist"], > .tab_list', _innerWrap);
-	var _tabItemsCase = $('> [class^="tab_item"]', _tabList);
-	var _tabItems = $(' > [role="tab"], > .tab_item', _tabItemsCase);
+	// rol : tablist
+	this.el.tabList = $(' > [role="tablist"], > .tab_list', this.el.innerWrap);
+	this.el.tabItemsCase = $('> [class^="tab_item"]', this.el.tabList);
+	this.el.tabItems = $(' > a, > button', this.el.tabItemsCase);
 
 	// expanded list button
-	var _btnFold = $('> [class^="btn_tab_fold"]', _targetWrap);
+	this.el.btnFold = $('> [class^="btn_tab_fold"]', this.el.targetWrap);
 
-	// rol = tabpanel
-	var _tabPanelName = 'panel_' + _tabUiName;
-	var _tabPanelWrap = $('[tab-name="' + _tabPanelName + '"]');
-	var _tabPanelSwipeBox = _tabPanelWrap.closest('[class^="panel_swiper_box"]');
-	var _tabPanelItems = $('> [role="tabpanel"]', _tabPanelWrap);
-	var _panelSwiperFn;
+	// rol : tabpanel
+	this.el.tabPanelName = 'panel_' + this.el.tabUiName;
+	this.el.tabPanelWrap =  dom ? $('[tab-name="' + this.el.tabPanelName + '"]', this.el.dom) : $('[tab-name="' + this.el.tabPanelName + '"]');
+	this.el.tabPanelItems = $('> [role="tabpanel"]', this.el.tabPanelWrap);
+	this.el.tabPanelSwipeBox = $(this.el.tabPanelWrap).closest('[class^="panel_swiper_box"]');
 
 	// fixed box
-	var _tabFixedWrap = _targetWrap.closest('[class^="tab_fixed_box"]');
+	this.el.tabFixedWrap = this.el.targetWrap.closest('[class^="tab_fixed_box"]');
 
 	// layer wrap
-	var _layerWrap = _targetWrap.closest('[class^="layer_wrap"]');
+	this.el.layerWrap = this.el.targetWrap.closest('[class^="layer_wrap"]');
 
-	// swiper
-	var _isSwiperUI = options.swiperUI != undefined ? options.swiperUI : false;
+	this.oldIdx = 0; // tab position old index
+	this.nowIdx = 0; // tab position index
+
+	this.options = options ? options : {};// func options
+	this.isSwiperUI = this.options.swiperUI != undefined ? this.options.swiperUI : false;
+	this.swiperPanel = undefined;
+
+	this.initialFn = function() {
+		this.el.innerWrap.scrollLeft(0);
+		this.setTabAttrFn();
+	}
 
 	// id, aria 속성 셋팅
-	var _setTabAttrFn = function() {
-		var _lastInt = _tabItems.length;
+	this.setTabAttrFn = function() {
+		var _tabObj = this;
+		var _tabEl = this.el;
+		var _lastInt = _tabEl.tabItems.length;
 
-		_tabItems.each(function(i) {
+		this.el.tabPanelSwipeBox.attr('tab-swiper-panel', this.el.tabPanelName);
+
+		_tabEl.tabItems.each(function(i) {
 			var _this = $(this);
 			var _num = i + 1;
-			var _tabId = ('tab_' + _tabUiName) + '_' + (_num < 10 ? '0' + _num : i+1);
+			var _tabId = ('tab_' + _tabEl.tabUiName) + '_' + (_num < 10 ? '0' + _num : i+1);
 			var _tagName = _this.prop('tagName').toUpperCase();
 
 			_this.attr('id', _tabId);
-			if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-labelledby', _tabId);
+
+			if(_tagName === 'BUTTON') _tabObj.setPanelAttrFn(i, 'aria-labelledby', _tabId);
 			if($(this).parent().hasClass('active')) {
-				_this.attr('aria-selected', true).attr('tabindex', 0);
-				if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-hidden', 'false');
+				_this.closest('[class^="tab_item"]').attr('aria-label', '선택됨');
+				if(_tagName === 'BUTTON') _tabObj.setPanelAttrFn(i, 'aria-hidden', 'false');
 				if(_tagName === 'A') {
-					_setPanelAttrFn(0, 'aria-labelledby', _tabId);
-					_setPanelAttrFn(0, 'aria-hidden', 'false');
+					_tabObj.setPanelAttrFn(0, 'aria-labelledby', _tabId);
+					_tabObj.setPanelAttrFn(0, 'aria-hidden', 'false');
 				}
-				_oldIdx = _idxCycleFn(i - 1);
-				_nowIdx = i;
+				_tabObj.oldIdx = _tabObj.idxCycleFn(i - 1);
+				_tabObj.nowIdx = i;
 			} else {
-				_this.attr('aria-selected', false).attr('tabindex', -1);
-				if(_tagName === 'BUTTON') _setPanelAttrFn(i, 'aria-hidden', 'true');
+				if(_tagName === 'BUTTON') _tabObj.setPanelAttrFn(i, 'aria-hidden', 'true');
 			}
 		});
-
-		if(_isSwiperUI) {
-			_panelSwiperFn = new swiperFn('.' + _tabPanelSwipeBox.attr('class').split(' ')[0], {
-				'initialSlide' : _nowIdx,
+		// panel swiper
+		if(_tabObj.isSwiperUI) {
+			_tabObj.swiperPanel = new swiperFn('[tab-swiper-panel="' + this.el.tabPanelSwipeBox.attr('tab-swiper-panel') + '"]', {
+				'initialSlide' : _tabObj.nowIdx,
 				'pagination' : false,
 				'navigation' : false,
 				'transitionStart' : function() {
 					var _slides = this.slides;
 					var _idx = this.realIndex;
-					_oldIdx = _nowIdx;
-					_nowIdx = _idx;
+					_tabObj.oldIdx = _tabObj.nowIdx;
+					_tabObj.nowIdx = _idx;
 
-					_scrollMov(_nowIdx);
-					_tabChFn (_nowIdx);
-					_panelChFn(_nowIdx);
+					_tabObj.scrollMov(_idx);
+					_tabObj.tabChFn (_idx);
+					_tabObj.panelChFn(_idx);
 				},
 				'transitionEnd' : function() {
 					var _slides = this.slides;
 					var _idx = this.realIndex;
-					_oldIdx = _nowIdx;
-					_nowIdx = _idx;
+					_tabObj.oldIdx = _tabObj.nowIdx;
+					_tabObj.nowIdx = _idx;
 
-					_tabPanelItems.scrollTop(0).css({'visibility' : 'hidden'});
-					_tabPanelItems.eq(_nowIdx).css({'visibility' : 'visible'});
-				},
-				'touchMove' : function() {
-					_tabPanelItems.css({'visibility' : 'visible'});
+					_tabEl.tabPanelItems.scrollTop(0);
+					_tabEl.tabPanelItems.eq(_idx);
 				}
 			});
 
-			var _swiperOffset = _tabPanelSwipeBox.offset().top;
+			var _swiperOffset = _tabEl.tabPanelSwipeBox.offset().top;
 			var _height = window.innerHeight - _swiperOffset;
-
-			_tabPanelItems.css({
+			_tabEl.tabPanelItems.css({
 				'height' : _height
 			});
-			_tabPanelItems.eq(_nowIdx).css({'visibility' : 'visible'});
 		}
 
-		if(_tabItemsCase.eq(_nowIdx).position()) {
-			var _activeLeft = _tabItemsCase.eq(_nowIdx).position().left;
-			var _activeWidth = _tabItemsCase.eq(_nowIdx).outerWidth();
+		// move active tabItem
+		if(_tabEl.tabItemsCase.eq(_tabObj.nowIdx).position()) {
+			var _activeLeft = _tabEl.tabItemsCase.eq(_tabObj.nowIdx).position().left;
+			var _activeWidth = _tabEl.tabItemsCase.eq(_tabObj.nowIdx).outerWidth();
 
 			if(_activeLeft > 0) {
 				var _spillover = _activeLeft + _activeWidth;
 
-				if(_innerWrap.outerWidth() < _spillover) {
-					_scrollMov(_nowIdx);
+				if(_tabEl.innerWrap.outerWidth() < _spillover) {
+					_tabObj.scrollMov(_tabObj.nowIdx);
 				}
 			}
 		}
 
-		if(_btnFold.length) {
-			_btnFold.attr('aria-hidden', false);
+		// tab_list_wrap02 접힘/펼침
+		if(_tabEl.targetWrap.hasClass('tab_list_wrap02')) {
+			var _spillover = _tabEl.tabItemsCase.eq(_tabEl.tabItemsCase.length - 1).position().left + _activeWidth;
+
+			if(_tabEl.innerWrap.outerWidth() < _spillover) {
+				_tabEl.targetWrap.addClass('fold');
+				$('.btn_tab_fold', _tabEl.targetWrap).attr('aria-hidden', 'false').show();
+			} else {
+				$('.btn_tab_fold', _tabEl.targetWrap).attr('aria-hidden', 'true').hide();
+			}
+		} else if(_tabEl.targetWrap.hasClass('tab_list_wrap04')) {
+			_tabObj.barChangeFn();
 		}
-		if(options.setInit) options.setInit(_nowIdx, _tabPanelItems);
+
+		if(_tabEl.btnFold.length) {
+			_tabEl.btnFold.attr('aria-hidden', false);
+		}
+		if(_tabObj.options.setInit) _tabObj.options.setInit(_tabObj.nowIdx, _tabObj.el.tabPanelItems.eq(_tabObj.nowIdx));
 	}
 
-	var _setPanelAttrFn = function(idx, attrName, attrVale) {
+
+	this.setPanelAttrFn = function(idx, attrName, attrVale) {
+		var _tabEl = this.el;
 		var _num = idx + 1;
-		var _panelId = ('tabpanel_' + _tabUiName) + (_num < 10 ? '0' + _num : _num+1);
+		var _panelId = ('tabpanel_' + _tabEl.tabUiName) + (_num < 10 ? '0' + _num : _num+1);
 
-		_tabPanelItems.eq(idx).attr(attrName, attrVale);
-		_tabItems.eq(idx).attr('aria-controls', _panelId);
-	}
-
-	// initial function
-	var _initialFn = function() {
-		_innerWrap.scrollLeft(0);
-		_setTabAttrFn();
+		_tabEl.tabPanelItems.eq(idx).attr(attrName, attrVale);
+		_tabEl.tabItems.eq(idx).attr('aria-controls', _panelId);
 	}
 
 	// tab change
-	var _tabChFn = function(idx) {
-		_tabItems.attr('aria-selected', 'false');
-		_tabItems.attr('tabindex', '-1');
-		_tabItems.parent().removeClass('active');
-		_tabItems.eq(idx).attr('aria-selected', 'true');
-		_tabItems.eq(idx).attr('tabindex', '0');
-		_tabItems.eq(idx).parent().addClass('active');
+	this.tabChFn = function(idx) {
+		var _tabEl = this.el;
+		_tabEl.tabItems.removeAttr('title');
+		_tabEl.tabItems.parent().removeClass('active').removeAttr('aria-label');
+		_tabEl.tabItems.eq(idx).closest('[class^="tab_item"]').attr('aria-label', '선택됨');
+		_tabEl.tabItems.eq(idx).parent().addClass('active');
 	}
 
 	// tab panel change
-	var _panelChFn = function(idx) {
-		_tabPanelItems.attr('aria-hidden', 'true');
-		_tabPanelItems.eq(idx).attr('aria-hidden', 'false');
+	this.panelChFn = function(idx) {
+		var _tabObj = this;
+		var _tabEl = this.el;
+		_tabEl.tabPanelItems.attr('aria-hidden', 'true');
+		_tabEl.tabPanelItems.eq(idx).attr('aria-hidden', 'false');
+
+		if(!_tabObj.isSwiperUI) {
+			/* 검색필터 영역 */
+			if($('.list_top_box02', _tabEl.tabPanelWrap).length) {
+				$('.list_top_box02', _tabEl.tabPanelWrap).removeClass('fixed').removeAttr('style');
+				$('.list_top_box02 .list_top_inner', _tabEl.tabPanelWrap).removeAttr('style');
+			}
+		}
 
 
-		if(options.panelChangeAfter) {
-			options.panelChangeAfter(idx, _tabPanelItems.eq(idx));
+		if(_tabObj.options.panelChangeAfter) {
+			_tabObj.options.panelChangeAfter(idx, _tabEl.tabPanelItems.eq(idx));
 		}
 	}
 
+
 	// index recycle function
-	var _idxCycleFn = function(idx) {
-		_oldIdx = _nowIdx;
-		_nowIdx = (_tabItems.length + (idx % _tabItems.length)) % _tabItems.length;
-		return _nowIdx;
+	this.idxCycleFn = function(idx) {
+		var _tabEl = this.el;
+		return (_tabEl.tabItems.length + (idx % _tabEl.tabItems.length)) % _tabEl.tabItems.length;
 	}
 
 	// tab item disabled check function
-	var _isDisabledFn = function(idx) {
-		return _tabItems.eq(idx).parent().hasClass('disabled');
+	this.isDisabledFn = function(idx) {
+		var _tabEl = this.el;
+		return _tabEl.tabItems.eq(idx).parent().hasClass('disabled');
 	}
 
-	// calculate move tab idx function
-	var _calcMoveIdx = function(idx, dir) {
-		var _isDisabled;
-		_oldIdx = idx;
-		if(dir === 'minus') {
-			_nowIdx = _idxCycleFn(idx-1);
-			_isDisabled = _isDisabledFn(_nowIdx);
-		} else if(dir === 'plus') {
-			_nowIdx = _idxCycleFn(idx+1);
-			_isDisabled = _isDisabledFn(_nowIdx);
-		}
-
-		if(_isDisabled) {
-			return _calcMoveIdx(_nowIdx, dir);
-		} else {
-			return _nowIdx;
-		}
+	// 탭 백 바 이동 애니메이션
+	this.barChangeFn = function() {
+		var _tabObj = this;
+		var _tabEl = this.el;
+		$('.bar_active', _tabEl.tabEltargetWrap).css({
+			'width' : _tabEl.tabItemsCase.eq(_tabObj.nowIdx).outerWidth(),
+			'left' : _tabEl.tabItemsCase.eq(_tabObj.nowIdx).position().left + 4
+		});
 	}
 
-	var _scrollMov = function(i) {
-		var _positionL = _tabItemsCase.eq(i).position().left;
-//		var _mov = _positionL - (_innerWrap.outerWidth() / 2);
+	// tab items scroll X 이동
+	this.scrollMov = function(i) {
+		var _tabEl = this.el;
+		var _positionL = _tabEl.tabItemsCase.eq(i).position().left;
 		var _tabListType;
 		var _mov;
-		if(_tabItemsCase.eq(i).closest('.tab_list_wrap').length) {
+		if(_tabEl.tabItemsCase.eq(i).closest('.tab_list_wrap').length) {
 			_tabListType = 'type01';
-		} else if(_tabItemsCase.eq(i).closest('.tab_list_wrap02').length) {
+		} else if(_tabEl.tabItemsCase.eq(i).closest('.tab_list_wrap02').length) {
 			_tabListType = 'type02';
 		}
 		if(_tabListType == 'type01') {
-			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 24 : _innerWrap.scrollLeft() + (_positionL - 24);
+			_mov = _tabEl.innerWrap.scrollLeft() == 0 ? _positionL - 24 : _tabEl.innerWrap.scrollLeft() + (_positionL - 24);
 		} else if(_tabListType == 'type02') {
-			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 24 : _innerWrap.scrollLeft() + (_positionL - 24);
+			_mov = _tabEl.innerWrap.scrollLeft() == 0 ? _positionL - 24 : _tabEl.innerWrap.scrollLeft() + (_positionL - 24);
 		} else {
-			_mov = _innerWrap.scrollLeft() == 0 ? _positionL - 14 : _innerWrap.scrollLeft() + (_positionL - 14);
+			_mov = _tabEl.innerWrap.scrollLeft() == 0 ? _positionL - 14 : _tabEl.innerWrap.scrollLeft() + (_positionL - 14);
 		}
 
-		_innerWrap.animate({
+
+		_tabEl.innerWrap.animate({
 			scrollLeft : _mov
 		}, 300);
 	}
 
 	// 화면 스크롤시 상단 고정
-	if(_tabFixedWrap.length) {
+	if(this.el.tabFixedWrap.length) {
 		var _tabOffsetT;
 		var _tabTopFixFn = function(fixT, movT) {
 			if(movT >= fixT) {
-				_tabFixedWrap.addClass('fixed');
+				gl.el.tabFixedWrap.addClass('fixed');
 			}else{
-				_tabFixedWrap.removeClass('fixed');
+				gl.el.tabFixedWrap.removeClass('fixed');
 			}
 
 		}
 
-		if(_layerWrap.length) { // 팝업 내부 탭이 존재 할 경우
-			_tabOffsetT = _targetWrap.position().top
-			$('.layer_container', _layerWrap).scroll(function() {
-				var _fixT = _tabOffsetT - options.fixedT || _tabOffsetT - 68;
+		if(this.el.layerWrap.length) { // 팝업 내부 탭이 존재 할 경우
+			_tabOffsetT = this.el.targetWrap.position().top
+			$('.layer_container', this.el.layerWrap).scroll(function() {
+				var _fixT = _tabOffsetT - gl.options.fixedT || _tabOffsetT - 68;
 				var _scrollT = $(this).scrollTop();
 				var _movT = _scrollT + _fixT;
 
 				_tabTopFixFn(_fixT, _movT);
 			});
 		} else { // 본 화면에 탭이 존재할 경우
-			_tabOffsetT = _targetWrap.offset().top;
+			_tabOffsetT = this.el.targetWrap.offset().top;
 			$(window).scroll(function() {
-				var _fixT = _tabOffsetT - options.fixedT || _tabOffsetT - 68;
+				var _fixT = _tabOffsetT - gl.options.fixedT || _tabOffsetT - 68;
 				var _scrollT = $(window).scrollTop();
 				var _movT = _scrollT;
+
+				if(gl.el.targetWrap.closest('.pageStack, #pageStack').is(':hidden')) return;
 
 				_tabTopFixFn(_fixT, _movT);
 			});
 		}
 	}
 
-	setTimeout(function() {
-		if(_tabList.attr('role') == 'tablist') {// TAB TYPE
-			_initialFn();
-		}else{// NAVI TYPE
-			_nowIdx = $('> .tab_list > .tab_item.active', _innerWrap).index();
-			if(_tabItemsCase.eq(_nowIdx).position()) {
-				var _activeLeft = _tabItemsCase.eq(_nowIdx).position().left;
-				var _activeWidth = _tabItemsCase.eq(_nowIdx).outerWidth();
+	// tab 함수 실행영역
+
+	if(this.el.tabList.attr('role') == 'tablist') {// TAB TYPE
+		setTimeout(function() {gl.initialFn();});
+	}else{// NAVI TYPE
+		setTimeout(function() {
+			var _tabObj = gl;
+			var _tabEl = gl.el;
+			$('> .tab_list > .tab_item.active > a', _tabEl.innerWrap).attr('title', '현재 페이지');
+			_nowIdx = $('> .tab_list > .tab_item.active', _tabEl.innerWrap).index();
+			if(_tabEl.tabItemsCase.eq(_nowIdx).position()) {
+				var _activeLeft = _tabEl.tabItemsCase.eq(_nowIdx).position().left;
+				var _activeWidth = _tabEl.tabItemsCase.eq(_nowIdx).outerWidth();
 
 				if(_activeLeft > 0) {
 					var _spillover = _activeLeft + _activeWidth;
 
-					if(_innerWrap.outerWidth() < _spillover) {
-						_scrollMov(_nowIdx);
+					if(_tabEl.innerWrap.outerWidth() < _spillover) {
+						_tabObj.scrollMov(_tabObj.nowIdx);
 					}
 				}
 			}
-
-			return;
-		}
-	}, 0);
+		});
+		return;
+	}
 
 	// 2Depth tab 클릭이벤트 중복방지
-	_tabItems.off();
+	this.el.tabItems.off();
 
 	// click event
-	_tabItems.on('click', function() {
+	this.el.tabItems.on('click', function() {
+		var _tabObj = gl;
+		var _tabEl = gl.el;
 		var _this = $(this);
-		var _thisIdx = _tabItems.index(this);
+		var _thisIdx = _tabEl.tabItems.index(this);
 		var _tagName = _this.prop('tagName').toUpperCase();
 
+		if(_this.hasClass('non-ui-event')) return;
 		if(_tagName === 'BUTTON') {
-			_oldIdx = _nowIdx;
-			_nowIdx = _thisIdx;
-			_tabChFn(_thisIdx);
-			_panelChFn(_thisIdx);
-			_scrollMov(_nowIdx);
+			_tabObj.oldIdx = _tabObj.nowIdx;
+			_tabObj.nowIdx = _thisIdx;
+			_tabObj.tabChFn(_thisIdx);
+			_tabObj.panelChFn(_thisIdx);
+			_tabObj.scrollMov(_tabObj.nowIdx);
 
-			if(_isSwiperUI) {
-				_panelSwiperFn.swiper.slideTo(_nowIdx);
+			if(_tabObj.isSwiperUI) {
+				_tabObj.swiperPanel.swiper.slideTo(_tabObj.nowIdx);
+			}
+			if(_tabEl.targetWrap.hasClass('tab_list_wrap04')) {
+				_tabObj.barChangeFn();
 			}
 		}
 	});
 
-	// key event
-	_tabItems.on('keyup', function(e) {
-		/**
-		 * e.keyCode
-		 * 37 : 좌, 39 : 우
-		 * 38 : 상, 40: 하
-		 */
-		var _this = $(this);
-		var _thisIdx = _tabItems.index(this);
-		var _keycode = e.keyCode;
-		var _tagName = _this.prop('tagName').toUpperCase();
-		var _moveIdx;
-
-		if(_keycode < 37 || _keycode > 40 ) return;
-
-		if(_keycode === 37 || _keycode === 38) {
-			_moveIdx = _calcMoveIdx(_thisIdx, 'minus');
-		} else if(_keycode === 39 || _keycode === 40) {
-			_moveIdx = _calcMoveIdx(_thisIdx, 'plus');
-		}
-
-		if(_tagName === 'BUTTON') {
-			_tabChFn(_moveIdx);
-
-			if(options.asyncPanelChange) options.asyncPanelChange(_moveIdx, _panelChFn);
-			if(!options.asyncPanelChange) _panelChFn(_moveIdx);
-		}
-		_tabItems.eq(_moveIdx).focus();
-	});
-
 	// folding button event
-	_targetWrap.off().on('click', '> [class^="btn_tab_fold"]', function() {
+	this.el.targetWrap.off().on('click', '> [class^="btn_tab_fold"]', function() {
+		var _tabObj = gl;
+		var _tabEl = gl.el;
 		var _this = $(this);
-		if(_targetWrap.hasClass('active')) {
-			_targetWrap.removeClass('active');
-			_scrollMov(_nowIdx);
+		if(_tabEl.targetWrap.hasClass('active')) {
+			_tabEl.targetWrap.removeClass('active');
+			_tabObj.scrollMov(_nowIdx);
 			_this.attr('aria-expanded', false);
 		}else{
-			_targetWrap.addClass('active');
-			_innerWrap.scrollLeft(0);
+			_tabEl.targetWrap.addClass('active');
+			_tabEl.innerWrap.scrollLeft(0);
 			_this.attr('aria-expanded', true);
 		}
 
 	});
 
-	return {
-		'goToPanel' : function(idx) {
-			_oldIdx = _nowIdx;
-			_nowIdx = idx;
-			_tabChFn(_nowIdx);
-			_panelChFn(_nowIdx);
-			_scrollMov(_nowIdx);
+	// tab get active index
+	this.activeIndex = function() {return gl.nowIdx;}
 
-			if(_isSwiperUI) {
-				_panelSwiperFn.swiper.slideTo(_nowIdx);
-			}
+	// tab panel 이동
+	this.goToPanel = function(idx) {
+		gl.oldIdx = gl.nowIdx;
+		gl.nowIdx = idx;
+		gl.tabChFn(gl.nowIdx);
+		gl.panelChFn(gl.nowIdx);
+		gl.scrollMov(gl.nowIdx);
+
+		if(gl.isSwiperUI) {
+			gl.swiperPanel.swiper.slideTo(gl.nowIdx);
+		}
+		if(gl.el.targetWrap.hasClass('tab_list_wrap04')) {
+			gl.barChangeFn();
 		}
 	}
 }
+
+$(document).on('click', '.search_slide_wrap .btn_search', function() {
+	var _this = $(this);
+	var _wrap = _this.closest('.search_slide_wrap');
+	var _searchBox = $('.opt_search_wrap', _wrap);
+	var _isHide = _searchBox.attr('aria-hidden');
+
+	_wrap.addClass('active');
+	_searchBox.attr('aria-hidden', 'false');
+	$('.deposit_result_list').show().attr('aria-hidden', 'false');
+	$('[tab-name="panel_transfer02"]').hide().attr('aria-hidden', 'true');
+});
+$(document).on('click', '.search_slide_wrap .close_search', function() {
+	var _this = $(this);
+	var _wrap = _this.closest('.search_slide_wrap');
+	var _searchBox = $('.opt_search_wrap', _wrap);
+	var _isHide = _searchBox.attr('aria-hidden');
+
+	_wrap.removeClass('active');
+	_searchBox.attr('aria-hidden', 'true');
+	$('.deposit_result_list').hide().attr('aria-hidden', 'true');
+	$('[tab-name="panel_transfer02"]').show().attr('aria-hidden', 'false');
+});
 
 /*********************************************************************************************************
 Accordion (toggle type)
@@ -742,25 +870,39 @@ $(document).on('click', '[class^="toggle_list_wrap"] .toggle_tit', function() {
 	var _toggleWrap = _this.closest('[class^="toggle_list_wrap"]');
 	var _toggleCase = $('[class^="toggle_case"]', _toggleWrap);
 
+	var _scrollPos = function() {
+		var _offsetT = _thisCase.offset().top;
+
+		$('body, html').animate({scrollTop : _offsetT - 120}, 300);
+	}
+
 	if(_toggleWrap.hasClass('multi')) {
 		if(!_thisCase.hasClass('active')) {
-			_this.attr('aria-expanded', true);
-			_thisConts.slideDown(300).attr('aria-hidden', false);
+			_this.attr('aria-expanded', 'true');
+			_thisConts.slideDown(300, function() {
+				_scrollPos();
+			}).attr('aria-hidden', 'false');
 			_thisCase.addClass('active');
 		}else{
-			_this.attr('aria-expanded', false);
-			_thisConts.slideUp(300).attr('aria-hidden', true);
+			_this.attr('aria-expanded', 'false');
+			_thisConts.slideUp(300).attr('aria-hidden', 'true');
 			_thisCase.removeClass('active');
 		}
 	}else{
 		if(!_thisCase.hasClass('active')) {
 			_toggleCase.removeClass('active');
-			$('.toggle_tit', _toggleCase).attr('aria-expanded', false);
-			$('.toggle_conts', _toggleCase).slideUp(300).attr('aria-hidden', true);
+			$('.toggle_tit', _toggleCase).attr('aria-expanded', 'false');
+			$('.toggle_conts', _toggleCase).slideUp(300).attr('aria-hidden', 'true');
 
-			_this.attr('aria-expanded', true);
-			_thisConts.slideDown(300).attr('aria-hidden', false);
+			_this.attr('aria-expanded', 'true');
+			_thisConts.slideDown(300, function() {
+				_scrollPos();
+			}).attr('aria-hidden', 'false');
 			_thisCase.addClass('active');
+		}else{
+			_this.attr('aria-expanded', 'false');
+			_thisConts.slideUp(300).attr('aria-hidden', 'true');
+			_thisCase.removeClass('active');
 		}
 	}
 });
@@ -774,22 +916,29 @@ $(document).on('click', '[class^="toggle_list_wrap"] .faq_tit', function() {
 
 	if(!_thisCase.hasClass('active')) {
 		_toggleCase.removeClass('active');
-		$('.faq_tit', _toggleCase).attr('aria-expanded', false);
-		$('.faq_conts', _toggleCase).slideUp(300).attr('aria-hidden', true);
+		$('.faq_tit', _toggleCase).attr('aria-expanded', 'false');
+		$('.faq_conts', _toggleCase).slideUp(300).attr('aria-hidden', 'true');
 
-		_this.attr('aria-expanded', true);
-		_thisConts.slideDown(300).attr('aria-hidden', false);
+		_this.attr('aria-expanded', 'true');
+		_thisConts.slideDown(300).attr('aria-hidden', 'false');
 		_thisCase.addClass('active');
+	}else{
+		_this.attr('aria-expanded', 'false');
+		_thisConts.slideUp(300).attr('aria-hidden', 'true');
+		_thisCase.removeClass('active');
 	}
 });
 
 /*********************************************************************************************************
 	TOOLTIP
 *********************************************************************************************************/
-$(document).on('click', '[class^="tip_info_box"] [class^="btn_tip_open"]', function() {
+$(document).on('click', '[class^="tip_info_box"] [class^="btn_tip_open"]', function(e) {
+	e.stopPropagation();
+	e.preventDefault();
 	var _globalTipWrap = $('[class^="tip_info_box"]');
 	var _this = $(this);
 	var _thisW = _this.outerWidth();
+	var _winW = $(window).width();
 	var _tipWrap = _this.closest('[class^="tip_info_box"]');
 	var _tipConts = $('.tip_conts_box', _tipWrap);
 	var _tipCase = $('.tip_conts_case', _tipConts);
@@ -805,33 +954,35 @@ $(document).on('click', '[class^="tip_info_box"] [class^="btn_tip_open"]', funct
 		_this.attr('aria-expanded', true);
 		_tipWrap.addClass('active');
 		_tipConts.show(1, function() {
-			var _tipZone = _tipConts.outerWidth() - 16;
+			var _tipZone = _winW - 18;
 			var _tipCaseW = _tipCase.outerWidth();
-			var _posC = (_tipCaseW - _thisW) / 2;
-			var _tipPos;
+			var _tipOffsetR = _tipZone - (_offsetX + 8);
+			var _tipTotalArea = _offsetX + _tipCaseW;
+			var _tipHalpW = _tipCaseW / 2;
+			var _tipPos = 8;
 
-			if(_posC - 16 >= _tipOffsetX) {
-				_tipPos = 8;
-			} else if(_posC - 16 < _tipOffsetX) {
-				_tipPos = _offsetX - _posC;
-
-				if(_tipPos + _tipCaseW > _tipZone) {
-					_tipPos = _tipZone - _tipCaseW;
-				}
-
+			if(_tipHalpW < _offsetX && _tipHalpW < _tipOffsetR) {
+				_tipPos = _offsetX - (_tipHalpW - 8);
+			} else if(_tipHalpW < _offsetX && _tipHalpW > _tipOffsetR) {
+				_tipPos = _tipZone - (_tipCaseW - 8);
 			}
 
 			_tipCase.css({'transform' : 'translate('+ _tipPos +'px, 0)'});
 
 
 		}).attr('aria-hidden', false).css({'left' : -(_offsetX)});
-
 		_tipTail.css({'left' : _offsetX})
 	}else{
 		_this.attr('aria-expanded', false);
 		_tipWrap.removeClass('active');
 		_tipConts.hide().attr('aria-hidden', true);
 	}
+
+	_tipConts.unbind('click').bind('click', function() {
+		_this.attr('aria-expanded', false);
+		_tipWrap.removeClass('active');
+		_tipConts.hide().attr('aria-hidden', true);
+	});
 });
 $(document).on('click', '[class^="tip_info_box"] .btn_tip_close', function() {
 	var _this = $(this);
@@ -945,6 +1096,8 @@ $(document).on('click', '[class^="inq_card_case"] .check_item', function() {
 	var _checkWrap = _this.closest('[class^="inq_card_case"]');
 	var _isActive = _checkWrap.hasClass('active');
 
+	if(_this.hasClass('no-ui-event')) return;
+
 	if(_isActive) {
 		_checkWrap.removeClass('active')
 		_this.attr('aria-pressed', 'false');
@@ -995,7 +1148,7 @@ $(document).on('click', '[class^="chip_rdo_btn"]', function() {
 	하단 체크 토탈 플리팅 UI
  *********************************************************************************************************/
 var totalFloatFn = function(state) {
-	var _bottomFixed = $('[class^="page_bottom_fixed"]');
+	var _bottomFixed = $('[class^="page_bottom_fixed"]', $page_ID);
 	var _totalBox = $('[class^="check_total_box"]', _bottomFixed);
 
 	if(state == 'open' && !_bottomFixed.hasClass('isTotal')) {
@@ -1042,8 +1195,12 @@ $(document).on('click', '[class^="info_view_box"] .tit_view[aria-expanded], [cla
 
 $(document).on('click', '[class^="points_noti_box"] button.tit_noti', function() {
 	var _this = $(this);
+	var _wrap = _this.closest('[class^="points_noti_box"]');
+	var _layerWrap = _wrap.closest('[class^="layer_wrap"]');
+	var _layerContainer = $('.layer_container', _layerWrap);
 	var _isExpanded = _this.attr('aria-expanded');
 	var _viewConts = _this.next();
+	var _offsetT = _wrap.offset().top;
 
 	if(_isExpanded == 'true') {
 		_this.attr('aria-expanded', false);
@@ -1051,6 +1208,13 @@ $(document).on('click', '[class^="points_noti_box"] button.tit_noti', function()
 	}else{
 		_this.attr('aria-expanded', true);
 		_viewConts.slideDown(200).attr('aria-hidden', false);
+		setTimeout(function() {
+			if(_layerContainer.length) {
+				_layerContainer.animate({scrollTop : _offsetT - 150})
+			}else{
+				$('body, html').animate({scrollTop : _offsetT - 150})
+			}
+		}, 200)
 	}
 });
 
@@ -1062,10 +1226,11 @@ $(document).on('click', '[class^="info_view_box"] .fold_func', function() {
 	var _isHidden = _foldBox.attr('aria-hidden');
 
 	if(_isHidden === 'true') {
-		_foldBox.attr('aria-hidden', 'false');
+		_foldBox.attr('aria-hidden', 'false').attr('tabindex', '0');
 		_textBox.text('접기');
+		_foldBox.focus();
 	} else if(_isHidden === 'false') {
-		_foldBox.attr('aria-hidden', 'true');
+		_foldBox.attr('aria-hidden', 'true').removeAttr('tabindex');
 		_textBox.text('더보기');
 	}
 });
@@ -1122,99 +1287,68 @@ $(document).on('click', '.switch_func input[type="checkbox"]', function() {
 /*********************************************************************************************************
 	상단 고정
  *********************************************************************************************************/
-var scrollTopFixed = function(target, posT) {
-	var _target = $(target);
+var scrollTopFixed = function(target, posT, dom) {
+	var _dom = dom ? $(dom) : undefined;
+	var _target = dom ? $(target, _dom) : $(target, _dom);
+	var _isTabPanel = _target.closest('[class^="tab_panel"]');
 	var _fixedBox = _target;
 	var _targetConts = _target.closest('.contents')
 	var _layerContain = _target.closest('.layer_container');
 	var _targetH = _target.css('height');
-	var _offsetT = _target.offset().top;
 	var _posT = posT || 44;
+	var _offsetT;
 
-	console.log(_target.hasClass('list_top_box02'));
-	if(_target.hasClass('list_top_box02')) {//IBsheet
-		_fixedBox = $('.list_top_inner', _target);
-	}
+	var _initFn = function() {
+		_target.data('scrollTop', _offsetT);
 
-	console.log(_fixedBox);
+		_target.css({'height' : _fixedBox.outerHeight()});
 
-	var _fixedFnc = function(scrollT) {
-		var _current = (scrollT + _posT) - _offsetT;
-		if(_current >= 0) {
-			if(_target.hasClass('fixed')) return;
-			_target.addClass('fixed');
-			_target.css({'height' : _fixedBox.outerHeight()});
-			_fixedBox.css({'top' : _posT});
+		if(_target.hasClass('list_top_box02')) {//IBsheet
+			_fixedBox = $('.list_top_inner', _target);
+		}else if(_target.hasClass('search_slide_wrap')) {//이체 받는분 계좌  검색
+			_fixedBox = $('.inner_search_slide', _target);
+		}
+
+		var _fixedFnc = function(scrollT) {
+			if(!_target.offset()) return;
+
+			_offsetT = _target.offset().top;
+			var _current = (scrollT + _posT) - _offsetT;
+
+			if((_target.data('scrollTop') + _posT) - _offsetT > scrollT) {
+				_target.removeClass('fixed');
+				_fixedBox.removeAttr('style');
+			}else{
+				if(_current >= 0) {
+					if(_target.hasClass('fixed')) return;
+					_target.addClass('fixed');
+					_fixedBox.css({'top' : _posT});
+				}else{
+					_target.removeClass('fixed');
+					_fixedBox.removeAttr('style');
+				}
+			}
+
+		}
+
+		if(_layerContain.length) {
+			_layerContain.scroll(function() {
+				var _scrollT = $(this).scrollTop();
+				_fixedFnc(_scrollT);
+			});
 		}else{
-			_target.removeClass('fixed').removeAttr('style');
-			_fixedBox.removeAttr('style');
+			$(window).scroll(function() {
+				if(!_targetConts.length || _targetConts.is(':hidden')) return;
+				var _scrollT = $(window).scrollTop();
+
+				_fixedFnc(_scrollT);
+			});
 		}
 	}
 
-	if(_layerContain.length) {
-		_layerContain.scroll(function() {
-			var _scrollT = $(this).scrollTop();
-			_fixedFnc(_scrollT);
-		});
-	}else{
-		$(window).scroll(function() {
-			if(!_targetConts.length || _targetConts.is(':hidden')) return;
-			var _scrollT = $(window).scrollTop();
-			_fixedFnc(_scrollT);
-		});
-	}
+	setTimeout(function() {_initFn()});
 
 }
-
-/*********************************************************************************************************
-	IBsheet 검색 바
- *********************************************************************************************************/
-$(document).on('click', '.list_sort_case .search_btn', function() {
-	var _this = $(this);
-	var _wrap = _this.closest('.list_sort_case');
-	var _wordInp = $('.word_inp', _wrap);
-
-	if(_wordInp.is(':hidden')) {
-		_wordInp.attr('aria-hidden', 'false');
-		_wordInp.find('input').focus();
-	}else{
-		_wordInp.attr('aria-hidden', 'true');
-	}
-});
-
-//inp_bundle 포커스 dom클릭시 포커스 아웃 처리
-$(document).on('click focusin', function(e) {
-	$('.list_sort_case .word_inp').removeClass('focus').find('.btn_inp_del').remove();
-});
-$(document).on('click focusin', '[class^="inp_bundle"], [class^="inp_bundle"] input, [class^="inp_bundle"] textarea, [class^="combo_bundle"], [class^="combo_bundle"] button', function(e) {
-	$('.list_sort_case .word_inp').removeClass('focus').find('.btn_inp_del').remove();
-});
-//inp_bundle 클릭시 input[type="text"] click 이벤트 방지
-$(document).on('click focusin', '.list_sort_case .word_inp input, .list_sort_case .word_inp .btn_inp_del', function(e) {e.stopPropagation();});
-//input[type="text"]에 focus in
-$(document).on('focusin keyup change', '.list_sort_case .word_inp input', function(e) {
-	var _this = $(this);
-	var _val = _this.val();
-	var _bundle = _this.closest('[class^="list_sort_case"]');
-	var _inpBox = _this.closest('.word_inp');
-	var _btnDelHtml = '<button type="button" class="btn_inp_del" aria-hidden="true"><span class="blind">입력값 삭제</span></button>';
-
-	_inpBox.addClass('focus');
-	if(_val == '') {
-		if($('.btn_inp_del', _bundle).length) $('.btn_inp_del', _bundle).remove();
-	}else {
-		if(!$('.btn_inp_del', _bundle).length) _inpBox.append(_btnDelHtml);
-	}
-});
-//btn_inp_del 클릭시 value삭제
-$(document).on('click', '.list_sort_case .word_inp .btn_inp_del', function() {
-	var _this = $(this);
-	var _bundle = _this.closest('[class^="list_sort_case"]');
-	var _inpBox = _this.closest('.word_inp');
-	var _inp = $('input', _bundle);
-
-	_inp.val('').eq(0).focus();
-});
 
 /*********************************************************************************************************
 	즐겨찾기 버튼
@@ -1222,10 +1356,12 @@ $(document).on('click', '.list_sort_case .word_inp .btn_inp_del', function() {
 $(document).on('click', '.btn_bookmark02, .btn_bookmark03', function() {
 	var _this = $(this);
 
+	if(_this.hasClass('no-ui-event')) return;
+
 	if(_this.hasClass('active')) {
-		_this.removeClass('active');
+		_this.removeClass('active').attr('aria-pressed', 'false');
 	}else{
-		_this.addClass('active');
+		_this.addClass('active').attr('aria-pressed', 'true');
 	}
 });
 
@@ -1244,9 +1380,20 @@ var layerOpenFn = function(target, clickEl) {
 	var _accessbility01;
 	var _accessbility02;
 
-	$('body').addClass('isPop');
-
-	/*_layerWrap.attr('aria-hidden', false).css({'visibility' : 'visible'});*/
+	_layerWrap.data('winScrollTop', $(window).scrollTop());
+	if(!_layerWrap.hasClass('money_keypad')) {
+		$('body').addClass('isPop');
+	}
+	if(_layerWrap.hasClass('money_keypad')) {
+		var _amountT;
+		_layerWrap.on('touchstart', function() {
+			_amountT = $(window).scrollTop();
+		});
+		_layerWrap.on('touchend', function() {
+			$('body, html').animate({scrollTop : _amountT});
+		});
+	}
+	$('#header, .contents:visible').attr('aria-hidden', 'true');
 	if(clickEl) _layerWrap.data('click-target', clickEl);
 	_layerWrap.data('scroll-pos', $(window).scrollTop());
 	_layerWrap.prepend('<div class="AccessibilityHtml1" tabindex="0" aria-hidden="true"></div>');
@@ -1255,20 +1402,18 @@ var layerOpenFn = function(target, clickEl) {
 
 	_layerWrap.attr('aria-hidden', false).show(1, function() {
 		$('.layer_mask', _layerWrap).addClass('active');
-		if(_layerWrap.hasClass('dialog_up')) {
+		if(_layerWrap.hasClass('dialog_up') || _layerWrap.hasClass('evt')) {
 			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight()})}
 			layerScrollCalc(_layerBox);
 		} else if(_layerWrap.hasClass('full')) {
 			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight() + 16})}
 			fullScrollCalc(_layerBox);
-		}else{
+		} else {
 			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight() + 8})}
 		}
 	});
 
-
 	_layerBox.addClass('active');
-
 	_layerBox.focus();
 	_accessbility01 = $('.AccessibilityHtml1', _layerWrap);
 	_accessbility02 = $('.AccessibilityHtml2', _layerWrap);
@@ -1280,6 +1425,126 @@ var layerOpenFn = function(target, clickEl) {
 	});
 	$('.layer_mask', _layerWrap).on('click', function(e) {
 		layerCloseFn(target);
+	});
+	// E :팝업 close
+
+	// S : 페이지 스크를 방지
+//	$('.isPop').off().on('touchstart touchmove touchend', function(e) {e.preventDefault();})
+	// E : 페이지 스크를 방지
+
+	// S : 팝업 처음, 마지막 포커스 이동 컨트롤
+	_accessbility01.on('focusin', function(e) {
+		e.stopPropagation();
+		if(_btnClose.is(':hidden') || !_btnClose.length) {//팝업 닫기 버튼이 없을 경우
+			if(_btnGroupBox.length) {//하단 버튼 그룹 박스 있을경우
+				$('button:last', _btnGroupBox).focus();
+			}else{//하단 버튼 그룹 박스 없을경우
+				_layerBox.focus();
+			}
+		} else {
+			_btnClose.focus();
+		}
+	});
+	_accessbility02.off('focusin').on('focusin', function(e) {
+		e.stopPropagation();
+		_layerBox.focus();
+	});
+	// E : 팝업 처음, 마지막 포커스 이동 컨트롤
+
+	//S : 확장형 바텀시트
+	if(_btnExpanded.length) {
+		expandedSwipeFn(_layerWrap);
+	}
+	//E : 확장형 바텀시트
+}
+
+var layerCloseFn = function(target, callback) {
+	var _layerWrap = $(target);
+	var _layerBox = $('.layer_box', _layerWrap);
+	var _layerContainer = $('.layer_container', _layerBox);
+	var _btnClose = $('.layer_close', _layerBox);
+	var _btnExpanded = $('[class^="btn_layer_expanded"] button', _layerBox);
+	var _accessbility01 = $('.AccessibilityHtml1', _layerWrap);
+	var _accessbility02 = $('.AccessibilityHtml2', _layerWrap);
+	var _scrollT = _layerWrap.data('winScrollTop') ? _layerWrap.data('winScrollTop') : undefined;
+
+	_layerBox.one('transitionend', function() {
+		$('.layer_mask', _layerWrap).removeClass('active');
+		// S :팝업 close
+		_btnClose.off('click');
+		// E :팝업 close
+		if(!_layerWrap.length) return;
+		_accessbility01.remove();
+		_accessbility02.remove();
+		$('.layer_mask', _layerWrap).remove();
+		_layerBox.removeAttr('tabindex');
+		_layerWrap.attr('aria-hidden', true).hide();
+
+		if(_btnExpanded.length) {
+			_btnExpanded.attr('aria-expanded', false);
+			_layerContainer.removeAttr('style');
+		}
+
+		if(_layerWrap.data('click-target')) {
+			var _clickEl = $(_layerWrap.data('click-target'));
+			_layerWrap.removeData('click-target');
+			$(_clickEl).focus();
+		}
+		if (callback) {
+			callback();
+		}
+	});
+
+	if($('body').hasClass('isPop')) $('body').removeClass('isPop');
+	$('#header, .contents:visible').removeAttr('aria-hidden');
+
+	_layerBox.removeClass('active');
+	if(_scrollT)$('html, body').animate({scrollTop : _scrollT}, 1);
+}
+
+//팝업 오픈 타입 2
+var layerOpenFn02 = function(target, prevTarget) {
+	var _prevWrap = $(prevTarget);
+	var _layerWrap = $(target);
+	var _layerBox = $('.layer_box', _layerWrap).attr('tabindex', '0');
+	var _layerHeader = $('.layer_header', _layerBox);
+	var _layerContainer = $('.layer_container', _layerBox);
+	var _layerConents = $('.layer_contents', _layerContainer);
+	var _btnExpanded = $('[class^="btn_layer_expanded"] button', _layerBox);
+	var _btnGroupBox = $('[class^="btn_layer_wrap"]', _layerBox);
+	var _btnClose = $('.layer_close', _layerBox);
+	var _accessbility01;
+	var _accessbility02;
+
+	_layerWrap.addClass('active-layer');
+	_layerWrap.data('prev-target', prevTarget);
+	_layerWrap.data('scroll-pos', $(window).scrollTop());
+	_layerWrap.prepend('<div class="AccessibilityHtml1" tabindex="0" aria-hidden="true"></div>');
+	_layerWrap.prepend('<div class="layer_mask" aria-hidden="true"></div>');
+	_layerWrap.append('<div class="AccessibilityHtml2" tabindex="0" aria-hidden="true"></div>');
+	_layerWrap.attr('aria-hidden', false).show(1, function() {
+		$('.layer_mask', _layerWrap).addClass('active');
+		if(_layerWrap.hasClass('dialog_up')) {
+			if(_btnGroupBox.length) {_layerConents.css({'padding-bottom' : _btnGroupBox.outerHeight()})}
+			layerScrollCalc(_layerBox);
+		}
+	});
+
+
+	_prevWrap.addClass('prev-layer');
+	_layerBox.addClass('active');
+
+	_layerBox.focus();
+	_accessbility01 = $('.AccessibilityHtml1', _layerWrap);
+	_accessbility02 = $('.AccessibilityHtml2', _layerWrap);
+
+	// S :팝업 close
+	_btnClose.on('click', function(e) {
+		e.stopPropagation();
+		layerCloseFn02(target);
+	});
+	$('.layer_mask', _layerWrap).on('click', function(e) {
+		layerCloseFn02(target);
 	});
 	// E :팝업 close
 
@@ -1309,7 +1574,7 @@ var layerOpenFn = function(target, clickEl) {
 	//E : 확장형 바텀시트
 }
 
-var layerCloseFn = function(target) {
+var layerCloseFn02 = function(target) {
 	var _layerWrap = $(target);
 	var _layerBox = $('.layer_box', _layerWrap);
 	var _layerContainer = $('.layer_container', _layerBox);
@@ -1317,10 +1582,9 @@ var layerCloseFn = function(target) {
 	var _btnExpanded = $('[class^="btn_layer_expanded"] button', _layerBox);
 	var _accessbility01 = $('.AccessibilityHtml1', _layerWrap);
 	var _accessbility02 = $('.AccessibilityHtml2', _layerWrap);
+	var _prevWrap = $(_layerWrap.data('prev-target'));
 
-
-	$('body').removeClass('isPop');
-
+	_prevWrap.removeClass('prev-layer');
 	_layerBox.removeClass('active');
 	$('.layer_mask', _layerWrap).removeClass('active');
 
@@ -1351,11 +1615,10 @@ var layerCloseFn = function(target) {
 			$(_clickEl).focus();
 		}
 	});
-
 }
 
 // max height 60% 설정 함수
-var layerScrollCalc = function(target) {
+var layerScrollCalc = function(target, ratioH) {
 	var _layerBox = $(target);
 	var _layerWrap = _layerBox.closest('[class^="layer_wrap"]');
 	var _layeraHeader = $('.layer_header', _layerBox);
@@ -1363,10 +1626,9 @@ var layerScrollCalc = function(target) {
 	var _layerContents = $('.layer_contents', _layerBox);
 	var _btnGroupWrap = $('[class^="btn_layer_wrap"]', _layerBox);
 	var _btnExpanded = $('.btn_layer_expanded', _layerBox);
-	var _maxH = window.innerHeight * 0.6;
+	var _ratioH = ratioH != undefined ? ratioH : 0.6
+	var _maxH = window.innerHeight * _ratioH;
 	var _standardH = _maxH;
-
-
 
 	if(_layerWrap.data('height') === 'free') {//바텀시트 max height free
 		_maxH = window.innerHeight - 44;
@@ -1380,7 +1642,8 @@ var layerScrollCalc = function(target) {
 	}
 
 	_layerBox.css({
-		'max-height' : _maxH
+		'max-height' : _maxH,
+		'height' : _btnExpanded.length ? _maxH : 'auto'
 	}).data('max-height', _maxH);
 	_layerContainer.css({
 		'max-height' : _standardH
@@ -1396,7 +1659,6 @@ var fullScrollCalc = function(target) {
 	var _containH = window.innerHeight;
 
 	_containH = _layeraHeader.length ? _containH - _layeraHeader.outerHeight() : _containH;
-//	_containH = _btnGroupWrap.length ? _containH - _btnGroupWrap.outerHeight() : _containH;
 
 	_layerContainer.css({
 		'max-height' : _containH
@@ -1418,11 +1680,11 @@ $(document).on('click', '[class^="layer_wrap"] [class^="btn_layer_expanded"] but
 	if(_isExpanded == 'true') {
 		_boxH = _maxH;
 		_containH = _maxH;
-		_this.attr('aria-expanded', false)
+		_this.attr('aria-expanded', 'false');
 	} else if(_isExpanded == 'false') {
 		_boxH = window.innerHeight;
 		_containH = window.innerHeight;
-		_this.attr('aria-expanded', true)
+		_this.attr('aria-expanded', 'true');
 	}
 
 	if(_layeraHeader.length) _containH = _containH - _layeraHeader.outerHeight();
@@ -1430,6 +1692,9 @@ $(document).on('click', '[class^="layer_wrap"] [class^="btn_layer_expanded"] but
 	_layerBox.css({
 		'max-height' : _boxH,
 		'height' : _boxH
+	});
+	_layerContainer.css({
+		'max-height' : _containH
 	});
 });
 
@@ -1548,6 +1813,30 @@ var expandedSwipeFn = function(target) {
 	_layeraHeader.off('touchend').on('touchend', function(e) {end(e);});
 }
 
+/*팝업 리사이즈 대응*/
+$(window).on('resize', function() {
+	var _wrap = $('[class^="layer_wrap"]:visible');
+	if(!_wrap.length) return;
+	_wrap.each(function() {
+		var _layerBox = $('[class^="layer_box"]', this);
+		var _btnExpand = $('.btn_layer_expanded button', _layerBox);
+
+		if(_wrap.hasClass('dialog_up')) {
+			if($('input:focus', _layerBox).length == 0) {
+				layerScrollCalc(_layerBox);
+				if(_btnExpand.length) _btnExpand.attr('aria-expanded', 'false');
+			}else{
+				layerScrollCalc(_layerBox, 1);
+				if(_btnExpand.length) _btnExpand.attr('aria-expanded', 'true');
+			}
+
+		} else if(_wrap.hasClass('full')) {
+			fullScrollCalc(_layerBox);
+		}
+	});
+
+});
+
 /*********************************************************************************************************
 	TOAST POPUP
 *********************************************************************************************************/
@@ -1578,25 +1867,28 @@ var toastPopFn = function(target) {
 	Swiper
 *********************************************************************************************************/
 var swiperFn = function(target, options) {
-	var _wrap = $(target);
-	var _swipeContain = $(' > .swiper-container', _wrap);
-	var _swipeWrap = $(' > .swiper-wrapper', _swipeContain);
-	var _swipeSlide = $(' > .swiper-slide', _swipeWrap);
-	var _swiperPrev = $(' > .swiper-btn-prev, > .swiper-container > .swiper-btn-prev', _wrap);
-	var _swiperNext = $(' > .swiper-btn-next, > .swiper-container > .swiper-btn-next', _wrap);
-	var _slideTotal = _swipeSlide.length;
-	var _options = options || {};
+	var gl = this;
+	this.el = {};
 
-	var _prevEl = $(' > .swiper-btn-prev', _wrap).length != 0 ? target + '> .swiper-btn-prev' : target + '> .swiper-container > .swiper-btn-prev';
-	var _nextEl = $(' > .swiper-btn-next', _wrap).length != 0 ? target + '> .swiper-btn-next' : target + '> .swiper-container > .swiper-btn-next';
+	this.el.wrap = $(target);
+	this.el.swipeContain = $(' > .swiper-container', this.el.wrap);
+	this.el.swipeWrap = $(' > .swiper-wrapper', this.el.swipeContain);
+	this.el.swipeSlide = $(' > .swiper-slide', this.el.swipeWrap);
+	this.el.swiperPrev = $(' > .swiper-btn-prev, > .swiper-container > .swiper-btn-prev', this.el.wrap);
+	this.el.swiperNext = $(' > .swiper-btn-next, > .swiper-container > .swiper-btn-next', this.el.wrap);
+	this.slideTotal = this.el.swipeSlide.length;
+	this.options = options || {};
 
-	var _swiperOpt = {
+	this.el.prevEl = $(' > .swiper-btn-prev', this.el.wrap).length != 0 ? target + '> .swiper-btn-prev' : target + '> .swiper-container > .swiper-btn-prev';
+	this.el.nextEl = $(' > .swiper-btn-next', this.el.wrap).length != 0 ? target + '> .swiper-btn-next' : target + '> .swiper-container > .swiper-btn-next';
+
+	this.swiperOpt = {
 		initialSlide : 0,
-		allowTouchMove : _options.allowTouchMove != undefined ? _options.allowTouchMove : true,
-		longSwipes : _options.longSwipes != undefined ? _options.longSwipes : false,
+		allowTouchMove : this.options.allowTouchMove != undefined ? this.options.allowTouchMove : true,
+		longSwipes : this.options.longSwipes != undefined ? this.options.longSwipes : true,
  		navigation : {
- 			prevEl : _prevEl,
- 			nextEl : _nextEl
+ 			prevEl : this.el.prevEl,
+ 			nextEl : this.el.nextEl
  		},
 		pagination : {
 			el : target + ' > .swiper-ctrl-box > .swiper-pagi-box',
@@ -1609,82 +1901,112 @@ var swiperFn = function(target, options) {
 		a11y : {
 			prevSlideMessage : '이전 슬라이드',
 			nextSlideMessage : '다음 슬라이드',
-			paginationBulletMessage : 'Go to slide {{index}}'
+			paginationBulletMessage : '{{index}}번 슬라이드로 이동'
 		},
 		on : {
 			init : function() {
 				var _slides = this.slides;
-				var _idx = _swiperOpt.loop ? this.activeIndex : this.realIndex;
+				var _idx = gl.options.loop ? this.activeIndex : this.realIndex;
 
-				_slides.attr('tabindex', '-1').attr('aria-hidden', 'true').eq(_idx).attr('tabindex', '0').attr('aria-hidden', 'false');
+				_slides.attr('aria-hidden', 'true').eq(_idx).attr('aria-hidden', 'false');
 			},
 			slideChangeTransitionEnd : function() {
-				if(_swiperOpt.loop) {
-					var _slides = this.slides;
-					var _idx = _swiperOpt.loop ? this.activeIndex : this.realIndex;
+				var _slides = this.slides;
+				var _idx = gl.options.loop ? this.activeIndex : this.realIndex;
+				_slides.attr('aria-hidden', 'true').eq(_idx).attr('aria-hidden', 'false');
 
-					_slides.attr('tabindex', '-1').attr('aria-hidden', 'true').eq(_idx).attr('tabindex', '0').attr('aria-hidden', 'false');
-
-					if(_idx === 0) this.slideToLoop(_slideTotal - 1, 1);
+				/*option loop 일경우 아이템 처음/마지막 위치 재설정*/
+				if(gl.options.loop) {
+					if(_idx === 0) this.slideToLoop(gl.slideTotal - 1, 1);
 					if(_idx === this.slides.length - 1) this.slideToLoop(0, 1);
 				}
 
 				/*slideChangeTransitionEnd 함수에 추가 작업 필요 할 경우*/
-				if(_options.slideChangeTransitionEnd != undefined) _options.slideChangeTransitionEnd(this);
+				if(gl.options.slideChangeTransitionEnd != undefined) gl.options.slideChangeTransitionEnd(this);
+			},
+			resize : function() {
+				this.update(true);
 			}
 		}
 	}
 
-	_swipeSlide.css({
-		'width' : _swipeContain.outerWidth()
+	this.el.swipeSlide.css({
+		'width' : this.el.swipeContain.outerWidth()
 	});
 
 	// initialSlide option
-	if(_options.initialSlide != undefined) _swiperOpt['initialSlide'] = _options.initialSlide;
+	if(this.options.initialSlide != undefined) this.swiperOpt['initialSlide'] = this.options.initialSlide;
+
+	// width option
+	if(this.options.width != undefined) this.swiperOpt['width'] = this.options.width;
+
+	// height option
+	if(this.options.height != undefined) this.swiperOpt['height'] = this.options.height;
 
 	// loop option
-	if(_options.loop != undefined && _options.loop === true) _swiperOpt['loop'] = _options.loop;
+	if(this.options.loop != undefined) this.swiperOpt['loop'] = this.options.loop;
+
+	// centeredSlides option
+	if(this.options.centeredSlides != undefined && this.options.centeredSlides === true) this.swiperOpt['centeredSlides'] = this.options.centeredSlides;
+
+	// slidePerView option
+	if(this.options.slidesPerView != undefined) this.swiperOpt['slidesPerView'] = this.options.slidesPerView;
+
+	// direction option
+	if(this.options.direction != undefined) this.swiperOpt['direction'] = this.options.direction;
 
 	// navigation option
-	if(_options.navigation != undefined && _options.navigation === false) _swiperOpt['navigation'] = false;
+	if(this.options.navigation != undefined && this.options.navigation === false) this.swiperOpt['navigation'] = false;
 
 	// pagination custom option
-	if(_options.pagination != undefined && _options.pagination === 'custom') {
-		_swiperOpt['pagination'] = {
+	if(this.options.pagination != undefined && this.options.pagination === 'custom') {
+		this.swiperOpt['pagination'] = {
 				el : target + ' > .swiper-ctrl-box > .swiper-pagi-box',
 				type : 'custom',
 				renderCustom : function(swiper, current, total) {
 					return '<span >' + current + '</span>' + ' / ' + '<span class="">' + total + '</span>';
 				}
 		}
-	}else if(_options.pagination != undefined && _options.pagination === false){
-		_swiperOpt['pagination'] = false;
+	}else if(this.options.pagination != undefined && this.options.pagination === false){
+		this.swiperOpt['pagination'] = false;
+	}
+
+	// init option
+	if(this.options.init != undefined) {
+		this.swiperOpt['on']['init'] = this.options.init;
 	}
 
 	// transitionEnd option
-	if(_options.transitionEnd != undefined) {
-		_swiperOpt['on']['transitionEnd'] = options.transitionEnd;
+	if(this.options.transitionEnd != undefined) {
+		this.swiperOpt['on']['transitionEnd'] = this.options.transitionEnd;
 	}
 
 	// transitionStart option
-	if(_options.transitionStart != undefined) {
-		_swiperOpt['on']['transitionStart'] = options.transitionStart;
+	if(this.options.transitionStart != undefined) {
+		this.swiperOpt['on']['transitionStart'] = this.options.transitionStart;
 	}
 
 	// touchMove option
-	if(_options.touchMove != undefined) {
-		_swiperOpt['on']['touchMove'] = options.touchMove;
+	if(this.options.touchMove != undefined) {
+		this.swiperOpt['on']['touchMove'] = this.options.touchMove;
+	}
+	// touchMove option
+	if(this.options.touchEnd != undefined) {
+		this.swiperOpt['on']['touchEnd'] = this.options.touchEnd;
 	}
 
-	var libSwiper = new Swiper(target + ' > .swiper-container', _swiperOpt);
+	// freeMode option
+	if(this.options.freeMode != undefined) {
+		this.swiperOpt['freeMode'] = options.freeMode;
+	}
 
-	$(' > .swiper-notification', _swipeContain).attr('aria-live', 'off').attr('aria-atomic', false).attr('aria-hidden', true);
+	this.libSwiper = new Swiper(target + ' > .swiper-container', this.swiperOpt);
 
-	return {
-		swiper : libSwiper,
-		slideTo : function(i) {
-			libSwiper.slideTo(i);
-		}
+	$(' > .swiper-notification', this.el.swipeContain).attr('aria-live', 'off').attr('aria-atomic', false).attr('aria-hidden', true);
+
+	this.swiper = this.libSwiper;
+	this.slideTo = function(i) {
+		gl.libSwiper.slideTo(i);
 	}
 }
 
@@ -1726,8 +2048,9 @@ jQuery.event.special.dblclick = {
 /*********************************************************************************************************
 	이제 - 보내는분 계좌 선택 화면 검색영역
 *********************************************************************************************************/
-var srchAccNavi = function() {
-	var _srchAccNavi = $('.srch_acc_navi');
+var trnSchNaviSetTime = undefined;
+var trnSchNaviFn = function() {
+	var _trnSchNavi = $('.trn_sch_navi', $page_ID);
 
 	/* 스크로로 방향 체크 */
 	var _pubLastScrollY = 0;
@@ -1740,26 +2063,43 @@ var srchAccNavi = function() {
 
 
 	$(window).scroll(function(e) {
-		var _scrollDir = scrollDir();
-
-		if(_pubLastScrollY === 0) {
-			_srchAccNavi.hide().attr('aria-hidden', 'true');
+		if(_trnSchNavi.closest('.tab_panel').is(':hidden')) {
+			//해당탭 비활성화
+			if(_pubLastScrollY > 0) _pubLastScrollY = 0;
+			return;
+		}
+		if(!$('.search_slide_wrap').hasClass('active')) {
 			return;
 		}
 
-		if(_scrollDir == 'up' && _pubLastScrollY != 0) {
-			_srchAccNavi.show().attr('aria-hidden', 'false');
-		} else if(_scrollDir == 'down') {
-			_srchAccNavi.hide().attr('aria-hidden', 'true');
+		var _scrollDir = scrollDir();
+
+		if(_pubLastScrollY === 0) {
+			_trnSchNavi.hide().attr('aria-hidden', 'true');
+			return;
 		}
+
+		if(trnSchNaviSetTime != undefined) clearTimeout(trnSchNaviSetTime);
+		_trnSchNavi.show().attr('aria-hidden', 'false');
+		trnSchNaviSetTime = setTimeout(function() {
+			_trnSchNavi.hide().attr('aria-hidden', 'true');
+		}, 3000);
+//		if(_scrollDir == 'up' && _pubLastScrollY != 0) {
+//			_trnSchNavi.hide().attr('aria-hidden', 'true');
+//		} else if(_scrollDir == 'down') {
+//			_trnSchNavi.show().attr('aria-hidden', 'false');
+//			trnSchNaviSetTime = setTimeout(function() {
+//				_trnSchNavi.hide().attr('aria-hidden', 'true');
+//			}, 3000);
+//		}
 	});
 
-	$('.acc_navi_btn', _srchAccNavi).click(function() {
+	$('.trn_navi_btn', _trnSchNavi).click(function() {
 		var _this = $(this);
 		var _wrap = _this.closest('.deposit_result_list');
 		var _list = $('.toggle_list_wrap > ul', _wrap);
 		var _listItems = $('> li', _list);
-		var _movPos = _listItems.eq(_this.parent().index()).offset().top - ($('#header').outerHeight() + $('.tran_deposit_fixed').outerHeight());
+		var _movPos = _listItems.eq(_this.parent().index()).offset().top - 191;
 
 		$('html, body').animate({
 			scrollTop : _movPos
@@ -1774,7 +2114,7 @@ var acctTranSwipeFnc = function(target) {
 	var _target = $(target)
 	var _current = {};
 	var _delta = {};
-	var _maxAngle = 30;
+	var _maxAngle = 10;
 	var _minTouchDist = 10;
 	var _duration = 600;
 	var _rads;
@@ -1785,6 +2125,7 @@ var acctTranSwipeFnc = function(target) {
 	var _moveDist;
 	var _startTime;
 	var _endTime;
+	var _isEndBlock = false;
 
 	var _viewBox = $('.info_view_row', _target);
 	var _eventTarget;
@@ -1792,6 +2133,7 @@ var acctTranSwipeFnc = function(target) {
 	var _isTransition = false;
 
 	var start = function(e, el) {
+		if(_isTransition) return;
 		var _touchObj = e.originalEvent.changedTouches[0];
 		_current = {
 			X : _touchObj.pageX,
@@ -1803,6 +2145,7 @@ var acctTranSwipeFnc = function(target) {
 		_startTime = new Date().getTime();
 	}
 	var move = function(e) {
+		if(_isTransition) return;
 		var _touchObj = e.originalEvent.changedTouches[0];
 		_delta = {
 			X : _touchObj.pageX - _current.X,
@@ -1814,6 +2157,9 @@ var acctTranSwipeFnc = function(target) {
 		_movDist = _delta.X + _posX;
 		_dir = _delta.X < 0 ? 'left' : 'right';
 
+		if(Math.abs(_delta.Y) > Math.abs(_delta.X)) _isEndBlock = true;
+		if(_isEndBlock) return;
+
 		if(_deg < _maxAngle) {
 			e.preventDefault();
 			if(_dir === 'left' && _movDist < -150) {
@@ -1821,11 +2167,16 @@ var acctTranSwipeFnc = function(target) {
 			} else if(_dir === 'right' && _movDist > 0) {
 				_movDist = 0;
 			}
+			_translate(_eventTarget, _movDist, 0);
 		}
 
-		_translate(_eventTarget, _movDist, 0);
 	}
 	var end = function(e) {
+		if(_isTransition) return;
+		if(_isEndBlock) {
+			_isEndBlock=false;
+			return;
+		}
 		var _touchObj = e.originalEvent.changedTouches[0];
 		_delta = {
 			X : _touchObj.pageX - _current.X,
@@ -1840,26 +2191,29 @@ var acctTranSwipeFnc = function(target) {
 
 		if(_endTime - _startTime < 600) _duration = _endTime - _startTime;
 
-		if(Math.abs(_delta.X) > 50 && _deg < _maxAngle) {
-			if(_dir === 'left') {
-				_movDist = -97;
-			} else if(_dir === 'right') {
-				_movDist = 0;
-			}
-		} else if(Math.abs(_delta.X) <= 50 && _deg < _maxAngle) {
-			_movDist = _posX == -97 ? -97 : 0;
-			if(_endTime - _startTime < 200) {
-				if(_delta.X < -10) {
-					_movDist = _dir === 'left' ? -97 : _movDist;
-				} else if(_delta.X > 10) {
-					_movDist = _dir === 'right' ? 0 : _movDist;
+		if(_deg < _maxAngle) {
+			if(Math.abs(_delta.X) > 50) {
+				if(_dir === 'left') {
+					_movDist = -97;
+				} else if(_dir === 'right') {
+					_movDist = 0;
+				}
+			} else if(Math.abs(_delta.X) <= 50) {
+				_movDist = _posX == -97 ? -97 : 0;
+				if(_endTime - _startTime < 200) {
+					if(_delta.X < -10) {
+						_movDist = _dir === 'left' ? -97 : _movDist;
+					} else if(_delta.X > 10) {
+						_movDist = _dir === 'right' ? 0 : _movDist;
+					}
 				}
 			}
+
+			_eventTarget.data('movPos', _movDist);
+			if(_movDist > 0) _isTransition = true;
+			_translate(_eventTarget, _movDist, _duration);
 		}
 
-		_eventTarget.data('movPos', _movDist);
-		_isTransition = true;
-		_translate(_eventTarget, _movDist, _duration);
 	}
 
 	var _translate = function(target, dist, speed) {
@@ -1885,6 +2239,8 @@ var acctTranSwipeFnc = function(target) {
 			_btnExpanded.attr('aria-hidden', 'true');
 			_utilInner.attr('aria-expanded', 'false');
 		}
+
+		if(_isTransition) _isTransition = false;
 	});
 	_btnUtil.off('click').on('click', function(e) {
 		var _this = $(this);
@@ -1947,6 +2303,7 @@ var accTabHoldFn = function(target, options) {
 	var _wrap = $(target);
 	var _inqMain = _wrap.closest('.inquiry_main');
 	var _guideBox = $('.hold_trans_guide', _wrap);
+	var _inqMainItem = $('.inq_main_item', _wrap);
 	var _listBox = $('.list_box > ul', _wrap);
 	var _itemsBox = $('> li', _listBox);
 	var _items = $('> .acc_plate_wrap04', _itemsBox);
@@ -2007,6 +2364,7 @@ var accTabHoldFn = function(target, options) {
 		_tapSetTime = setTimeout(function() {
 			_isTapHold = true;
 			_inqMain.addClass('isHold');
+			_inqMainItem.removeClass('fixed');
 			_holdSetFn();
 			_tapEvtEl.addClass('hold_case');
 			_holdItemH = _tapEvtEl.outerHeight();
@@ -2093,10 +2451,10 @@ var accTabHoldFn = function(target, options) {
 			_inqMain.removeClass('isHold');
 			_items.removeClass('hold_hover');
 			_scrollMovFn(0);
-			_guideBox.show().attr('aria-hidden', 'false');
+			_guideBox.hide().attr('aria-hidden', 'true');
 		}
 
-		if(_options.holdEnd) _options.holdEnd(_tapEvtEl, $(_cardPosInf[_cardPosKey[_selectedIdx]]), _selectedIdx != undefined ? true : false);
+		_options.holdEnd(_tapEvtEl, _selectedIdx != undefined ? $(_cardPosInf[_cardPosKey[_selectedIdx]]) : '', _selectedIdx != undefined ? true : false);
 	}
 
 	_holdBtn.unbind('touchstart', holdStart).bind('touchstart', holdStart);
@@ -2110,6 +2468,156 @@ var accTabHoldFn = function(target, options) {
 		e.preventDefault();
 		return false;
 	});
-
-
 }
+
+/*********************************************************************************************************
+	메인계좌 설정
+*********************************************************************************************************/
+$(document).on('click', '.main_acc_group_box .acc_tit', function() {
+	var _this = $(this);
+	var _groupWrap = _this.closest('.main_acc_group_box');
+	var _listBox = $('.main_acc_list_box', _groupWrap);
+
+	if(_listBox.is(':hidden')) {
+		$('.main_acc_group_box .acc_tit').removeClass('active').attr('aria-expanded', 'false');
+		$('.main_acc_group_box .main_acc_list_box').slideUp(300).attr('aria-hidden', 'true');
+		_this.addClass('active').attr('aria-expanded', 'true');
+		_listBox.slideDown(300).attr('aria-hidden', 'false');
+	}else{
+		_this.removeClass('active').attr('aria-expanded', 'false');
+		_listBox.slideUp(300).attr('aria-hidden', 'true');
+
+	}
+});
+
+/*********************************************************************************************************
+	계좌순서 변경
+*********************************************************************************************************/
+$(document).on('click', '.order_acc_group_box .acc_tit', function() {
+	var _this = $(this);
+	var _groupWrap = _this.closest('.order_acc_group_box');
+	var _listBox = $('.order_acc_list_box', _groupWrap);
+
+	if(_listBox.is(':hidden')) {
+		$('.order_acc_group_box .acc_tit').removeClass('active').attr('aria-expanded', 'false');
+		$('.order_acc_group_box .order_acc_list_box').slideUp(300).attr('aria-hidden', 'true');
+		_this.addClass('active').attr('aria-expanded', 'true');
+		_listBox.slideDown(300).attr('aria-hidden', 'false');
+	}else{
+		_this.removeClass('active').attr('aria-expanded', 'false');
+		_listBox.slideUp(300).attr('aria-hidden', 'true');
+
+	}
+});
+
+/*********************************************************************************************************
+	금융상품몰 비교하기
+ *********************************************************************************************************/
+$(document).on('click', '[class^="compare_wrap"] .tit_compare', function() {
+	var _this = $(this);
+	var _wrap = _this.closest('[class^="compare_wrap"]');
+	var _conts = $('[class^="cont_compare"]', _wrap);
+
+	if(_conts.is(':hidden')) {
+		_this.addClass('active').attr('aria-expanded', 'true');
+		_conts.slideDown(300).attr('aria-hidden', 'false');
+	}else{
+		_this.removeClass('active').attr('aria-expanded', 'false');
+		_conts.slideUp(300).attr('aria-hidden', 'true');
+	}
+});
+
+/*********************************************************************************************************
+	range slider
+ *********************************************************************************************************/
+var rangeFn = function() {
+	var _rangeWrap = $('[class^="slider_range_wrap"]', $page_ID);
+	var _rangeEl = $('input[type="range"]', _rangeWrap);
+
+	_rangeWrap.each(function() {
+		var _rangeEl = $('input[type="range"]', this);
+		var _trackBox = $('.slider_range_track', this);
+		var _trackBarItem = $('.slider_range_bar', this);
+		var _trackHandleItem = $('.slider_range_handle', this);
+		var _minVal = parseInt(_rangeEl.attr('min'), 10);
+		var _maxVal = parseInt(_rangeEl.attr('max'), 10);
+		var _val = _rangeEl.val();
+
+		_trackBarItem.css({'width' : (_val / _maxVal) * 100 + '%'});
+		_trackHandleItem.css({'left' : (_val / _maxVal) * 100 + '%'});
+	});
+
+	var _rangeMov = function(e) {
+		var _rangeEl = $(e.target);
+		var _rangeWrap = _rangeEl.closest('[class^="slider_range_wrap"]');
+		var _trackBox = $('.slider_range_track', _rangeWrap);
+		var _trackBarItem = $('.slider_range_bar', _rangeWrap);
+		var _trackHandleItem = $('.slider_range_handle', _rangeWrap);
+		var _minVal = parseInt(_rangeEl.attr('min'), 10);
+		var _maxVal = parseInt(_rangeEl.attr('max'), 10);
+		var _val = _rangeEl.val();
+		var _step = _rangeEl.data('step');
+		var _setVal = _val;
+
+		if(_step) {
+			if(_val >= _step) {
+				_setVal = Math.ceil(_val / _step) * _step;
+				_rangeEl.val(_setVal);
+			}else{
+				_setVal = _minVal;
+				_rangeEl.val(_setVal);
+			}
+		}
+
+		_trackBarItem.css({'width' : (_setVal / _maxVal) * 100 + '%'});
+		_trackHandleItem.css({'left' : (_setVal / _maxVal) * 100 + '%'});
+	}
+
+	$('input[type="range"]').unbind('input change', _rangeMov).bind('input change', _rangeMov);
+}
+
+/*********************************************************************************************************
+	combo box 요소 포커스시 스크롤
+*********************************************************************************************************/
+var comboScrollFn = function(el) {
+	var _el = $(el);
+	var _elOffseT = _el.offset().top;
+	var _layerWrap = _el.closest('.layer_wrap');
+	var _winH = window.innerHeight;
+	var _scrollT = $(window).scrollTop();
+
+	if(_elOffseT - (_winH / 2) > 0) {
+		if(_layerWrap.length) {
+			$('.layer_container', _layerWrap).animate({
+				scrollTop : _elOffseT - (_winH / 2)
+			}, 1);
+		}else{
+			$('body, html').animate({
+				scrollTop : _elOffseT - (_winH / 2)
+			}, 1);
+		}
+	}
+}
+
+/*********************************************************************************************************
+	button tip 컴포넌트 안으로 들어갈 경우 상위요소 이벤트 상쇄
+*********************************************************************************************************/
+$(document).on('click', '[class^="btn_tip"]', function(e) {e.stopPropagation();});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

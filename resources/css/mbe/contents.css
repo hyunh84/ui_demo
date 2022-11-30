@@ -1,35 +1,102 @@
 @charset "utf-8";
 
 /* 컨텐츠 비주얼 이미지 */
-[class^="visual_image_box"] {}
+[class^="visual_image_box"] {padding:0;}
+[class^="visual_image_box"]:first-child {margin:24px 0 0;}
+[class^="visual_image_box"] .visual01 {display:block;text-align:center;}
+[class^="visual_image_box"] .visual01 img {width:209px;}
+[class^="visual_image_box"] .visual_txt {margin:32px 0 0;}
+[class^="visual_image_box"] .visual_txt:first-child {margin:0;}
 
 /* FULL팝업 약관동의 상세 */
 .agree_detail_box [class^="tab_list_wrap"] {position:sticky;top:0;z-index:1;}
+
+/* 입장 타이틀(사용자 확인) */
+[class^="enter_headline_wrap"] {margin:16px 0 60px;text-align:center;}
+[class^="enter_headline_wrap"] .headline {font-size:24px;font-weight:bold;color:#111;line-height:34px;}
+[class^="enter_headline_wrap"] .desc {margin-top:16px;font-size:13px;line-height:20px;}
+[class^="enter_headline_wrap"] .btn_wrap {margin-top:60px;}
+[class^="enter_headline_wrap"] [class^="ico_"] {display:block;width:48px;height:48px;margin:0 auto 16px;;}
+[class^="enter_headline_wrap"] .ico_error {background:url(/resource/img/mbe/common/ico_error02.png) no-repeat center / 100%}
+[class^="enter_headline_wrap"] .enter_visual {margin:60px 0 0;}
+[class^="enter_headline_wrap"] .enter_visual .inner {display:inline-flex;position:relative;}
+[class^="enter_headline_wrap"] .enter_visual .inner:before {display:block;content:"";position:absolute;left:20px;right:20px;top:50%;height:1px;background-color:#eee;transform:translate(0, -50%);}
+[class^="enter_headline_wrap"] [class^="visual_item"] {position:relative;width:64px;height:64px;margin:0 0 0 12px;border:1px solid #eee;border-radius:100%;background-color:#fff;background-repeat:no-repeat;background-position:center;background-size:24px auto;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
+[class^="enter_headline_wrap"] [class^="visual_item"]:first-child {margin:0;}
+[class^="enter_headline_wrap"] .visual_item_face {background-image:url(/resource/img/mbe/contents/ico_enter_guide01.png);}
+[class^="enter_headline_wrap"] .visual_item_pw {background-image:url(/resource/img/mbe/contents/ico_enter_guide02.png);}
+[class^="enter_headline_wrap"] .visual_item_finger {background-image:url(/resource/img/mbe/contents/ico_enter_guide03.png);}
+[class^="enter_headline_wrap"] .visual_item_pattern {background-image:url(/resource/img/mbe/contents/ico_enter_guide04.png);}
+.enter_headline_wrap02 {margin-top:24.63vh;}
+.enter_headline_wrap03 {margin-top:36px;}
+
+/*********************************************************************************************************
+	메인 계좌 설정
+*********************************************************************************************************/
+.main_acc_list_box {margin:24px 0 0;}
+.main_acc_list_box ul li {margin:12px 0 0;}
+.main_acc_list_box ul li:first-child {margin:0;}
+.main_acc_list_box ul li.sortable-drag {opacity:1 !important;background-color:#fff;}
+.main_acc_list_box ~ [class^="btn_conts_box"] {margin:24px 0 0;}
+
+.main_acc_group_list {margin:24px -24px 0;padding:9px 24px 0;border-top:1px solid #eee;}
+.main_acc_group_list .main_acc_group_box {margin:24px 0 0;}
+.main_acc_group_list .main_acc_group_box:first-child {margin-top:0;}
+.main_acc_group_list .main_acc_group_box + .main_acc_group_box {margin:16px 0 0;}
+.main_acc_group_list .main_acc_group_box .acc_tit {display:block;position:relative;width:100%;padding:15px 0;text-align:left;}
+.main_acc_group_list .main_acc_group_box .acc_tit:after {display:block;content:"";position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/arrow_accordion_open.png) no-repeat center / 24px 24px;}
+.main_acc_group_list .main_acc_group_box .acc_tit strong {display:inline-block;position:relative;padding:0;font-size:18px;font-weight:500;color:#111;vertical-align:middle;}
+.main_acc_group_list .main_acc_group_box .acc_tit .num {display:inline-block;box-sizing:border-box;width:20px;height:20px;font-size:13px;color:#d21300;line-height:20px;text-align:center;border-radius:20px;background-color:#fcedeb;vertical-align:middle;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box {margin:0;padding:0;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box ul li {margin:16px 0 0;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box ul li:first-child {margin:0;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box ul li .list_card_box .inner {padding:15px 32px;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box ul li .list_card_box .btn_bookmark02 {left:0;}
+.main_acc_group_list .main_acc_group_box .main_acc_list_box ul li .list_card_box .util02 {right:0;}
+.main_acc_group_list .main_acc_group_box .acc_tit.active:after {background-image:url(/resource/img/mbe/common/arrow_accordion_close.png);}
+.main_acc_group_list .main_acc_group_box .acc_tit:disabled:after {display:none;}
+.main_acc_group_list .main_acc_group_box .acc_tit:disabled + .main_acc_list_box {display:none;}
+.main_acc_group_list .main_acc_group_box ~ [class^="btn_conts_box"] {margin:24px 0 0;}
+
+.main_acc_nodata {margin:100px 0 60px;line-height:34px;font-size:24px;font-weight:700;color:#111;text-align:center;}
+.main_acc_nodata .ico {display:inline-block;width:48px;height:48px;margin:0 0 16px;background:url(/resource/img/mbe/common/ico_nodata.png) no-repeat center / 100%;}
 
 /*********************************************************************************************************
 	통합검색
 *********************************************************************************************************/
 /* 검색어 입력 박스 */
-.integrate_serach_wrap .integrate_inp .inp_bundle_search {position:relative;padding:9px 55px 9px 15px}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search .inp_txt {padding:0 0 0 32px}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button {position:absolute;right:0;top:0;width:51px;height:46px;border-radius:0 24px 24px 0;background-color:#f8f8f8;background-position:center;background-repeat:no-repeat;background-size:34px;z-index:1;}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="true"] {display:none;}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button[aria-hidden="false"] {display:block;}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.keyboard_btn {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_serch_keyboard.png);}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search > button.voice_btn {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_serch_voice.png);}
-.integrate_serach_wrap .integrate_inp .inp_bundle_search.focus .inp_txt {padding:0 24px 0 32px}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search {position:relative;padding:9px 50px 9px 58px;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search .inp_txt {padding:0;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button {position:absolute;left:0;top:0;width:50px;height:46px;border-radius:46px 0 0 46px;background-color:#f8f8f8;background-position:center;background-repeat:no-repeat;background-size:24px;z-index:1;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button[aria-hidden="true"] {display:none;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button[aria-hidden="false"] {display:block;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button.keyboard_btn {background-image:url(/resource/img/mbe/common/ico_serch_keyboard.png);}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button.voice_btn {background-image:url(/resource/img/mbe/common/ico_serch_voice.png);}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search > button.search_btn {left:auto;background-color:transparent;}
+.integrate_serach_wrap [class^="integrate_inp"] .inp_bundle_search.focus .inp_txt {padding-right:32px;}
+
+/* 메뉴 검색어 입력 박스 */
+.integrate_serach_wrap .integrate_inp02 .inp_bundle_search {position:relative;padding:9px 15px;}
 
 /* 통합검색 타이틀 */
 .integrate_serach_wrap .integrate_title strong {display:inline-block;line-height:28px;font-size:18px;font-weight:500;color:#111;}
 
 /* 검색결과 리스트 */
-.integrate_serach_wrap .integrate_search_box {margin:32px 0 0;}
-.integrate_serach_wrap .integrate_search_box[aria-hidden="true"] {display:none;}
-.integrate_serach_wrap .integrate_search_box .integrate_list {margin:12px 0 0;}
-.integrate_serach_wrap .integrate_search_box .integrate_list > ul {border-bottom:1px solid #eee;}
-.integrate_serach_wrap .integrate_search_box .integrate_list > ul > li {border-top:1px solid #eee;}
-.integrate_serach_wrap .integrate_search_box .integrate_list .integrate_item button {padding:12px 0;color:#111;}
-.integrate_serach_wrap .integrate_search_box .integrate_list .integrate_item .keyword {color:#d21300;}
+.integrate_serach_wrap [class^="integrate_search_box"] {margin:32px 0 0;}
+.integrate_serach_wrap [class^="integrate_search_box"][aria-hidden="true"] {display:none;}
+.integrate_serach_wrap [class^="integrate_search_box"] .integrate_list {margin:12px 0 0;}
+.integrate_serach_wrap [class^="integrate_search_box"] .integrate_list > ul {border-bottom:1px solid #eee;}
+.integrate_serach_wrap [class^="integrate_search_box"] .integrate_list > ul > li {border-top:1px solid #eee;}
+.integrate_serach_wrap [class^="integrate_search_box"] .integrate_list .integrate_item button {padding:12px 0;color:#111;}
+.integrate_serach_wrap [class^="integrate_search_box"] .integrate_list .integrate_item .keyword {color:#d21300;}
+
+/* 검색결과 리스트 */
+.integrate_serach_wrap .integrate_search_box02 {margin:18px 0 0;}
+.integrate_serach_wrap .integrate_search_box02 .integrate_list > ul {border-bottom:none;}
+.integrate_serach_wrap .integrate_search_box02 .integrate_list > ul > li {position:relative;border-top:none;}
+.integrate_serach_wrap .integrate_search_box02 .integrate_list .integrate_item{padding-right:24px;}
+.integrate_serach_wrap .integrate_search_box02 .integrate_list .integrate_item button {padding:6px 0;text-align:left;color:#111;}
+.integrate_serach_wrap .integrate_search_box02 .integrate_list .integrate_item .btn_link04 {position:absolute;right:0;top:50%;width:16px;height:16px;margin:-8px 0 0;background:url(/resource/img/mbe/common/arrow_link03.png) no-repeat center / 16px auto;}
 
 /* 최근검색어 리스트 */
 .integrate_serach_wrap .recent_search_box {margin:32px 0 0;}
@@ -41,13 +108,16 @@
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .word {color:#666;}
 .integrate_serach_wrap .recent_search_box .recent_list .recent_item .search_word .date {font-size:12px;color:#999;}
-.integrate_serach_wrap .recent_search_box .recent_list .recent_item .del_search {position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
+.integrate_serach_wrap .recent_search_box .recent_list .recent_item .del_search {position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
 
 /* 인기검색어 리스트 */
-.integrate_serach_wrap .popular_search_box {margin:32px 0 0;}
-.integrate_serach_wrap .popular_search_box[aria-hidden="true"] {display:none;}
-.integrate_serach_wrap .popular_search_box .popular_list {margin:4px 0 0;}
-.integrate_serach_wrap .popular_search_box .popular_list .btn_hash {margin:8px 4px 0 0;}
+.integrate_serach_wrap [class^="popular_search_box"] {margin:32px 0 0;}
+.integrate_serach_wrap [class^="popular_search_box"][aria-hidden="true"] {display:none;}
+.integrate_serach_wrap [class^="popular_search_box"] .popular_list {margin:4px 0 0;}
+.integrate_serach_wrap [class^="popular_search_box"] .popular_list .btn_hash {margin:8px 4px 0 0;}
+
+/* 바로가기 리스트 */
+.integrate_serach_wrap .popular_search_box02 {margin:16px 0 0;}
 
 /*********************************************************************************************************
 	비대면 회원관리
@@ -56,7 +126,12 @@
 [class^="list_img_view"] {margin-top:16px;}
 [class^="list_img_view"] > li + li {margin-top:16px;}
 [class^="list_img_view"] .inner {overflow:hidden;}
-[class^="list_img_view"] .img {float:left;width:48px;height:48px;margin-right:12px;}
+[class^="list_img_view"] .img {float:left;width:48px;height:48px;margin-right:12px;border-radius:100%;background:#f8f8f8;}
+[class^="list_img_view"] .img [class^="ico_"] {display:block;width:24px;height:24px;padding:12px;background-position:50% 50%;background-repeat:no-repeat;background-size:24px;}
+[class^="list_img_view"] .img .ico_phone {background-image:url(/resource/img/mbe/common/ico_phone.png);}
+[class^="list_img_view"] .img .ico_idcard {background-image:url(/resource/img/mbe/common/ico_idcard.png);}
+[class^="list_img_view"] .img .ico_license {background-image:url(/resource/img/mbe/common/ico_license.png);}
+[class^="list_img_view"] .img .ico_account {background-image:url(/resource/img/mbe/common/ico_account.png);}
 [class^="list_img_view"] .txt_wrap {display:flex;overflow:hidden;min-height:48px;align-items:center;}
 
 /*********************************************************************************************************
@@ -64,41 +139,58 @@
 *********************************************************************************************************/
 .inquiry_main {position:relative;margin:-32px -24px -40px;padding:32px 24px 40px;background-color:#f8f8f8;}
 .inquiry_main .tab_panel {position:relative;}
-.inquiry_main .balance_box {display:flex;justify-content:space-between;;padding:18px 20px;color:#fff;border-radius:12px;background-color:#d21300;box-shadow:0 2px 10px rgba(210, 19, 0, 0.2);}
+.inquiry_main .balance_box {display:flex;justify-content:space-between;position:relative;padding:18px 20px;color:#fff;border-radius:12px;background-color:#d21300;box-shadow:0 2px 10px rgba(210, 19, 0, 0.2);}
 .inquiry_main .balance_box .tit {flex-shrink:0;}
-.inquiry_main .balance_box .tit strong {display:inilne-block;font-size:16px;font-weight:400;vertical-align:middle;}
+.inquiry_main .balance_box .tit strong {display:inline-block;font-size:16px;font-weight:400;vertical-align:middle;}
 .inquiry_main .balance_box .tit .tip_info_box {margin:0 0 0 4px;vertical-align:middle;}
-.inquiry_main .balance_box .balance {line-height:30px;font-size:20px;font-weight:700;}
+.inquiry_main .balance_box .balance {box-sizing:border-box;width:100%;margin:0 0 0 4px;padding:0 32px 0 0;line-height:30px;font-size:20px;font-weight:700;text-align:right;}
+.inquiry_main .balance_box .balance:empty:before {display:block;content:"";width:100%;height:27px;border-radius:8px;background:linear-gradient(to left, #f3f4f6 0%, #f3f4f6 20%, #dde1e8 40%, #f3f4f6 60%, #f3f4f6 100%);background-size:600px 15px;background-position:bottom;animation:skeleton 1s linear infinite;}
+.inquiry_main .balance_box .reload {position:absolute;right:16px;top:21px;width:24px;height:24px;background:url(/resource/img/mbe/common/ico_reload.png) no-repeat center/100%;}
 .inquiry_main .main_list_util {display:flex;justify-content:space-between;margin:32px 0 0;}
 .inquiry_main .main_list_util:first-child {margin:0;}
 .inquiry_main .inq_main_list {margin:16px -24px 0;padding:19px 24px 0;border-top:1px solid #eee;}
-.inquiry_main .inq_main_list .inq_main_item {margin:34px 0 0;}
-.inquiry_main .inq_main_list .inq_main_item:first-child {margin:0;}
-.inquiry_main .inq_main_list .inq_main_item .inq_item_tit {position:relative;}
-.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner {display:flex;justify-content:space-between;box-sizing:border-box;width:100%;padding:3px 32px 3px 0;}
-.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn {display:block;content:"";position:absolute;right:0;top:0;bottom:0;width:24px;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/arrow_accordion_open.png) no-repeat center / 24px;}
-.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn[aria-expanded="true"] {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/arrow_accordion_close.png);}
+.inquiry_main .inq_main_list .inq_main_item {position:relative;margin:34px 0 0;padding:34px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item:first-child,
+.inquiry_main .inq_main_list .hold_trans_guide + .inq_main_item {margin:0;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit {position:absolute;left:0;top:0;right:0;height:34px;background-color:#f8f8f8;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .add_acc_btn {display:block;content:"";position:absolute;right:0;top:50%;box-sizing:border-box;width:24px;height:24px;margin:-12px 0 0;border:1px solid #d21300;border-radius:24px;background:url(/resource/img/mbe/common/ico_add.png) no-repeat center / 24px;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn {display:block;content:"";position:absolute;right:0;top:0;bottom:0;width:24px;background:url(/resource/img/mbe/common/arrow_accordion_open.png) no-repeat center / 24px;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .expand_btn[aria-expanded="true"] {background-image:url(/resource/img/mbe/common/arrow_accordion_close.png);}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner {display:flex;justify-content:space-between;align-items:center;box-sizing:border-box;width:100%;padding:3px 32px 3px 0;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner > div:last-child {margin:0 0 0 8px;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner > div:first-child {flex-shrink:0;margin:0;}
 .inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .tit {display:inline-block;line-height:28px;font-size:18px;font-weight:500;color:#111;vertical-align:middle;}
 .inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .num {display:inline-block;box-sizing:border-box;min-width:20px;line-height:20px;font-size:13px;font-weight:500;color:#d21300;text-align:center;border-radius:100%;background-color:#fcedeb;vertical-align:middle;}
 .inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .tip_info_box {margin:0 4px 0 0;vertical-align:middle;}
 .inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .price {display:inline-block;line-height:28px;font-size:16px;color:#111;vertical-align:middle;}
 .inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .price span {font-weight:500;}
-.inquiry_main .inq_main_list .inq_main_item .list_box {display:none;padding:20px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .price:empty:before {display:block;content:"";width:140px;height:27px;border-radius:8px;background:linear-gradient(to left, #f3f4f6 0%, #f3f4f6 20%, #dde1e8 40%, #f3f4f6 60%, #f3f4f6 100%);background-size:600px 15px;background-position:bottom;animation:skeleton 1s linear infinite;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .copy_txt {font-size:13px;font-weight:500;color:#111;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .acc_link {position:relative;margin:0 -32px 0 0;padding:0 32px 0 0;font-size:13px;font-weight:500;color:#111;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit .inner .acc_link:after {display:block;content:"";position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/arrow_link04.png) no-repeat center / 100%;}
+.inquiry_main .inq_main_list .inq_main_item .inq_item_tit [class^="tip_info_box"] {z-index:12;}
+.inquiry_main .inq_main_list .inq_main_item .list_box {display:none;padding:20px 0 40px;}
 .inquiry_main .inq_main_list .inq_main_item .list_box .withdrawal_box {display:flex;justify-content:space-between;padding:8px 16px;line-height:20px;font-size:13px;color:#999;border-radius:8px;background-color:#eee;}
 .inquiry_main .inq_main_list .inq_main_item .list_box .withdrawal_box .tit {font-weight:500;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul {margin:16px 0 0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul:first-child {margin:0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul > li {margin:16px 0 0;}
 .inquiry_main .inq_main_list .inq_main_item .list_box > ul > li:first-child {margin:0;}
-.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 a.inner,
-.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 button.inner {width:100%;-webkit-touch-callout:none;-webkit-user-select: none; text-align:left;}
-.inquiry_main .inq_main_list .inq_main_item .list_box .more_box {margin:32px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 button {touch-callout:none;user-select:none;-webkit-touch-callout:none;-webkit-user-select:none;}
+.inquiry_main .inq_main_list .inq_main_item .list_box .more_box {margin:32px 0 -40px;}
 .inquiry_main .inq_main_list .inq_main_item .list_box .more_box .btn_more {background-color:transparent;}
+.inquiry_main .inq_main_list .inq_main_item.fixed .inq_item_tit {position:fixed;left:0;right:0;top:102px;height:auto;padding:10px 24px;background-color:#f8f8f8;z-index:1;}
+.inquiry_main .inq_main_list .inq_main_item.fixed .inq_item_tit .inner {height:50px;padding:0 32px 0 0;}
+.inquiry_main .inq_main_list .inq_main_item.fixed .inq_item_tit .expand_btn,
+.inquiry_main .inq_main_list .inq_main_item.fixed .inq_item_tit .add_acc_btn {right:24px;}
+.inquiry_main .inq_main_list .inq_main_item.fixed.prev .inq_item_tit {position:absolute;top:auto;bottom:0;left:-24px;right:-24px;}
 .inquiry_main .inq_main_list .hold_trans_guide {display:none;position:fixed;top:44px;left:0;right:0;text-align:center;background-color:#fff;z-index:60;}
 .inquiry_main .inq_main_list .hold_trans_guide .inner {box-sizing:border-box;height:65px;padding:9px 0 0;border:1px dashed #ddd;}
 .inquiry_main .inq_main_list .hold_trans_guide strong {display:block;line-height:26px;font-size:16px;font-weight:700;color:#111;}
 .inquiry_main .inq_main_list .hold_trans_guide span {display:block;line-height:20px;font-size:13px;color:#111;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .inq_item_tit .inner .price {display:none;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .inq_item_tit > .inner > div:last-child {display:none;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box .withdrawal_box {display:none;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li {box-sizing:border-box;border:1px dashed #ddd;border-radius:0 12px 12px 0;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 {margin:-1px;-webkit-touch-callout:none;-webkit-userselect:none;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_name .name {font-size:14px;color:#111;}
@@ -109,37 +201,49 @@
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04 .acc_btn {display:none;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_hover {position:relative;overflow:hidden;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_hover:after {display:block;content:"";position:absolute;left:0;top:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.3);}
-.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case {position:fixed;left:38px;right:10px;border:1px solid #d21300;transition:top 300ms ease;z-index:10;box-shadow:0 6px 30px rgba(0, 0, 0, 0.24);}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case {position:fixed;left:38px;right:10px;border:1px solid #d21300;transition:top 300ms ease;z-index:10;box-shadow:0 6px 30px rgba(0, 0, 0, 0.24);z-index:52;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_amount {display:none;}
 .inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_withdrawn {display:block;line-height:28px;font-size:18px;font-weight:500;color:#111;}
-.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_withdrawn em {display:inline-block;margin-right:4px;font-size:12px;font-weight:400;}
+.inquiry_main.isHold .inq_main_list .inq_main_item .list_box > ul > li .acc_plate_wrap04.hold_case .acc_withdrawn em {display:inline-bloc ;margin-right:4px;font-size:12px;font-weight:400;}
+.inq_main_sect {margin:32px 0 0;padding:32px 0 0;border-top:1px solid #eee;}
 
 /*********************************************************************************************************
 	조회/이체, 계좌관리
 *********************************************************************************************************/
 /* 이체 화면 */
-[class^="tran_proccess_wrap"] .tran_register_box {position:relative;margin:40px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
+[class^="tran_proccess_wrap"] .tran_register_box {position:relative;margin:32px 0 0;line-height:36px;font-size:26px;font-weight:700;color:#111;}
 [class^="tran_proccess_wrap"] .tran_register_box:first-child {margin-top:16px;}
-[class^="tran_proccess_wrap"] > [class^="regist_bundle_box"] {margin:60px 0 0;}
+[class^="tran_proccess_wrap"] .tran_register_box + [class^="regist_bundle_box"] {margin:60px 0 0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn {position:absolute;right:-24px;top:12px;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] {padding:12px;border-radius:24px 0 0 24px;background-color:#555;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] span {display:block;position:relative;padding:0 0 0 28px;line-height:24px;color:#fff;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"] span:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-color:#fff;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn [class^="tran_btn"][aria-hidden="true"] {display:none;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_type_btn .tran_btn02 {}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info {display:inline-block;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank span {display:inline-block;vertical-align:middle;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank .ico_bank + .bank_code {margin:0 0 0 4px;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .bank .bank_code {line-height:28px;font-size:18px;font-weight:500;color:#666;border-bottom:1px solid #666;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .recipient span {display:inline-block;margin:8px 0 0;line-height:28px;font-size:18px;font-weight:500;color:#666;border-bottom:1px solid #666;}
-[class^="tran_proccess_wrap"] .tran_register_box .tran_money {margin:24px 0 0 ;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .recipient {font-size:20px;color:#666;font-weight:400;line-height:27px;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .btn_link {vertical-align:top;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .btn_link span {font-size:20px;font-weight:bold;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info .btn_link.disabled span {border-bottom:none;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info [class^="acc_plate_wrap"] {margin-top:4px;line-height:16px;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_acc_info [class^="acc_plate_wrap"] [class^="acc_code"] .code {line-height:16px;font-weight:400;vertical-align:middle;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp {margin:40px 0 0;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp:first-child {margin-top:0;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp .inp_amount02 {vertical-align:top;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp .info_sub {margin-top:4px;font-weight:400;line-height:20px;color:#999;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp .info_sub span {display:block;font-size:12px;}
+
+/*[class^="tran_proccess_wrap"] .tran_register_box .tran_money {margin:24px 0 0 ;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money:first-child {margin:0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .tran_money_inp {line-height:0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money {margin:16px 0 0;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .possibility {display:inline-block;padding:3px 10px;line-height:18px;font-size:12px;font-weight:400;color:#666;border-radius:24px;background-color:#f4f4f4;}
 [class^="tran_proccess_wrap"] .tran_register_box .tran_money > .possibility_money .error {line-height:20px;font-size:13px;font-weight:400;color:#999;}
+*/
 [class^="tran_proccess_wrap"] + .list_view_box03 {margin:60px 0 0;}
 [class^="tran_proccess_wrap"] .tab_list_wrap03 {margin:60px 0 16px;}
+[class^="tran_proccess_wrap"] .page_move_box .error_tip {display:block;margin:16px 0 0;}
+[class^="tran_proccess_wrap"] .page_move_box .error_tip .inner {display:inline-block;position:relative;box-sizing:border-box;max-width:calc(100% - 16px);padding:12px 16px;font-size:13px;line-height:20px;color:#fff;border-radius:10px;background-color:rgba(0, 0, 0, .8);}
+[class^="tran_proccess_wrap"] .page_move_box .error_tip .inner .tail {display:block;content:"";overflow:hidden;position:absolute;top:-6px;left:50%;width:16px;height:6px;margin:0 0 0 -8px;}
+[class^="tran_proccess_wrap"] .page_move_box .error_tip .inner .tail:after {display:block;content:"";position:absolute;left:50%;top:2px;width:8px;height:8px;background-color:rgba(0, 0, 0, .8);transform:translate(-50%, 0) rotate(45deg);transform-origin:50% 50%;}
 
 [class^="tran_depsoit_box"] {position:relative;margin:60px 0 0;padding:73px 0 0;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed {position:absolute;top:0;left:0;right:0;padding:0 0 12px;}
@@ -147,7 +251,7 @@
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tab_list_wrap:after {right:48px;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed {position:fixed;top:44px;margin:0;background-color:#fff;z-index:90;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .tab_list_wrap {margin:0;}
-[class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
+[class^="tran_depsoit_box"] .tran_deposit_fixed .srch_deposit_btn {position:absolute;right:0;top:3px;width:24px;height:24px;background:#fff url(/resource/img/mbe/common/ico_search.png) no-repeat center/100%;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed.fixed .srch_deposit_btn {right:24px;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search {margin:24px 0 0;}
 [class^="tran_depsoit_box"] .tran_deposit_fixed .tran_deposit_search[aria-hidden="true"] {display:none;}
@@ -158,13 +262,17 @@
 [class^="tran_depsoit_box"] .tab_panel_wrap[aria-hidden="true"] {display:none;}
 [class^="tran_depsoit_box"] .tab_panel_wrap[aria-hidden="false"] {display:block;}
 
-[class^="tran_depsoit_box"] .srch_acc_navi {display:none;position:fixed;bottom:96px;right:24px;box-sizing:border-box;min-width:120px;padding:4px 16px;border-radius:8px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.08);}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li {border-top:1px solid #eee;}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li:first-child {border-top:none;}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn strong {font-weight:400;}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn span {color:#666;}
-[class^="tran_depsoit_box"] .srch_acc_navi > ul > li .acc_navi_btn span.diabled {color:#ccc;}
+/* 이체 계좌선택 검색 결과 navi */
+[class^="deposit_result_list"][aria-hidden="true"] {display:none;}
+[class^="deposit_result_list"][aria-hidden="false"] {display:block;}
+[class^="deposit_result_list"] .trn_sch_navi {display:none;position:fixed;bottom:96px;right:24px;box-sizing:border-box;min-width:120px;padding:4px 16px;border-radius:8px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.08);}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li {border-top:1px solid #eee;}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li:first-child {border-top:none;}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li .trn_navi_btn {display:flex;justify-content:space-between;width:100%;padding:12px 0;}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li .trn_navi_btn strong {font-weight:400;}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li .trn_navi_btn span {color:#666;}
+[class^="deposit_result_list"] .trn_sch_navi > ul > li .trn_navi_btn span.diabled {color:#ccc;}
+
 /* 계좌관리 */
 .tran_depsoit_box02 {padding:0;}
 
@@ -172,12 +280,16 @@
 .tran_inquiry_box {margin:0 -24px;padding:0 24px;background-color:#fff;}
 .tran_inquiry_box:after {display:block;content:"";height:44px;margin:-18px -24px 0;background-color:#eee;}
 .tran_inquiry_box .combo_bundle_acc02 {margin:0 0 16px;}
-.tran_inquiry_box .tran_inquiry_util {display:flex;margin:-18px -24px -44px;padding:18px 24px 0;background-color:#eee;}
-.tran_inquiry_box .tran_inquiry_util .col {width:100%;}
-.tran_inquiry_box .tran_inquiry_util button {position:relative;width:100%;height:62px;}
-.tran_inquiry_box .tran_inquiry_util button span {line-height:26px;font-size:16px;}
-.tran_inquiry_box .tran_inquiry_util .col + .col button:before {display:block;content:"";position:absolute;left:-1px;top:50%;width:1px;height:16px;margin:-8px 0 0;background-color:#979797;}
+.tran_inquiry_box [class^="tran_inquiry_util"] {display:flex;margin:-18px -24px -44px;padding:18px 24px 0;background-color:#eee;}
+.tran_inquiry_box [class^="tran_inquiry_util"] .col {width:100%;}
+.tran_inquiry_box [class^="tran_inquiry_util"] button {position:relative;width:100%;height:62px;}
+.tran_inquiry_box [class^="tran_inquiry_util"] button span {line-height:26px;font-size:16px;}
+.tran_inquiry_box [class^="tran_inquiry_util"] .col + .col button:before {display:block;content:"";position:absolute;left:-1px;top:50%;width:1px;height:16px;margin:-8px 0 0;background-color:#979797;}
 .tran_inquiry_box + .list_top_box02 {margin:0 -24px;}
+.tran_inquiry_box .tran_inquiry_util02 {padding:18px 0 0;justify-content:space-between;}
+.tran_inquiry_box .tran_inquiry_util02 .col {width:auto;flex-grow:1;}
+.tran_inquiry_box .tran_inquiry_util02 .col button {padding:0 6px;box-sizing:border-box;}
+.tran_inquiry_box [class^="combo_bundle_acc"] + [class^="info_view_box"] {margin-top:12px;}
 
 /* 은행/증권사 선택 */
 .bank_select_box .bank_search_top {position:sticky;top:0;margin:0 -24px;padding:0 24px;background-color:#fff;z-index:1;}
@@ -188,21 +300,52 @@
 .bank_select_box .tab_panel_wrap[aria-hidden="true"] {display:none;}
 .bank_select_box .tab_panel_wrap[aria-hidden="false"] {display:block;}
 .bank_select_box .tab_panel_wrap .tab_panel {padding:32px 0 0;}
-.bank_select_box .tab_panel_wrap .tab_panel .bank_search_top {position:sticky;top:41px;margin:-32px -24px 0;padding:32px 24px 24px;z-index:1;}
+.bank_select_box .tab_panel_wrap .tab_panel .bank_search_top {position:sticky;top:34px;margin:-32px -24px 0;padding:32px 24px 24px;z-index:1;}
 .bank_select_box .bank_search_result[aria-hidden="true"] {display:none;}
 .bank_select_box .bank_search_result[aria-hidden="false"] {display:block;}
-.bank_list_box > ul {display:flex;flex-wrap:wrap;margin:-16px -9px 0;}
-.bank_list_box > ul > li {box-sizing:border-box;width:25%;padding:0 9px 0 0;margin:16px 0 0;}
-.bank_list_box > ul > li > button {box-sizing:border-box;width:100%;height:100%;min-height:103px;padding:8px 0;border-radius:12px;}
-.bank_list_box > ul > li > button:active,
-.bank_list_box > ul > li > button:focus {background-color:#f8f8f8;}
-.bank_list_box > ul > li > button > div {height:100%;text-align:center;}
-.bank_list_box > ul > li > button > div {height:100%;text-align:center;}
-.bank_list_box > ul > li > button > div .bank_name {display:block;margin:8px 0 0;}
-.bank_list_box > ul > li > button > div .bank_Code {display:none;}
-.bank_list_box > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
-.bank_list_box > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
+.bank_select_box .bank_search_result .row_item + .row_item {margin-top:32px;}
+[class^="bank_list_box"] > ul {display:flex;flex-wrap:wrap;margin:-16px -9px 0;}
+[class^="bank_list_box"] > ul > li {box-sizing:border-box;width:25%;padding:0 9px 0 0;margin:16px 0 0;}
+[class^="bank_list_box"] > ul > li > button {position:relative;box-sizing:border-box;width:100%;height:100%;min-height:103px;padding:8px 0;border-radius:12px;}
+[class^="bank_list_box"] > ul > li > button.active,
+[class^="bank_list_box"] > ul > li > button.focus,
+[class^="bank_list_box"] > ul > li > button:active,
+[class^="bank_list_box"] > ul > li > button:focus {background-color:#f8f8f8;}
+[class^="bank_list_box"] > ul > li > button.active:after {content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;background:url(/resource/img/mbe/common/ico_checkbox02_on.png) 50% 50% no-repeat;background-size:24px;}
+[class^="bank_list_box"] > ul > li > button > div {height:100%;text-align:center;}
+[class^="bank_list_box"] > ul > li > button > div .ico_bank02 .txt {display:block;font-size:13px;line-height:30px;}
+[class^="bank_list_box"] > ul > li > button > div .bank_name {display:block;margin:8px 0 0;line-height:20px;}
+[class^="bank_list_box"] > ul > li > button > div .bank_Code {display:none;}
+[class^="bank_list_box"] > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
+[class^="bank_list_box"] > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
 .bank_search_result {margin:32px 0 0;}
+.bank_list_box02 > ul > li {width:33.333%;margin-top:8px;}
+.bank_list_box02 > ul > li > button {min-height:60px;}
+.bank_list_box02 > ul > li > button > div .bank_name {font-size:13px;}
+
+/* 복사한 계좌로 보내기 버튼 */
+.copy_transinfo_box {position:fixed;left:0;right:0;bottom:-100%;padding:0 24px 36px;background-color:#fff;z-index:10;opacity:0;transition:bottom 700ms ease, opacity 700ms ease;}
+.copy_transinfo_box.active {bottom:0;opacity:1;}
+
+/* 자동이체 - 등록 */
+.headline_btn_box {margin:32px 0 0}
+.headline_btn_box span {font-size:20px;font-weight:700;color:#ccc;}
+[class^="tran_proccess_wrap"] .tran_register_box .tran_money_inp + .combo_link{margin:32px 0 0;}
+
+/*********************************************************************************************************
+	카드
+*********************************************************************************************************/
+/* 한도 변경 */
+[class^="inp_change_box"] {display:flex;justify-content:space-between;position:relative;}
+[class^="inp_change_box"]:after {content:"";position:absolute;top:28px;left:50%;width:24px;height:24px;margin-left:-12px;background:url(/resource/img/mbe/common/arrow_link.png) no-repeat center / 100% auto;}
+[class^="inp_change_box"] .inp_change_item {width:50%;box-sizing:border-box;}
+[class^="inp_change_box"] .inp_change_item .desc {margin-top:8px;font-size:13px;color:#999;line-height:20px;}
+[class^="inp_change_box"] .inp_change_item:first-child {padding-right:16px;}
+[class^="inp_change_box"] .inp_change_item:last-child {padding-left:16px;}
+[class^="inp_change_box"] .inp_change_item:last-child .desc {text-align:right;}
+[class^="inp_change_box"] .inp_change_item .unit,
+[class^="inp_change_box"] .inp_change_item .inp_txt input {font-size:16px;}
+[class^="inp_change_box"] .inp_change_item .unit {width:auto;margin-left:4px;flex-grow:0;}
 
 /*********************************************************************************************************
 	외환환율
@@ -223,74 +366,129 @@
 .coin_list_box > ul > li > button > div .nation {display:block;margin:8px 0 0;line-height:20px;font-size:13px;}
 .coin_list_box > ul > li > button > div .coin_unit {display:block;line-height:20px;font-size:13px;color:#999;}
 
+/* 금고잔액 리스트 */
+[class^="list_coin_plate"] > li + li {margin-top:16px;}
+[class^="list_coin_plate"] [class^="info_view_box"] {padding:15px 20px;box-shadow:none;}
+[class^="list_coin_plate"] [class^="info_view_box"] [class^="tit_view"] {padding-right:52px;}
+[class^="list_coin_plate"] [class^="info_view_box"] button.tit_view {width:100%;margin:0;padding:0 52px 0 0;box-sizing:border-box;}
+[class^="list_coin_plate"] [class^="info_view_box"] button.tit_view:after {top:50%;right:0;margin-top:-12px;}
+
+/* 비주얼 영역 */
+[class^="visual_area"] {margin:-24px -24px 0;padding:48px 24px 0;background:linear-gradient(to bottom, #f1f6ff, #fff)}
+[class^="visual_area"] [class^="headline_wrap"] {margin:0;}
+[class^="visual_area"] [class^="visual_img"] {display:block;margin:24px 0 0;text-align:center;}
+[class^="visual_area"] [class^="visual_img"] img {max-width:100%;max-height:100%;height:145px;}
+[class^="visual_area"] + .sect_bundle_box03 {margin-top:60px}
+.tab_panel [class^="visual_area"] {margin-top:-32px;}
+
 /*********************************************************************************************************
-	금융상품몰
+	외환환율
 *********************************************************************************************************/
-/* 상품 배너 */
-.swiper_banner {margin-top:40px;}
-.swiper_banner:first-child,
-.blind:first-child + .swiper_banner {margin-top:0;}
-.swiper_banner .swiper-slide {padding-right:16px;}
-.bnr_wrap {position:relative;}
-.bnr_wrap .img {overflow:hidden;border-radius:12px;}
-.bnr_wrap .inner {position:absolute;top:0;left:0;bottom:0;width:100%;padding:24px 20px;box-sizing:border-box;color:#000;}
-.bnr_wrap .sup_wrap {padding:2px 68px 12px 0;font-size:0;}
-.bnr_wrap .sup_wrap [class^="flag_item"] + [class^="flag_item"] {margin-left:8px;}
-.bnr_wrap .tit_wrap:first-child {padding-right:60px}
-.bnr_wrap .tit_wrap .tit {display:block;line-height:30px;font-size:24px;font-weight:500;}
-.bnr_wrap .tit_wrap .desc {display:block;margin-top:8px;line-height:18px;font-size:14px;}
-.bnr_wrap .cont_wrap {position:absolute;bottom:24px;left:20px;right:20px;}
-.bnr_wrap .txt_per {line-height:24px;font-size:0;}
-.bnr_wrap .txt_per span {display:inline-block;line-height:24px;font-size:14px;vertical-align:top;}
-.bnr_wrap .txt_per .lab {margin-right:8px;}
-.bnr_wrap .txt_per .per {font-size:16px;font-weight:500;}
-.bnr_wrap .txt_per .per .num {font-size:24px;}
-.bnr_wrap .area_btn {position:absolute; top:24px;right:20px;}
-.bnr_wrap .area_btn button {width:24px;height:24px;}
-.bnr_wrap .area_btn button + button {margin-left:8px;}
+/* 해외송금 파일첨부 영역 */
+[class^="fild_list_box"] {margin-top:12px;}
+[class^="fild_list_box"] .fild_list {margin-top:8px;padding:12px 16px;border:1px solid #eee;border-radius:8px;}
+[class^="fild_list_box"] .fild_list .fild_ineer {display:flex;align-items:center;justify-content:space-between;}
+[class^="fild_list_box"] .fild_list .fild_ineer .name {flex:1;overflow:hidden;margin-right:8px;font-size:14px;text-overflow:ellipsis;white-space:nowrap;}
+[class^="fild_list_box"] .fild_list .fild_ineer .file_del_btn {width:24px;height:24px;background:url(/resource/img/mbe/common/btn_input_del.png) no-repeat center / 24px auto;}
+/* 송금TRACKING step 영역 */
+[class^="row_step_wrap"] {margin-top:16px;}
+[class^="row_step_wrap"] [class^="row_step_box"] {padding:20px 4px;border:1px solid #ddd;border-radius:12px;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04);}
+[class^="row_step_wrap"] [class^="row_step_box"] ul {display:flex;justify-content:space-between;padding-top:16px;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"] {flex:1;position:relative;padding-top:16px;text-align:center;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"] + [class^="step"] {margin-left:8px;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"]:before {content:'';display:block;position:absolute;top:0;left:-50%;width:100%;height:2px;background-color:#fcedeb;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"]:first-child:before {left:50%;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul .step_todo:before {left:auto;right:50%;width:100%;height:0;border:1px dashed #ddd;background-color:transparent;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"] .circle:after {content:'';display:block;position:absolute;top:-3px;left:calc(50% - 4px);border-radius:50%;background-color:#d21400;z-index:1;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul .step_done .circle:after {width:8px;height:8px;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul .step_todo .circle:after {top:-5px;width:4px;height:4px;border:4px solid #ddd;background-color:#fff;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul .step_active .circle:after {width:20px;height:20px;top:-10px;left:calc(50% - 10px);background:#d21400 url(/resource/img/mbe/common/ico_checkbox_on.png) no-repeat center / 16px auto;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul .step_active .circle:before {content:'';display:block;position:absolute;top:-11px;left:calc(50% - 11px);width:22px;height:22px;border-radius:50%;background:#f9e2e0;animation:currentProcessDot 1s 1s linear infinite;z-index:-1;}
+[class^="row_step_wrap"] [class^="row_step_box"] ul [class^="step"] .name_box {display:flex;align-items:center;justify-content:space-evenly;height:100%;min-height:40px;line-height:20px;font-size:13px;}
+/*********************************************************************************************************
+	대출
+*********************************************************************************************************/
+/* 스크랩핑 */
+.scraping_txt_wrap {margin-top:16px;}
+.scraping_txt_wrap .scraping_txt_box {text-align:center;}
+/* 금상몰 - 대출상환방식 안내*/
+.flex_gray_wrap {}
+.flex_gray_wrap .flex_gray_box {display:flex;margin-top:12px;padding:16px;border-radius:12px;background-color:#f8f8f8;}
+.flex_gray_wrap .flex_gray_box .flex_item {flex:1;text-align:center;}
+.flex_gray_wrap .flex_gray_box .flex_item strong {font-size:14px;font-weight:500;color:#111;}
+.flex_gray_wrap .flex_gray_box .flex_item p {margin-top:4px;font-size:13px;font-weight:400;color:#666;}
+.flex_gray_wrap + [class^="sect_bundle_box"] {margin-top:12px;}
+/*********************************************************************************************************
+	공과금
+*********************************************************************************************************/
+.bill_main .balance_box {display:flex;justify-content:space-between;margin-bottom:16px;padding:18px 20px;color:#fff;border-radius:12px;background-color:#d21300;box-shadow:0 2px 10px rgba(210, 19, 0, 0.2);}
+.bill_main .balance_box .tit {flex-shrink:0;}
+.bill_main .balance_box .tit strong {display: inline-block;font-size:16px;font-weight:400;vertical-align:middle;}
+.bill_main .balance_box .tit .tip_info_box {margin:0 0 0 4px;vertical-align:middle;}
+.bill_main .balance_box .balance {line-height:30px;font-size:20px;font-weight:700;}
+.bill_main [class^="points_noti_box"] {margin-top:0;}
+.bill_main [class^="points_noti_box"] .tit_noti strong {font-size:16px;}
+.list_bill_wrap .list_bill li {padding:16px 0;}
+.list_bill_wrap .list_bill li:first-child {padding-top:0;}
+.list_bill_wrap .list_bill li + li {border-top:1px solid #eee;}
+.list_bill_wrap .list_bill .info_view_case {align-items:center;}
+.list_bill_wrap .list_bill .sum {display:block;margin-top:4px;font-size:16px;color:#111;font-weight:500;}
+.list_link_wrap {margin-top:16px;font-size:0;}
+.list_link_wrap li {display:inline-block;width:50%;box-sizing:border-box;}
+.list_link_wrap li:nth-child(odd) {padding-right:4px;}
+.list_link_wrap li:nth-child(even) {padding-left:4px;}
+.list_link_wrap li:nth-child(n+3) {margin-top:12px;}
+.list_link_wrap li .inner {display:flex;width:100%;align-items:center;}
+.list_link_wrap li .inner:before {content:"";display:inline-block;width:48px;height:48px;margin-right:12px;border:1px solid #eee;border-radius:8px;box-sizing:border-box;background-position:50% 50%;background-repeat:no-repeat;background-size:48px;flex-shrink:0;}
+.list_link_wrap .item1 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill01.png);}
+.list_link_wrap .item2 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill02.png);}
+.list_link_wrap .item3 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill03.png);}
+.list_link_wrap .item4 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill04.png);}
+.list_link_wrap .item5 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill05.png);}
+.list_link_wrap .item6 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill06.png);}
+.list_link_wrap .item7 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill07.png);}
+.list_link_wrap .item8 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill08.png);}
+.list_link_wrap .item9 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill09.png);}
+.list_link_wrap .item10 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill10.png);}
+.list_link_wrap .item11 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill11.png);}
+.list_link_wrap .item12 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill12.png);}
+.list_link_wrap .item13 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill13.png);}
+.list_link_wrap .item14 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill14.png);}
+.list_link_wrap .item15 .inner:before {background-image:url(/resource/img/mbe/contents/ico_util_bill15.png);}
 
-/* 상품 카드 */
-.info_product_wrap {position:relative;min-height:68px;padding-right:60px;}
-.info_product_wrap .img {float:left;width:48px;height:48px;margin-right:12px;background-position:50% 50%;background-size:100% auto;}
-.info_product_wrap .tit_wrap {overflow:hidden;}
-.info_product_wrap .tit_wrap .tit {display:block;line-height:24px;font-size:16px;color:#000;font-weight:500;}
-.info_product_wrap .tit_wrap .desc {display:block;margin-top:4px;line-height:18px;color:#999;}
-.info_product_wrap  .cont_wrap {margin-top:12px;}
-.info_product_wrap .txt_per {font-size:0;color:#000;}
-.info_product_wrap .txt_per span {display:inline-block;line-height:24px;vertical-align:top;}
-.info_product_wrap .txt_per .lab {margin-right:8px;font-size:12px;}
-.info_product_wrap .txt_per .per {font-size:16px;font-weight:bold;}
-.info_product_wrap [class^="btn_tiny"] {position:absolute;bottom:0;right:0;}
-.info_product_wrap [class^="btn_bookmark"] {position:absolute;top:0;right:0;}
+.list_link_wrap li .inner .lab {display:block;line-height:20px;font-size:13px;color:#111;word-break:break-all;}
+.list_link_wrap li .inner span em {display:inline-block;}
 
-/* 상품 비교 */
-.list_compare li {position:relative;}
-.list_compare li + li {margin-top:12px;}
-.item_box .inner {padding:16px 48px 16px 16px;;background:#f8f8f8;border-radius:12px;}
-.item_box .tit {display:block;line-height:24px;font-size:16px;font-weight:500;color:#000;}
-.item_box .desc {display:block;color:#111;}
-.item_box .btn_del02 {position:absolute;top:16px;right:16px;width:24px;height:24px;}
-.list_compare .empty .inner {display:flex;width:100%;height:80px;padding:16px;border:1px dashed #cdcdcd;background:none;box-sizing:border-box;flex-direction:column;justify-content:center;}
-.list_compare .empty .mssg_empty {color:#999;}
-.tbl_compare th,
-.tbl_compare td {width:50%;text-align:left;word-break:break-all;vertical-align:top;}
-.tbl_compare th {font-size:16px;color:#111;font-weight:500;}
-.tbl_compare thead th {position:relative;padding-bottom:8px;line-height:22px;}
-.tbl_compare thead th:after {content:"";position:absolute;bottom:0;height:2px;background:#111;}
-.tbl_compare thead th:first-child:after {left:0;right:6px;}
-.tbl_compare thead th:last-child:after {left:6px;right:0;}
-.tbl_compare thead .num {display:block;font-size:26px;line-height:1;font-weight:500;}
-.tbl_compare thead .tit {display:block;font-size:16px;font-weight:500;}
-.tbl_compare tbody th {padding:24px 0 8px;}
-.tbl_compare th:first-child,
-.tbl_compare td:first-child {padding-right:6px;}
-.tbl_compare th:last-child,
-.tbl_compare td:last-child {padding-left:6px;}
-.tbl_compare th:only-child,
-.tbl_compare td:only-child {padding-left:0;padding-right:0;}
-.tbl_compare .txt {display:block;padding:16px 0 8px;border-top:1px solid #eee;}
-.tbl_compare tfoot td {padding-top:24px;}
+/*********************************************************************************************************
+	계좌 순서변경
+*********************************************************************************************************/
+/* 계좌 순서변경 */
+.order_acc_group_wrap {margin:24px -24px 0;padding:9px 24px 0;}
+.order_acc_group_wrap .order_acc_group_box {position:relative;margin:24px 0 0;}
+.order_acc_group_wrap .order_acc_group_box:first-child {margin-top:0;}
+.order_acc_group_wrap .order_acc_group_box + .order_acc_group_box {margin:16px 0 0;}
+.order_acc_group_wrap .order_acc_group_box > .btn_order04 {position:absolute;left:0;top:16px;z-index:1;}
+.order_acc_group_wrap .order_acc_group_box > .btn_order04 + .acc_tit {padding-left:32px;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit {display:block;position:relative;width:100%;padding:15px 0;text-align:left;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit:after {display:block;content:"";position:absolute;right:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/arrow_accordion_open.png) no-repeat center / 24px 24px;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit strong {display:inline-block;position:relative;padding:0;font-size:18px;font-weight:500;color:#111;vertical-align:middle;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit .num {display:inline-block;box-sizing:border-box;width:20px;height:20px;font-size:13px;color:#d21300;line-height:20px;text-align:center;border-radius:20px;background-color:#fcedeb;vertical-align:middle;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box .list_util {display:flex;justify-content:space-between;margin:0 -24px;padding:16px 24px;border-top:1px solid #eee;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li {margin:16px 0 0;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li:first-child {margin:0;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li .list_card_box .inner {padding:15px 32px;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li .list_card_box .btn_bookmark02 {left:0;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li .list_card_box .util02 {right:0;}
+.order_acc_group_wrap .order_acc_group_box .order_acc_list_box ul li.sortable-drag {height:auto !important;opacity:1 !important;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit.active:after {background-image:url(/resource/img/mbe/common/arrow_accordion_close.png);}
+.order_acc_group_wrap .order_acc_group_box .acc_tit:disabled:after {display:none;}
+.order_acc_group_wrap .order_acc_group_box .acc_tit:disabled + .order_acc_list_box {display:none;}
+.order_acc_group_wrap .order_acc_group_box ~ [class^="btn_conts_box"] {margin:24px 0 0;}
+.order_acc_group_wrap .order_acc_group_box.sortable-drag {height:auto !important;opacity:1 !important;background-color:#f8f8f8;}
+.order_acc_group_wrap .order_acc_group_box.sortable-drag .order_acc_list_box {display:none;}
 
+/* 빠른이체 순서 변경 */
+.list_view_box[reorder-name="reorder-box"] .sortable-drag {opacity:1 !important;background-color:#fff !important;}
 
 /*********************************************************************************************************
 	인증센터
@@ -301,30 +499,30 @@
 .certifi_method_box ul li .chip_chk02 {width:100%;}
 .certifi_method_box ul li .chip_chk02 em {padding:0 28px 0 36px;}
 .certifi_method_box ul li .chip_chk02 em:before {display:block;content:"";position:absolute;left:0;top:0;width:24px;height:24px;background-position:center;background-repeat:no-repeat;background-size:100%;}
-.certifi_method_box ul li .chip_chk02 em.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger.png);}
-.certifi_method_box ul li .chip_chk02 em.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face.png);}
-.certifi_method_box ul li .chip_chk02 em.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern.png);}
-.certifi_method_box ul li .chip_chk02 em.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password.png);}
-.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger_on.png);}
-.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face_on.png);}
-.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern_on.png);}
-.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password_on.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_finger:before {background-image:url(/resource/img/mbe/common/ico_finger.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_face:before {background-image:url(/resource/img/mbe/common/ico_face.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_pattern:before {background-image:url(/resource/img/mbe/common/ico_pattern.png);}
+.certifi_method_box ul li .chip_chk02 em.ico_password:before {background-image:url(/resource/img/mbe/common/ico_password.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_finger:before {background-image:url(/resource/img/mbe/common/ico_finger_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_face:before {background-image:url(/resource/img/mbe/common/ico_face_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_pattern:before {background-image:url(/resource/img/mbe/common/ico_pattern_on.png);}
+.certifi_method_box ul li .chip_chk02 input[type="checkbox"]:checked + .label_txt em.ico_password:before {background-image:url(/resource/img/mbe/common/ico_password_on.png);}
 
 .certifi_method_box ul li .btn_link02 span {padding:11px 0 11px 36px;}
-.certifi_method_box ul li .btn_link02 span:before {display:block;content:"";position:absolute;left:16px;top:11px;width:24px;height:24px;background-position:center;background-repeat:no-repeat;background-size:100%;}
-.certifi_method_box ul li .btn_link02 span.ico_finger:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_finger.png);}
-.certifi_method_box ul li .btn_link02 span.ico_face:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_face.png);}
-.certifi_method_box ul li .btn_link02 span.ico_pattern:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_pattern.png);}
-.certifi_method_box ul li .btn_link02 span.ico_password:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_password.png);}
+.certifi_method_box ul li .btn_link02 span:before {display:block;content:"";position:absolute;left:0;top:11px;width:24px;height:24px;background-position:center;background-repeat:no-repeat;background-size:100%;}
+.certifi_method_box ul li .btn_link02 span.ico_finger:before {background-image:url(/resource/img/mbe/common/ico_finger.png);}
+.certifi_method_box ul li .btn_link02 span.ico_face:before {background-image:url(/resource/img/mbe/common/ico_face.png);}
+.certifi_method_box ul li .btn_link02 span.ico_pattern:before {background-image:url(/resource/img/mbe/common/ico_pattern.png);}
+.certifi_method_box ul li .btn_link02 span.ico_password:before {background-image:url(/resource/img/mbe/common/ico_password.png);}
 
 /* 간편인증 가이드  */
-.certifi_guide_box:before {display:block;content:"";width:65px;height:65px;margin:0 0 40px;background-color:#00f;background-repeat:no-repeat;background-position:center;background-size:100%;}
+.certifi_guide_box:before {display:block;content:"";width:64px;height:64px;margin:0 0 40px;background-repeat:no-repeat;background-position:center;background-size:100%;}
 .certifi_guide_box .txt {line-height:36px;font-size:26px;font-weight:700;color:#111;}
 .certifi_guide_box .txt02 {margin:16px 0 0;}
-.certifi_guide_box.ico_finger:before {}
-.certifi_guide_box.ico_face:before {}
-.certifi_guide_box.ico_pattern:before {}
-.certifi_guide_box.ico_password:before {}
+.certifi_guide_box.ico_finger:before {background-image:url(/resource/img/mbe/common/visual_finger.png);}
+.certifi_guide_box.ico_face:before {background-image:url(/resource/img/mbe/common/visual_face.png);}
+.certifi_guide_box.ico_pattern:before {background-image:url(/resource/img/mbe/common/visual_patter.png);}
+.certifi_guide_box.ico_password:before {background-image:url(/resource/img/mbe/common/visual_easy_pw.png);}
 .certifi_guide_box .mssg_certifi_fixed {position:fixed;left:0;right:0;bottom:116px;padding:0 24px;line-height:20px;font-size:13px;color:#999;text-align:center;background-color:#fff;}
 
 /* 간편인증 설정 */
@@ -334,7 +532,6 @@
 .certifi_set_box ul li strong {font-weight:400;color:#111;}
 .certifi_set_box ul li strong,
 .certifi_set_box ul li [class^="inp_switch"] {display:block;}
-
 /*********************************************************************************************************
 	고객센터
 *********************************************************************************************************/
@@ -347,14 +544,14 @@
 /* 공지사항 상단 슬라이드 */
 .notice_swipe_wrap {overflow:hidden;margin:-32px -24px 0;padding:24px 0;background-color:#f8f8f8;}
 .notice_swipe_wrap .noti_card_item {display:block;box-sizing:border-box;height:100%;padding:20px;border-radius:12px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
-.notice_swipe_wrap .noti_card_item .title {line-height:28px;font-size:18px;font-weight:500;color:#111;}
+.notice_swipe_wrap .noti_card_item .title {display:block;overflow:hidden;line-height:28px;font-size:18px;font-weight:500;color:#111;white-space:nowrap;text-overflow:ellipsis;}
 .notice_swipe_wrap .noti_card_item .conts {display:-webkit-box;overflow:hidden;margin:8px 0 0;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .notice_swipe_wrap .noti_card_item .date {margin:16px 0 0;line-height:20px;font-size:13px;color:#999;}
 .notice_swipe_wrap .swiper-container .swiper-wrapper {height:160px;}
 .notice_swipe_wrap .swiper-container .swiper-wrapper .swiper-slide {position:relative;box-sizing:border-box;height:100%;padding:0 24px;}
 
 /* 소비자보호헌장 */
-.cunsumer_charter_box {margin:12px 0 0;padding:19px;border:1px solid #eee;border-radius:12px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
+.cunsumer_charter_box {margin:24px 0 0;padding:19px;border:1px solid #eee;border-radius:12px;background-color:#fff;box-shadow:0 0 12px rgba(0, 0, 0, 0.04);}
 .cunsumer_charter_box ul li {position:relative;margin:12px 0 0;padding:0 0 0 34px;}
 .cunsumer_charter_box ul li:first-child {margin:0;}
 .cunsumer_charter_box ul li .charter {position:absolute;left:0;top:0;color:#111;}
@@ -364,22 +561,23 @@
 .complaint_link_box ul li {width:100%;margin:0 0 0 9px;}
 .complaint_link_box ul li:first-child {margin:0;}
 .complaint_link_box ul li a {display:block;padding:20px 0;font-weight:500;color:#111;text-align:center;border:1px solid #ddd;border-radius:12px;}
-.complaint_link_box ul li a:before {display:block;content:"";width:56px;height:56px;margin:0 auto 12px;background-repeat:no-repeat;background-position:center;background-size:56px;background-color:#0f0;}
-.complaint_link_box ul li a.member:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/);}
-.complaint_link_box ul li a.non_member:before {background-image:url(https://dm.busanbank.co.kr/resource/img/mbe/common/);}
+.complaint_link_box ul li a:before {display:block;content:"";width:48px;height:48px;margin:0 auto 12px;background-repeat:no-repeat;background-position:center;background-size:100%;}
+.complaint_link_box ul li a.member:before {background-image:url(/resource/img/mbe/contents/ico_bnk_member.png);}
+.complaint_link_box ul li a.non_member:before {background-image:url(/resource/img/mbe/contents/ico_non_member.png);}
 
 /* 민원신청 접수안내 */
-.step_group {padding-top: 10px;}
 .step_group > ul {position:relative;}
-.step_group > ul > li {display:flex;margin:32px 0 0;padding:6px 0 0;}
-.step_group > ul > li::after{position:absolute;top:62px;left:30px;bottom:62px;content:'';display:block;width:2px;background-color:rgba(210,19,0,0.1)}
+.step_group > ul > li {display:flex;position:relative;margin:32px 0 0;}
+.step_group > ul > li::after{position:absolute;top:12px;left:30px;bottom:-32px;content:'';display:block;width:2px;background-color:rgba(210,19,0,0.1);}
 .step_group > ul > li:first-child {margin:0;}
-.step_group > ul > li:first-child::after{display:none;}
-.step_group > ul > li .step_num {display: flex;justify-content:center;flex-shrink:0;align-items:center;position:relative;width:60px;height:60px;margin:-6px 0 0;border:1px solid #f2f2f2;border-radius: 50%;background-color:#fff;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04);z-index:1;}
+.step_group > ul > li:last-child::after{display:none;}
+.step_group > ul > li [class^="tit_sub"] {margin:0;}
+.step_group > ul > li .step_num {display: flex;justify-content:center;flex-shrink:0;align-items:center;position:relative;box-sizing:border-box;width:60px;height:60px;padding:2px 0 0;border:1px solid #f2f2f2;border-radius: 50%;background-color:#fff;box-shadow:0 0 12px 0 rgba(0, 0, 0, 0.04);z-index:1;}
 .step_group > ul > li .step_num strong{width:34px;font-size:13px;font-weight:bold;color:#d21300;letter-spacing:-0.3px;text-align: center;line-height: 18px;}
-.step_group > ul > li dl {width: calc(100% - 74px);margin:-6px 0 0 12px;}
-.step_group > ul > li dl > dt.tit_sub02 {margin:0 0 8px}
+.step_group > ul > li dl {width: calc(100% - 74px);margin:0 0 0 12px;}
+.step_group > ul > li dl > dt.tit_sub02 {margin:0 0 8px;}
 .step_group > ul > li .step_conts {margin:0 0 0 12px;line-height:24px;font-size:14px;}
+.step_group > ul > li.flex_vc {align-items:center;}
 
 /*********************************************************************************************************
 	기간별 명세서 스와이프 - 이용대금 명세서
@@ -389,11 +587,11 @@
 .period_swipe_box {padding:0 24px;background-color:#fff;z-index:20;}
 .period_swipe_box.fixed {position:fixed;left:0;top:44px;right:0;}
 .period_swipe_box .period_btn {position:relative;height:26px;padding:0 0 0 32px;line-height:24px;font-size:14px;font-weight:500;}
-.period_swipe_box .period_btn:before {display:block;content:"";position:absolute;left:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_calendar.png) no-repeat center/24px;}
+.period_swipe_box .period_btn:before {display:block;content:"";position:absolute;left:0;top:50%;width:24px;height:24px;margin:-12px 0 0;background:url(/resource/img/mbe/common/ico_calendar.png) no-repeat center/24px;}
 .period_swipe_box .period_swipe_inner {overflow:hidden;position:relative;margin:0 auto;padding:12px 0;border-radius:25px;background-color:#f8f8f8;}
 .period_swipe_box .swiper-wrapper .swiper-slide {text-align:center;}
-.period_swipe_box .swiper-btn-prev {width:50px;height:50px;background:#f8f8f8 url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_period_left.png) no-repeat center/24px;}
-.period_swipe_box .swiper-btn-next {width:50px;height:50px;background:#f8f8f8 url(https://dm.busanbank.co.kr/resource/img/mbe/common/btn_period_right.png) no-repeat center/24px;}
+.period_swipe_box .swiper-btn-prev {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_left.png) no-repeat center/24px;}
+.period_swipe_box .swiper-btn-next {width:50px;height:50px;background:#f8f8f8 url(/resource/img/mbe/common/btn_period_right.png) no-repeat center/24px;}
 /* 명세서 컨텐츠 */
 .statement_swipe_box {}
 .statement_swipe_box .swiper-container .swiper-wrapper .swiper-slide {padding:0 24px;}
@@ -402,8 +600,8 @@
 /*********************************************************************************************************
 	소비자 보호공시
 *********************************************************************************************************/
-.consumer_announce_box table {margin:12px 0 0;table-layout:fiexd;width:100%;border-collapse:collapse;border-top:1px solid #eee !important;}
-.consumer_announce_box table td {box-sizing:border-box;padding:6px;font-size:0.8571rem;line-height:1.4285rem;color:#111;text-align:center;border:1px solid #eee;}
+.consumer_announce_box table {margin:12px 0 0;table-layout:fixed;width:100%;border-collapse:collapse;border-top:1px solid #eee !important;}
+.consumer_announce_box table td {box-sizing:border-box;padding:6px;font-size:0.8571rem;line-height:1.4285rem;color:#111;text-align:center;border:1px solid #eee;word-break:break-all;}
 .consumer_announce_box table td strong {font-weight:400;}
 .consumer_announce_box table td:first-child {border-left:none;}
 .consumer_announce_box table td:last-child {border-right:none;}
@@ -423,7 +621,16 @@
 
 @media screen and (max-width:320px) {
 	.consumer_announce_box table td {padding:3px;font-size:0.7857rem;}
-}
+;}
+
+/*********************************************************************************************************
+	오류화면
+*********************************************************************************************************/
+/* error */
+[class^="error_page_wrap"] {margin:36px 0 60px;text-align:center;}
+[class^="error_page_wrap"] .img {display:block;width:48px;height:48px;margin:0 auto 16px;background:url(/resource/img/mbe/common/ico_error02.png) no-repeat center / 100%;}
+[class^="error_page_wrap"] [class^="error_comt"] {line-height:34px;font-size:24px;color:#111;font-weight:700;}
+[class^="error_page_wrap"] [class^="error_desc"] {margin-top:16px;line-height:20px;font-size:13px;color:#666;}
 
 /*********************************************************************************************************
 	PDF 박스
@@ -432,11 +639,18 @@
 .pdf_box img {width:100%;}
 
 /*********************************************************************************************************
+	화면 캡쳐시 영역 구분에 사용
+*********************************************************************************************************/
+[class^="screenshot_box"] {margin:-24px;padding:24px;}
+[class^="layer_wrap"] [class^="layer_box"] .layer_container.screenshot_box {padding:0;margin:0;}
+[class^="layer_wrap"] [class^="layer_box"] .layer_container.screenshot_box .layer_contents {padding:24px 24px 40px;margin:0;}
+
+/*********************************************************************************************************
 	IBsheet UI
 *********************************************************************************************************/
 /* ibsheet grid */
 .ibsheet_wrap {margin:0 -24px;}
-.ibsheet_wrap [class^="inq_card_case"] {border-top:1px solid #eee;}
+.ibsheet_wrap [class^="inq_card_case"] {border-top:1px solid #eee;white-space:normal !important;}
 .ibsheet_wrap [class^="list_card_box"] {border-top:1px solid #eee;}
 .ibsheet_wrap .ibsheet_veiw_more {margin:16px 24px 0;}
 

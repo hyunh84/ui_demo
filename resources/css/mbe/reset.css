@@ -4,15 +4,15 @@
 	Base(reset) style
 *****************************/
 html {font-size:14px;}
-html, body {height:100%;}
+html, body {height:100%;min-height:100%;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 html, body, blockquote, caption, dd, div, dl, dt, fieldset, form, frame, h1, h2, h3, h4, h5, h6, hr,
 iframe, input, legend, li, object, ol, p, pre, q, select, table, textarea, ul, tr, td{ margin:0;padding:0}
 ul, ol, li{list-style:none}
 
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;margin:0;padding:0;}
 
-body {font-size:1rem;line-height:1.7142rem;font-weight:400;color:#666;font-family:'SpoqaHanSansNeo', sans-serif;letter-spacing:-0.3px;-webkit-text-size-adjust: none;}
-body.isPop {overflow:hidden;}
+body {font-size:1rem;line-height:1.7142rem;font-weight:400;color:#666;font-family:'SpoqaHanSansNeo', sans-serif;letter-spacing:-0.3px;-webkit-text-size-adjust:none;}
+body.isPop {position:fixed;overflow:hidden;box-sizing:border-box;width:100%;touch-action:none;}
 
 pre, textarea, select {font-family:'SpoqaHanSansNeo', sans-serif;}
 
@@ -20,12 +20,12 @@ fieldset {display:block;margin:0;padding:0;border:0;}
 legend {position:absolute;visibility:hidden;overflow:hidden;width:0;height:0;font-size:0;line-height:0;}
 form {margin:0;padding:0;}
 
-a, a:link, a:visited, a:active, a:hover {text-decoration:none;line-height:24px;font-size:14px;color:#111;}
+a, a:link, a:visited, a:active, a:hover {text-decoration:none;line-height:24px;font-size:14px;color:#111;selector-dummy:expression(this.hideFocus=true);}
 
 input, button {padding:0;margin:0;border:0;line-height:28px;font-size:14px;color:#111;letter-spacing:-0.3px;vertical-align:middle;background:none;font-family:'SpoqaHanSansNeo', sans-serif;-webkit-appearance:none;}
 button, label {line-height:24px;font-size:14px;cursor:pointer;}
 
-button, a {-webkit-tap-highlight-color:transparent;}
+button, a, input {-webkit-tap-highlight-color:transparent;}
 
 select::-ms-expand {display:none;}
 select {appearance:none;-webkit-appearance:none;border:none;background-repeat:no-repeat;background-position:center right;}
@@ -37,9 +37,10 @@ input[type="tel"] {background:#fff;}
 input[type="radio"], input[type="checkbox"] {appearance:none;-webkit-appearance:none;}
 
 textarea::placeholder,
-input::placeholder {color:#ccc;}
+input::placeholder {color:#ccc !important;}
+input[type="search"]::-webkit-search-cancel-button {display:none;}
 
-/* *[tabindex]:focus, input:focus, textarea:focus, button:focus, a:focus {outline:2px solid #111;} */
+*[tabindex]:focus, input:focus, textarea:focus, button:focus, a:focus {outline:none;}
 
 img {border:0;vertical-align:middle;}
 
@@ -47,7 +48,7 @@ hr {display:none;}
 
 em, address {font-style:normal;}
 
-h1, h2, h3, h4, h5, h6, strong {font-weight:800;}
+h1, h2, h3, h4, h5, h6, strong {font-weight:700;}
 
 table {width:100%;border-collapse:collapse;}
 caption {overflow:hidden;margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;}
