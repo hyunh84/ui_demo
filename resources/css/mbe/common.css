@@ -2330,7 +2330,8 @@ l/* 계좌플레이트 - 박스 없이 상단 */
 [class^="layer_wrap"] {display:none;overflow:hidden;position:fixed;left:0;top:0;bottom:0;width:100%;z-index:200;}
 [class^="layer_wrap"] .layer_mask {position:absolute;left:0;top:0;right:0;bottom:0;background-color:#000;opacity:.4;}
 /* [class^="layer_wrap"] .layer_mask.active {opacity:.4;} */
-[class^="layer_wrap"] [class^="layer_box"] {overflow:hidden;position:fixed;left:50%;top:50%;box-sizing:border-box;width:calc(100% - 48px);max-width:327px;padding:32px 0 0;border-radius:16px;background-color:#fff;transform:translate(-50%, -50%) scale(0);opacity:0;transition:transform 300ms ease, opacity 300ms ease;}
+[class^="layer_wrap"] [class^="layer_box"] {overflow:hidden;position:fixed;box-sizing:border-box;padding:32px 0 0;border-radius:16px;background-color:#fff;}
+/* [class^="layer_wrap"] [class^="layer_box"] {overflow:hidden;position:fixed;left:50%;top:50%;box-sizing:border-box;width:calc(100% - 48px);max-width:327px;padding:32px 0 0;border-radius:16px;background-color:#fff;transform:translate(-50%, -50%) scale(0);opacity:0;transition:transform 300ms ease, opacity 300ms ease;} */
 /* [class^="layer_wrap"] [class^="layer_box"] {overflow:hidden;position:fixed;left:50%;top:50%;box-sizing:border-box;width:calc(100% - 48px);max-width:327px;padding:32px 0 0;border-radius:16px;background-color:#fff;transform:translate(-50%, -50%) scale(0);opacity:0;transition:all 300ms ease;-webkit-transition:all 300ms ease;} */
 /* [class^="layer_wrap"] [class^="layer_box"]:focus {outline:2px solid #111;} */
 [class^="layer_wrap"] [class^="layer_box"].active {transform:translate(-50%, -50%) scale(1);opacity:1;}
