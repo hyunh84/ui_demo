@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<link rel="stylesheet" href="../resources/css/base.css" />
+<link rel="stylesheet" href="../resources/css/font.css" />
+<script src="../resources/js/jquery-3.5.1.min.js"></script>
+<style type="text/css">
+
+.particule {overflow:hidden;position:relative;height:300px;margin:100px 0 0;background-color:aquamarine;}
+.particule .imgBox {position:absolute;left:50%;top:50%;width:50px;height:50px;background-color:#eb6383;transform:translate(-50%, -50%);}
+.particule .particuleItems {position: absolute;top: 0;left: 0;border-radius: 50%;width: 30px;height: 30px;box-shadow: 1px 1px 4px #eb6383;}
+
+/* @keyframes slide-in {
+	0% {transform: scale(2) rotate(60deg);opacity: 0;}
+}
+@keyframes bump-in {
+	0% {transform: scale(0);opacity: 0;}
+} */
+</style>
+
+</head>
+<body>
+	
+<div class="particule">
+	<div class="imgBox"></div>
+</div>
+
+<script>
+var particuleEl = $('.particule');
+var colors = ["#eb6383","#fa9191","#ffe9c5","#b4f2e1"];
+var isAnimate = false;
+var pop = function() {
+	for(var i=0; i < 150; i++) {
+		var el = document.createElement('div');
+		var $el = $(el);
+
+		$el.addClass('particuleItems')
+		$el.data('mass', Math.random() * 0.2 + 0.8);
+		$el.data('x', window.innerWidth * 0.5);
+		$el.data('y', particuleEl.outerHeight() + (Math.random() * particuleEl.outerHeight() * 0.3));
+		$el.data('vel', {
+			x: (Math.random() - 0.5) * 10,
+			y: Math.random() * -20 - 15
+		});
+
+		particuleEl.append(el);
+
+		var size = Math.random() * 15 + 5;
+		$el.css({
+			'width' : size,
+			'height' : size,
+			'background-color' : colors[Math.floor(Math.random()*colors.length)],
+			'transform' : 'translate3d(' + $el.data('x') + 'px, ' + $el.data('y') + 'px, 1px)'
+		});
+	}
+
+	render();
+}
+
+var render = function() {
+	var items = $('.particuleItems', particuleEl);
+	for (var i = items.length - 1; i >= 0; i--) {
+		var el= items.eq(i);
+		var x = el.data('x');
+		var y = el.data('y');
+		var vel = el.data('vel');
+
+		console.log('translate3d(' + x + 'px, ' + y + 'px, 1px)');
+
+		el.css({
+			'transform' : 'translate3d(' + x + 'px, ' + y + 'px, 1px)'
+		});
+
+		el.data('x', x + vel.x);
+		el.data('y', y + vel.y);
+		el.data('vel').y += (0.5 * el.data('mass'));
+
+		if (el.data('y') > (particuleEl.outerHeight() * 2)) {
+			el.remove();
+		}
+	}
+
+	console.log('requestAnimationFrame ==========================');
+	requestAnimationFrame(render);
+}
+
+$('.particule').click(function() {
+	pop();
+});
+</script>
+
+</body>
+</html>
