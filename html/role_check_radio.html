@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user_scalable=no, viewport-fit=cover" />
+<title>부산은행 기업금융 비대면 채널 개선</title>
+
+<link rel="stylesheet" type="text/css" href="../resources/css/mbe/mbe.css">
+
+<script type="text/javascript" src="../resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/mbe/ui_style.js"></script>
+
+
+<style type="text/css">
+
+.checkbox {position:relative;padding:5px 10px 5px 34px;border:1px solid #ccc;border-radius:8px;}
+.checkbox:focus {outline:2px solid #000;}
+.checkbox + .checkbox {margin:10px 0 0;}
+.checkbox:before {display:block;content:"";position:absolute;left:5px;top:5px;box-sizing:border-box;width:24px;height:24px;border:1px solid #ddd;border-radius:6px;background:#fff url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_checkbox_.png) no-repeat 0 0 / 24px auto;transition:border .3s ease, background .2s ease;}
+.checkbox:after {display:block;content:"";position:absolute;left:5px;top:5px;box-sizing:border-box;width:0;height:24px;border-radius:6px;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_checkbox_on.png) no-repeat  0 0 / 24px auto;transition:width .3s ease;transition-delay:.1s;}
+.checkbox.active:before {border:1px solid #d21300;background:#d21300;}
+.checkbox.active:after {width:24px;}
+
+.checkbox button:focus {outline:2px solid #000;}
+.checkbox .ex_fold_box {display:none;}
+
+</style>
+
+<script type="text/javascript"">
+
+$(document).ready(function() {
+	$('.checkbox').click(function() {
+		
+		var _this = $(this);
+		var _name = _this.attr('name');
+		var _radioGroup = $('.checkbox[name="' + _name + '"]');
+	
+
+		if(_name) {//radio
+			if(!_this.hasClass('active')) {
+				_radioGroup.removeClass('active');
+			}
+			_this.addClass('active');
+		}else{//checkbox
+			if(_this.hasClass('active')) {
+				_this.removeClass('active');
+			}else{
+				if(_name) {
+					_radioGroup.removeClass();
+				}
+				_this.addClass('active');
+			}
+		}
+
+
+	});
+
+
+	$('.checkbox .ex_fold').click(function(e) {e.stopPropagation();
+		var _this = $(this);
+		var _next = _this.next();
+
+		if(_next.is(':hidden')) {
+			_next.show();
+		}else{
+			_next.hide();
+		}
+
+	});
+});
+
+</script>
+</head>
+<body>
+
+<!-- wrap -->
+<div id="wrap">
+	<!-- header -->
+	<script>
+		// headerHtml();
+	</script>
+	<!-- //header -->
+
+	<!-- gnb -->
+	<script>
+		// gnbHtml();
+	</script>
+	<!-- gnb -->
+
+	<!-- container -->
+	<div id="container">
+		
+
+		<div class="checkbox active" rold="checkbox" tabindex="0">
+			<div class="text">
+				CHECKBOX 01 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</div>
+
+		<div class="checkbox" rold="checkbox" tabindex="0">
+			<div class="text">
+				CHECKBOX 02 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</div>
+
+		<div class="checkbox" rold="radio" tabindex="0" name="group01">
+			<div class="text">
+				CHECKBOX 01 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</div>
+
+		<div class="checkbox" rold="radio" tabindex="0" name="group01">
+			<div class="text">
+				CHECKBOX 02 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</div>
+
+
+	</div>
+	<!-- //container -->
+
+
+	<!-- footer -->
+	<footer id="footer">
+
+	</footer>
+	<!-- //footer -->
+</div>
+<!-- //wrap -->
+
+</body>
+</html>
