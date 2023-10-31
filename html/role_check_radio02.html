@@ -94,7 +94,7 @@ $(document).ready(function() {
 	<div id="container">
 		
 
-		<div class="checkbox" role="button" aria-pressed="false" tabindex="0">
+		<div class="checkbox" aria-pressed="false" tabindex="0">
 			<div class="text" aria-label="check01">
 				CHECKBOX 01 예제
 			</div>
@@ -104,9 +104,19 @@ $(document).ready(function() {
 			</div>
 		</div>
 
-		<div class="checkbox" >
-			<div class="text">
+		<a href="#" class="checkbox" aria-pressed="false" >
+			<div class="text" aria-label="check01">
 				CHECKBOX 02 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</a>
+
+		<div class="checkbox"  name="group01">
+			<div class="text">
+				CHECKBOX 03 예제
 			</div>
 			<button type="button" class="ex_fold">click</button>
 			<div class="ex_fold_box">
@@ -116,17 +126,7 @@ $(document).ready(function() {
 
 		<div class="checkbox"  name="group01">
 			<div class="text">
-				CHECKBOX 01 예제
-			</div>
-			<button type="button" class="ex_fold">click</button>
-			<div class="ex_fold_box">
-				text box
-			</div>
-		</div>
-
-		<div class="checkbox"  name="group01">
-			<div class="text">
-				CHECKBOX 02 예제
+				CHECKBOX 04 예제
 			</div>
 			<button type="button" class="ex_fold">click</button>
 			<div class="ex_fold_box">
