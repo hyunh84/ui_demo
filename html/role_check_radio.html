@@ -57,7 +57,9 @@ $(document).ready(function() {
 	});
 
 
-	$('.checkbox .ex_fold').click(function(e) {e.stopPropagation();
+	$('.checkbox .ex_fold').click(function(e) {
+		e.preventDefault();
+		e.stopPropagation();
 		var _this = $(this);
 		var _next = _this.next();
 
@@ -131,6 +133,46 @@ $(document).ready(function() {
 				text box
 			</div>
 		</div>
+
+		<a href="#" class="checkbox" rold="checkbox" tabindex="0">
+			<div class="text">
+				CHECKBOX 01 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</a>
+
+		<a href="#" class="checkbox" rold="checkbox" tabindex="0">
+			<div class="text">
+				CHECKBOX 02 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</a>
+
+		<a href="#" class="checkbox" rold="radio" tabindex="0" name="group01">
+			<div class="text">
+				CHECKBOX 01 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</a>
+
+		<a href="#" class="checkbox" rold="radio" tabindex="0" name="group01">
+			<div class="text">
+				CHECKBOX 02 예제
+			</div>
+			<button type="button" class="ex_fold">click</button>
+			<div class="ex_fold_box">
+				text box
+			</div>
+		</a>
 
 
 	</div>
