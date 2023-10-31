@@ -17,6 +17,7 @@
 .checkbox {display:block;position:relative;padding:5px 10px 5px 34px;border:1px solid #ccc;border-radius:8px;}
 .checkbox:focus {outline:2px solid #000;}
 .checkbox + .checkbox {margin:10px 0 0;}
+.checkbox > div[role="button"] {position:absolute;left:5px;top:5px;width:24px;height:24px;z-index:1;}
 .checkbox:before {display:block;content:"";position:absolute;left:5px;top:5px;box-sizing:border-box;width:24px;height:24px;border:1px solid #ddd;border-radius:6px;background:#fff url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_checkbox_.png) no-repeat 0 0 / 24px auto;transition:border .3s ease, background .2s ease;}
 .checkbox:after {display:block;content:"";position:absolute;left:5px;top:5px;box-sizing:border-box;width:0;height:24px;border-radius:6px;background:url(https://dm.busanbank.co.kr/resource/img/mbe/common/ico_checkbox_on.png) no-repeat  0 0 / 24px auto;transition:width .3s ease;transition-delay:.1s;}
 .checkbox.active:before {border:1px solid #d21300;background:#d21300;}
@@ -94,7 +95,8 @@ $(document).ready(function() {
 	<div id="container">
 		
 
-		<div class="checkbox" aria-pressed="false" tabindex="0">
+		<div class="checkbox">
+			<div role="button" aria-pressed="false" tabindex="0"></div>
 			<div class="text" aria-label="check01">
 				CHECKBOX 01 예제
 			</div>
