@@ -27,7 +27,7 @@
 
 </style>
 
-<script type="text/javascript"">
+<script type="text/javascript">
 
 $(document).ready(function() {
 	$('.checkbox').click(function() {
@@ -94,8 +94,9 @@ $(document).ready(function() {
 	<div id="container">
 		
 
-		<div class="checkbox" tabindex="0" title="checkbox">
-			<div class="text">
+		<div class="checkbox" >
+			<div role="button" aria-checked="false" aria-labelledby="check01"></div>
+			<div class="text" aria-label="check01">
 				CHECKBOX 01 예제
 			</div>
 			<button type="button" class="ex_fold">click</button>
@@ -104,7 +105,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 
-		<div class="checkbox" tabindex="0" title="checkbox">
+		<div class="checkbox" >
 			<div class="text">
 				CHECKBOX 02 예제
 			</div>
@@ -114,7 +115,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 
-		<div class="checkbox" tabindex="0" title="checkbox" name="group01">
+		<div class="checkbox"  name="group01">
 			<div class="text">
 				CHECKBOX 01 예제
 			</div>
@@ -124,7 +125,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 
-		<div class="checkbox" tabindex="0" title="checkbox" name="group01">
+		<div class="checkbox"  name="group01">
 			<div class="text">
 				CHECKBOX 02 예제
 			</div>
