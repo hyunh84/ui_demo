@@ -39,17 +39,16 @@ $(document).ready(function() {
 
 		if(_name) {//radio
 			if(!_this.hasClass('active')) {
-				_radioGroup.removeClass('active').removeAttr('title');
+				$('[role="checkbox"], [role="radio"]', _radioGroup).removeAttr('title');
 			}
 			_this.addClass('active').attr('title', '선택됨');
 		}else{//checkbox
 			if(_this.hasClass('active')) {
-				_this.removeClass('active');
+				_this.removeClass('active').removeAttr('title');
+				$('[role="checkbox"], [role="radio"]', _this).removeAttr('title');
 			}else{
-				if(_name) {
-					_radioGroup.removeClass().removeAttr('title');
-				}
 				_this.addClass('active').attr('title', '선택됨');
+				$('[role="checkbox"], [role="radio"]', _this).attr('title', '선택됨');
 			}
 		}
 
