@@ -39,17 +39,17 @@ $(document).ready(function() {
 
 		if(_name) {//radio
 			if(!_this.hasClass('active')) {
-				_radioGroup.removeClass('active');
+				_radioGroup.removeClass('active').removeAttr('title');
 			}
-			_this.addClass('active');
+			_this.addClass('active').attr('title', '선택됨');
 		}else{//checkbox
 			if(_this.hasClass('active')) {
 				_this.removeClass('active');
 			}else{
 				if(_name) {
-					_radioGroup.removeClass();
+					_radioGroup.removeClass().removeAttr('title');
 				}
-				_this.addClass('active');
+				_this.addClass('active').attr('title', '선택됨');
 			}
 		}
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
 	<div id="container">
 		
 
-		<div class="checkbox active" rold="checkbox" tabindex="0">
+		<div class="checkbox" rold="checkbox" tabindex="0">
 			<div class="text">
 				CHECKBOX 01 예제
 			</div>
